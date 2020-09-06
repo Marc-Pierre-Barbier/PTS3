@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
 
     public static int screenWidth=0;
     public static int screenHeight=0;
+    public static boolean bilinearFiltering = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +38,20 @@ public class MainActivity extends Activity {
         //return portrait mode resolution so we need to flip them
         Point size = new Point();
         display.getSize(size);
-        screenWidth = size.y;
-        screenHeight = size.x;
+        if(size.y > size.x)
+        {
+            screenWidth = size.y;
+            screenHeight = size.x;
+        }else{
+            screenWidth = size.x;
+            screenHeight = size.y;
+        }
+
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.debug_card);
 
         try {
-            //v.addToDraw(new Drawable(new Rect(0,0,screenHeight,screenWidth),"background",Color.BLUE));
+            v.addToDraw(new Drawable(new Rect(0,0,screenWidth,screenHeight),"background",Color.BLUE));
             v.addToDraw(new Drawable(bm,0.0F,00.0F,"Card1",50F,50F));
         } catch (InvalidDataException e) {
             //cette erreur est lance si un carre est invalid

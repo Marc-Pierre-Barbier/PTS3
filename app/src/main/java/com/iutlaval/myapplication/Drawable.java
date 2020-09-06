@@ -55,15 +55,18 @@ public class Drawable {
     public Drawable(Bitmap bitmap,float x_pos,float y_pos,String name,float x_size,float y_size) throws InvalidDataException {
         this(x_pos,y_pos,name);
 
-        float x_scaled_size = x_size*bitmap.getWidth()/100;
-        float y_scaled_size = y_size*bitmap.getHeight()/100;
+        float x_scaled_size = x_size*MainActivity.screenWidth/100;
+        float y_scaled_size = y_size*MainActivity.screenHeight/100;
+
+        System.out.println(x_scaled_size + " y: " + y_scaled_size);
+        System.out.println(y_size);
 
         if(x_scaled_size <=0 || y_scaled_size <=0)
         {
             throw new InvalidDataException(name,x_scaled_size,y_scaled_size);
         }
 
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int)x_scaled_size, (int)y_scaled_size,true);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int)x_scaled_size, (int)y_scaled_size,MainActivity.bilinearFiltering);
         this.bitmap=scaledBitmap;
     }
 
