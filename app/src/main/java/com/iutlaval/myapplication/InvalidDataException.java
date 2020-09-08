@@ -1,16 +1,17 @@
 package com.iutlaval.myapplication;
 
-import android.graphics.Rect;
+
+import com.iutlaval.myapplication.Video.Rectangle;
 
 public class InvalidDataException extends Throwable {
     private String name;
     private float x;
     private float y;
 
-    public InvalidDataException(String name, Rect rectangle)
+    public InvalidDataException(String name, Rectangle rectangle)
     {
-        x = rectangle.width();
-        y = rectangle.height();
+        x = rectangle.getWidth();
+        y = rectangle.getHeight();
         this.name=name;
     }
     public InvalidDataException(String name,float x,float y)

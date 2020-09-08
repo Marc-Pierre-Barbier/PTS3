@@ -1,12 +1,14 @@
-package com.iutlaval.myapplication;
+package com.iutlaval.myapplication.Video;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.util.Log;
 
-import java.util.Objects;
+import androidx.annotation.NonNull;
+
+import com.iutlaval.myapplication.GameActivity;
+import com.iutlaval.myapplication.InvalidDataException;
 
 public class Drawable {
 
@@ -20,7 +22,7 @@ public class Drawable {
      * @param y coordoné y comrpis entre 0 et 100
      * @param name nom du drawable agit comme un identifiant mais doit être unique
      */
-    private Drawable(float x,float y,String name)
+    protected Drawable(float x,float y,String name)
     {
         this.x=x;
         this.y=y;
@@ -52,11 +54,11 @@ public class Drawable {
      *
      *  TODO : echelle dynamique avec l'ecran
      */
-    public Drawable(Bitmap bitmap,float x_pos,float y_pos,String name,float x_size,float y_size) throws InvalidDataException {
+    public Drawable(@NonNull Bitmap bitmap, float x_pos, float y_pos, String name, float x_size, float y_size) throws InvalidDataException {
         this(x_pos,y_pos,name);
 
-        float x_scaled_size = x_size*MainActivity.screenWidth/100;
-        float y_scaled_size = y_size*MainActivity.screenHeight/100;
+        float x_scaled_size = x_size* GameActivity.screenWidth/100;
+        float y_scaled_size = y_size* GameActivity.screenHeight/100;
 
         System.out.println(x_scaled_size + " y: " + y_scaled_size);
         System.out.println(y_size);
@@ -66,8 +68,8 @@ public class Drawable {
             throw new InvalidDataException(name,x_scaled_size,y_scaled_size);
         }
 
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int)x_scaled_size, (int)y_scaled_size,MainActivity.bilinearFiltering);
-        this.bitmap=scaledBitmap;
+        this.bitmap = Bitmap.createScaledBitmap(bitmap, (int)x_scaled_size, (int)y_scaled_size, GameActivity.bilinearFiltering);
+        Log.i("loul",""+this.bitmap.getWidth());
     }
 
     /**
@@ -80,13 +82,15 @@ public class Drawable {
      * @param color couleur du rectangle
      */
     @Deprecated
-    public Drawable(Rect rectangle, String name, int color) throws InvalidDataException {
-        if(rectangle.height() <= 0 || rectangle.width() <=0)throw new InvalidDataException(name,rectangle);
+    public Drawable(Rectangle rectangle, String name, int color) throws InvalidDataException {
+        if(rectangle.getHeight() <= 0 || rectangle.getWidth() <=0)throw new InvalidDataException(name,rectangle);
 
-        Bitmap bitmap = Bitmap.createBitmap(rectangle.width(),rectangle.height(), Bitmap.Config.ARGB_8888);
+        rectangle.scaleRectangleToScreen();
+
+        Bitmap bitmap = Bitmap.createBitmap((int)rectangle.getWidth(),(int)rectangle.getHeight(), Bitmap.Config.ARGB_8888);
 
         //on crée un canevas pour interagir avec la bitmap
-        Canvas c = new Canvas(bitmap);
+        RectangleCanevas c = new RectangleCanevas(bitmap);
         Paint p = new Paint();
 
         p.setColor(color);
@@ -96,14 +100,14 @@ public class Drawable {
 
         this.bitmap=bitmap;
         this.name=name;
-        this.x=rectangle.left;
-        this.y=rectangle.top;
+        this.x=rectangle.getPositionX();
+        this.y=rectangle.getPositionY();
     }
 
     public void drawOn(Canvas c, Paint p)
     {
         //drawings
-        c.drawBitmap(bitmap,x*MainActivity.screenWidth/100,y*MainActivity.screenHeight/100,p);
+        c.drawBitmap(getBitmap(),x* GameActivity.screenWidth/100,y* GameActivity.screenHeight/100,p);
     }
 
     public Bitmap getBitmap() {
@@ -135,4 +139,9 @@ public class Drawable {
         this.x=x;
         this.y=y;
     }
+
+    /**
+     * cette fonction est appeler quand le drawable est retirer de la liste toDraw
+     */
+    public void onDeletion(Renderer r){}
 }

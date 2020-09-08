@@ -1,11 +1,10 @@
-package com.iutlaval.myapplication;
+package com.iutlaval.myapplication.Video;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -14,7 +13,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CanevasView extends SurfaceView implements SurfaceHolder.Callback {
+public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder holder;
     private Paint p;
@@ -22,9 +21,8 @@ public class CanevasView extends SurfaceView implements SurfaceHolder.Callback {
 
 
     private List<Drawable> toDraw;
-    private Rect fullscreen;
 
-    public CanevasView(Context context) {
+    public Renderer(Context context) {
         super(context);
         holder = getHolder();
         holder.addCallback(this);
@@ -40,7 +38,6 @@ public class CanevasView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        fullscreen = holder.getSurfaceFrame();
         drawingThread.start();
     }
 
@@ -90,11 +87,8 @@ public class CanevasView extends SurfaceView implements SurfaceHolder.Callback {
                 }
 
                 //empecher d'aller plus vite que le taux de rafraichissement de l'ecran
-                //sauve de la betterie
-                try {
-                    float fps = getDisplay().getRefreshRate();
-                    Thread.sleep((long)(1.0/fps*1000));
-                } catch (InterruptedException e) {}
+                //sauve de la baterie
+                FpsTime.waitFrameTime();
             }
         }
     }
@@ -121,7 +115,7 @@ public class CanevasView extends SurfaceView implements SurfaceHolder.Callback {
      * @param y coodonné en y (-1.0 a 1.0)
      * @param name nom de l'element a modifier
      */
-    public void ChangeToDraw(float x,float y,String name) throws DrawableNotFoundException {
+    public void moveToDraw(float x, float y, String name) throws DrawableNotFoundException {
         for(Drawable d : toDraw)
         {
             if(d.getName().equals(name))
@@ -134,34 +128,39 @@ public class CanevasView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * remove the element from the draw list
-     * @param name the element name
+     * supprime le drawable possedant le nom indique
+     * @param name le nom
      */
     public void removeToDraw(String name){
-        Drawable toRemove = null;
-        for(Drawable d : toDraw)
-        {
-            if(d.getName().equals(name))
-            {
-                toRemove=d;
-                break;
-            }
-        }
-        if(toRemove != null)
-        {
-            toDraw.remove(toRemove);
-        }
+        Drawable d = getDrawAble(name);
+        if(d != null)
+            toDraw.remove(d);
     }
-
     /**
      * remove the element from the draw list
      * @param toRemove the element toRemove
      */
     public void removeToDraw(Drawable toRemove){
+        toRemove.onDeletion(this);
         toDraw.remove(toRemove);
     }
 
-    public Rect getFullscreen() {
-        return fullscreen;
+
+    /**
+     * retourne le drawable possedant le nom indiqué
+     * @param name le nom du drawable
+     * @return
+     */
+    public Drawable getDrawAble(String name){
+        Drawable drawable = null;
+        for(Drawable d : toDraw)
+        {
+            if(d.getName().equals(name))
+            {
+                drawable=d;
+                break;
+            }
+        }
+        return drawable;
     }
 }
