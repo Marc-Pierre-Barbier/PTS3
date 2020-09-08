@@ -36,16 +36,32 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
         toDraw = new ArrayList<>();
     }
 
+    /**
+     * cette fonction demare le thread graphique
+     * @param holder
+     */
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
         drawingThread.start();
     }
 
+    /**
+     * cette fonction est appeler a chaque fois que l'utilisateur tourne son ecran
+     * this function is unused since the screen is locked
+     * @param surfaceHolder
+     * @param i
+     * @param i1
+     * @param i2
+     */
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
     }
 
+    /**
+     * on surface destruction stop the thread
+     * @param surfaceHolder
+     */
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
         drawingThread.keepDrawing = false;
@@ -54,6 +70,10 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
         } catch (InterruptedException e) {}
     }
 
+    /**
+     * function ran for each frame to draw all the drawables
+     * @param canvas canevas on wich to draw on
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         for(Drawable d : toDraw)
@@ -62,6 +82,9 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    /**
+     * main drawing thread render each frame
+     */
     private class DrawingThread extends Thread {
 
         public boolean keepDrawing = true;
