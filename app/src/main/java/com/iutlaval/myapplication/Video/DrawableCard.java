@@ -56,7 +56,7 @@ public class DrawableCard extends Drawable{
         cardOnBoardHp.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FF00FF00"),p);
         cardOnBoardAtk.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FFFF0000"),p);
 
-        cardOnBardDrawable = new Drawable(cardOnBoardBitmap,x,y,toString()+"BOARD",CARD_WITH,CARD_HEIGHT*2/3);
+        cardOnBardDrawable = new Drawable(cardOnBoardBitmap,x+1,y+2,toString()+"BOARD",CARD_WITH,CARD_HEIGHT*2/3);
 
         onBoard=true;
     }
