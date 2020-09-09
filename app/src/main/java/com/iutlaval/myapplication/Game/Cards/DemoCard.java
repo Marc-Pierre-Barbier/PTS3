@@ -22,4 +22,14 @@ public class DemoCard extends Card{
     public String getDescription() {
         return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat metus eu augue aliquet, nec accumsan tellus aliquam. Nullam eu consectetur quam.";
     }
+
+    @Override
+    public int getAttack() {
+        return 10;
+    }
+
+    @Override
+    public int getHealth() {
+        return 10;
+    }
 }

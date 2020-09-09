@@ -10,9 +10,6 @@ import com.iutlaval.myapplication.Game.Board;
 import com.iutlaval.myapplication.R;
 
 public abstract class Card {
-    private int health;
-    private int attack;
-
     private static Bitmap frameBitmap = null;
 
     public void onCardAttack(Board board){}
@@ -68,4 +65,10 @@ public abstract class Card {
 
     public abstract String getDescription();
     //TODO
+
+
+    public abstract int getAttack();
+
+    public abstract int getHealth();
 }
+

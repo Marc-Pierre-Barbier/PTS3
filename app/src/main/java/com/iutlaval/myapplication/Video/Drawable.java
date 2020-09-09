@@ -92,6 +92,8 @@ public class Drawable {
 
         List<String> linesOfText = cutText(20,text);
 
+        Log.i("bitmap"," : h:" + 40*linesOfText.size() + "  w: "+text.length()*textSize / linesOfText.size());
+
         bitmap = Bitmap.createBitmap((int)(text.length()*textSize / linesOfText.size()), (int) 40*linesOfText.size(), Bitmap.Config.ARGB_8888);
 
         checkPaint();
@@ -221,6 +223,7 @@ public class Drawable {
                 Log.e("TextRender","ERROR WORD TOO LONG :" + word);
             }
         }
+        if(!nextLine.equals(""))output.add(nextLine);
         return output;
     }
 }
