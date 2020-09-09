@@ -15,6 +15,7 @@ public class Drawable {
     private float x,y;
     private String name;
     private Bitmap bitmap;
+    private static Paint p;
 
     /**
      * cree un drawable a partir de coordonné est d'un nom
@@ -83,25 +84,33 @@ public class Drawable {
      */
     @Deprecated
     public Drawable(Rectangle rectangle, String name, int color) throws InvalidDataException {
+        this(null,rectangle.getPositionX(),rectangle.getPositionY(),name);
         if(rectangle.getHeight() <= 0 || rectangle.getWidth() <=0)throw new InvalidDataException(name,rectangle);
 
         rectangle.scaleRectangleToScreen();
-
         Bitmap bitmap = Bitmap.createBitmap((int)rectangle.getWidth(),(int)rectangle.getHeight(), Bitmap.Config.ARGB_8888);
-
-        //on crée un canevas pour interagir avec la bitmap
-        RectangleCanevas c = new RectangleCanevas(bitmap);
-        Paint p = new Paint();
-
-        p.setColor(color);
-        p.setStyle(Paint.Style.FILL_AND_STROKE);
-
-        c.drawRect(rectangle,p);
+        rectangle.bitmapRectangleBuilder(bitmap,color,p);
 
         this.bitmap=bitmap;
-        this.name=name;
-        this.x=rectangle.getPositionX();
-        this.y=rectangle.getPositionY();
+    }
+
+    /**
+     * ce constructeur n'est pas rapide essayer de l'utiliser le moin possible
+     * TODO : optimize it and remove the deprecated flag
+     *TODO update javadoc
+     *
+     * this contructor create a Drawable object from a rectangle and a color
+     * @param rectangle recange cooresspondant a la surface a dessiner
+     * @param name nom du drawable agit comme un identifiant mais doit être unique
+     * @param color couleur du rectangle
+     */
+    @Deprecated
+    public Drawable(Bitmap bitmap,Rectangle rectangle, String name, int color) throws InvalidDataException {
+        this(bitmap,rectangle.getPositionX(),rectangle.getPositionY(),name);
+        if(rectangle.getHeight() <= 0 || rectangle.getWidth() <=0 || bitmap == null)throw new InvalidDataException(name,rectangle);
+
+        rectangle.scaleRectangleToScreen();
+        rectangle.bitmapRectangleBuilder(bitmap,color,p);
     }
 
     public void drawOn(Canvas c, Paint p)

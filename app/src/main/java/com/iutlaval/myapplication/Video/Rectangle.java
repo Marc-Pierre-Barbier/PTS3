@@ -1,5 +1,8 @@
 package com.iutlaval.myapplication.Video;
 
+import android.graphics.Bitmap;
+import android.graphics.Paint;
+
 import com.iutlaval.myapplication.GameActivity;
 
 public class Rectangle {
@@ -41,5 +44,22 @@ public class Rectangle {
                 getWidth()*GameActivity.screenWidth/100,
                 getHeight()*GameActivity.screenHeight/100
         );
+    }
+
+    /**
+     * retourne la bitmap entre mais avec un rectangle dessiner dedans
+     * @param bitmap la bitmap sur la quelle dessiner
+     * @param color la couleur du carre
+     * @param p le pinceau utiliser pour le canevas
+     */
+    public void bitmapRectangleBuilder(Bitmap bitmap, int color,Paint p)
+    {
+        RectangleCanevas c = new RectangleCanevas(bitmap);
+        if(p==null)p = new Paint();
+
+        p.setColor(color);
+        p.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        c.drawRect(this,p);
     }
 }
