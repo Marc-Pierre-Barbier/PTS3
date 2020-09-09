@@ -17,4 +17,9 @@ public class DemoCard extends Card{
     public String getColor() {
         return "#70000000";
     }
+
+    @Override
+    public String getDescription() {
+        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat metus eu augue aliquet, nec accumsan tellus aliquam. Nullam eu consectetur quam.";
+    }
 }

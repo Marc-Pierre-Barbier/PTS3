@@ -23,9 +23,13 @@ public class DrawableCard extends Drawable{
     private Boolean onBoard;
 
     private Drawable cardOnBardDrawable;
+    private Drawable cardDescription;
+
 
     public DrawableCard(Card c, float x, float y, String name, Context context) throws InvalidDataException {
         super(c.getFrameBitmap(context),x,y,name,CARD_WITH,CARD_HEIGHT);
+
+        cardDescription = new Drawable(c.getDescription(),x+CARD_WITH*0.1F,y+CARD_HEIGHT/2,name,CARD_WITH,CARD_HEIGHT/2,10F);
 
         color = c.getColor();//CARD_WITH+x
         Rectangle cardRect = new Rectangle(x,y,(float)(CARD_WITH+x),(float)(CARD_HEIGHT+x));
@@ -56,13 +60,14 @@ public class DrawableCard extends Drawable{
         cardOnBoardHp.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FF00FF00"),p);
         cardOnBoardAtk.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FFFF0000"),p);
 
-        cardOnBardDrawable = new Drawable(cardOnBoardBitmap,x+1,y+2,toString()+"BOARD",CARD_WITH,CARD_HEIGHT*2/3);
+        cardOnBardDrawable = new Drawable(cardOnBoardBitmap,x,y,toString()+"BOARD",CARD_WITH,CARD_HEIGHT*2/3);
 
-        onBoard=true;
+        onBoard=false;
     }
 
     private String removeAlpha(String color) {
-        char[] colorArray = color.toCharArray();;
+        char[] colorArray = color.toCharArray();
+        if(colorArray[1]=='0' && colorArray[2]=='0')return "#FFFFFFFF";
         colorArray[1]='F';
         colorArray[2]='F';
         System.out.println(String.valueOf(colorArray));
@@ -81,6 +86,9 @@ public class DrawableCard extends Drawable{
             super.drawOn(c, p);
             OpacityRectangleDrawable.drawOn(c,p);
             PictureDrawable.drawOn(c,p);
+            cardDescription.drawOn(c,p);
+            //draw text in the card
+
         }
 
     }
@@ -94,6 +102,7 @@ public class DrawableCard extends Drawable{
             super.setCoordinates(x, y);
             OpacityRectangleDrawable.setCoordinates(x, y);
             PictureDrawable.setCoordinates(x + 1.1F, y + 2.5F);
+            cardDescription.setCoordinates(x,y);
         }
     }
 

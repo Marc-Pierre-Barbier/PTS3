@@ -65,5 +65,7 @@ public abstract class Card {
     {
         return "#00000000";
     }
+
+    public abstract String getDescription();
     //TODO
 }
