@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.InvalidDataException;
@@ -15,7 +14,8 @@ public class DrawableCard extends Drawable{
 
     private static final int CARD_WITH = 14;
     private static final int CARD_HEIGHT = 32;
-    private static final float HP_ATK_FONT_SIZE =10F;
+    private static final float HP_ATK_FONT_SIZE_BIG_CARD =10F;
+    private static final float HP_ATK_FONT_SIZE_BOARD =20F;
 
     private String color;
 
@@ -32,6 +32,8 @@ public class DrawableCard extends Drawable{
 
     public DrawableCard(Card c, float x, float y, String name, Context context) throws InvalidDataException {
         super(c.getFrameBitmap(context),x,y,name,CARD_WITH,CARD_HEIGHT);
+
+        onBoard=false;
 
         cardDescription = new Drawable(c.getDescription(),x+1F,y+CARD_HEIGHT/2,toString()+"description",CARD_WITH,CARD_HEIGHT/2,10F);
         updateHpAndAtk(c.getAttack(),c.getHealth());
@@ -66,8 +68,6 @@ public class DrawableCard extends Drawable{
         cardOnBoardAtk.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FFFF0000"),p);
 
         cardOnBardDrawable = new Drawable(cardOnBoardBitmap,x,y,toString()+"BOARD",CARD_WITH,CARD_HEIGHT*2/3);
-
-        onBoard=false;
     }
 
     /**
@@ -78,8 +78,17 @@ public class DrawableCard extends Drawable{
      */
     public void updateHpAndAtk(Integer atk,Integer hp)
     {
-        if(atk != null)cardAtkDrawable = new Drawable(atk+"    ",getX()+0.6F,getY()+CARD_HEIGHT-5F,toString()+"atk",CARD_WITH/2,CARD_HEIGHT/8,HP_ATK_FONT_SIZE);
-        if(hp != null)cardHpDrawable = new Drawable(hp+"    ",getX()+2.4F+CARD_WITH/2,getY()+CARD_HEIGHT-5F,toString()+"hp",CARD_WITH/2,CARD_HEIGHT/8,HP_ATK_FONT_SIZE);
+        if(onBoard) {
+            if (atk != null)
+                cardAtkDrawable = new Drawable(atk + "    ", getX() + 0.6F, getY() + CARD_HEIGHT/2, toString() + "atk", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BOARD);
+            if (hp != null)
+                cardHpDrawable = new Drawable(hp + "    ", getX() + 2.4F + CARD_WITH / 2, getY() + CARD_HEIGHT/2, toString() + "hp", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BOARD);
+        }else{
+            if (atk != null)
+                cardAtkDrawable = new Drawable(atk + "    ", getX() + 0.6F, getY() + CARD_HEIGHT - 5F, toString() + "atk", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
+            if (hp != null)
+                cardHpDrawable = new Drawable(hp + "    ", getX() + 2.4F + CARD_WITH / 2, getY() + CARD_HEIGHT - 5F, toString() + "hp", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
+        }
     }
 
     private String removeAlpha(String color) {
@@ -120,15 +129,15 @@ public class DrawableCard extends Drawable{
         if (onBoard) {
             cardOnBardDrawable.setCoordinates(x,y);
             PictureDrawable.setCoordinates(x +1, y +2);
-            cardAtkDrawable.setCoordinates(getX()+0.6F,getY()+CARD_HEIGHT-5F);
-            cardHpDrawable.setCoordinates(getX()+2.4F+CARD_WITH/2,getY()+CARD_HEIGHT-5F);
+            cardAtkDrawable.setCoordinates(x+1F,y + CARD_HEIGHT/2 );
+            cardHpDrawable.setCoordinates(x+1F+CARD_WITH/2,y + CARD_HEIGHT/2 );
         }else{
             super.setCoordinates(x, y);
             OpacityRectangleDrawable.setCoordinates(x, y);
             PictureDrawable.setCoordinates(x + 1.1F, y + 2.5F);
             cardDescription.setCoordinates(x+CARD_WITH*0.1F,y+CARD_HEIGHT/2);
-            cardAtkDrawable.setCoordinates(x+1F,getY()+CARD_HEIGHT-5F);
-            cardHpDrawable.setCoordinates(x+1F+CARD_WITH/2,getY()+CARD_HEIGHT-5F);
+            cardAtkDrawable.setCoordinates(x + 0.6F,y+CARD_HEIGHT-5F);
+            cardHpDrawable.setCoordinates(x+ 2.4F+CARD_WITH/2,y+CARD_HEIGHT-5F);
         }
     }
 

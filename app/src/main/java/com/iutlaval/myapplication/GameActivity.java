@@ -98,7 +98,7 @@ public class GameActivity extends Activity {
                 if(i==0)increm=-increm;
 
                 //TODO get x,y coordinate form name
-                //view.moveToDraw(i,i,"card2");
+                view.moveToDraw(i,i,"card2");
                 //view.moveToDraw(1,1,"card2");
                 FpsTime.waitFrameTime();
             }
