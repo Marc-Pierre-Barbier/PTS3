@@ -15,6 +15,6 @@ public class DemoCard extends Card{
     //#AARRGGBB
     @Override
     public String getColor() {
-        return "#70FF0000";
+        return "#70000000";
     }
 }

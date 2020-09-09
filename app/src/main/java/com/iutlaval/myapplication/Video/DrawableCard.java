@@ -39,4 +39,11 @@ public class DrawableCard extends Drawable{
         OpacityRectangleDrawable.drawOn(c,p);
         PictureDrawable.drawOn(c,p);
     }
+
+    @Override
+    public void setCoordinates(float x, float y) {
+        super.setCoordinates(x, y);
+        OpacityRectangleDrawable.setCoordinates(x,y);
+        PictureDrawable.setCoordinates(x+1.1F,y+2.5F);
+    }
 }

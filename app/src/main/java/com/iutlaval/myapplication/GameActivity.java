@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Display;
 
@@ -99,7 +98,7 @@ public class GameActivity extends Activity {
                 if(i==0)increm=-increm;
 
                 //TODO get x,y coordinate form name
-                view.moveToDraw(i,i,"running");
+                view.moveToDraw(i,i,"card2");
                 FpsTime.waitFrameTime();
             }
         }
