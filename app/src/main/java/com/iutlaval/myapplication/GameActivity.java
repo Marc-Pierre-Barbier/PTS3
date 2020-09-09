@@ -73,6 +73,7 @@ public class GameActivity extends Activity {
         setContentView(v);
     }
 
+    //TODO a supprime quand le moteur de jeu pour être utliser a des fin de teste
     private class MainThread extends Thread
     {
         Renderer view;

@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
+import com.iutlaval.myapplication.ERROR_CODE;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.InvalidDataException;
 
@@ -29,8 +31,23 @@ public class DrawableCard extends Drawable{
     private Drawable cardHpDrawable;
     private Drawable cardAtkDrawable;
 
-
-    public DrawableCard(Card c, float x, float y, String name, Context context) throws InvalidDataException {
+    /**
+     * ce constructeur permet de crée un drawable simplifier pour les carte qui integre :
+     *  _le supoort de la description
+     *  _le changement d'etat entre grand et terrain
+     *  _les point de vie
+     *  _l'image
+     *  _les deplacement du tout
+     *
+     *
+     * @param c carte a dessiner
+     * @param x position de la carte sur l'axe x
+     * @param y position de la carte sur l'axe y
+     * @param name nom du drawable
+     * @param context le contexte est simplement l'instance de GameActivity qui est utiliser pas le moteur de jeu
+     * @throws InvalidDataException
+     */
+    public DrawableCard(Card c, float x, float y, String name, Context context){
         super(c.getFrameBitmap(context),x,y,name,CARD_WITH,CARD_HEIGHT);
 
         onBoard=false;
@@ -40,10 +57,16 @@ public class DrawableCard extends Drawable{
 
         color = c.getColor();//CARD_WITH+x
         Rectangle cardRect = new Rectangle(x,y,(float)(CARD_WITH+x),(float)(CARD_HEIGHT+x));
-        OpacityRectangleDrawable = new Drawable(cardRect,toString()+"Opacity", Color.parseColor(c.getColor()));
-
         Bitmap pictureBitmap = BitmapFactory.decodeResource(context.getResources(),c.getCardPicture());
-        PictureDrawable = new Drawable(pictureBitmap,getX()+1.1F,getY()+2.5F,toString()+"Picture",CARD_WITH-2.4F,CARD_HEIGHT/2 - 4);
+
+        try {
+            OpacityRectangleDrawable = new Drawable(cardRect,toString()+"Opacity", Color.parseColor(c.getColor()));
+            PictureDrawable = new Drawable(pictureBitmap,getX()+1.1F,getY()+2.5F,toString()+"Picture",CARD_WITH-2.4F,CARD_HEIGHT/2 - 4);
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+            Log.e("CARTE :","forme de la carte invalide !");
+            System.exit(ERROR_CODE.ERROR_INVALID_CARD_DIMENSIONS.ordinal());
+        }
 
 
         Paint p = new Paint();
@@ -91,6 +114,12 @@ public class DrawableCard extends Drawable{
         }
     }
 
+    /**
+     * supprime la couche alpha numerique d'une carte
+     * MAIS si la carte est completement transparente ALORS la texture devien blanche
+     * @param color le code #AARRGGBB de la carte
+     * @return la texture modifier
+     */
     private String removeAlpha(String color) {
         char[] colorArray = color.toCharArray();
         if(colorArray[1]=='0' && colorArray[2]=='0')return "#FFFFFFFF";
@@ -141,6 +170,10 @@ public class DrawableCard extends Drawable{
         }
     }
 
+    /**
+     * defini si la carte doit s'afficher en format plein ecran ou en format terrain (avec ou sans description)
+     * @param onBoard
+     */
     public void setOnBoard(Boolean onBoard)
     {
         this.onBoard = onBoard;

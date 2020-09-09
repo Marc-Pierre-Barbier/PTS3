@@ -14,12 +14,11 @@ public class InvalidDataException extends Throwable {
         y = rectangle.getHeight();
         this.name=name;
     }
-    public InvalidDataException(String name,float x,float y)
-    {
-        this.y=y;
-        this.x=x;
-    }
 
+    /**
+     * retourne un string detaillant l'erreur
+     * @return
+     */
     public String getDetail() {
         return "name " + name + " x:" + x +" y:"+ y;
     }

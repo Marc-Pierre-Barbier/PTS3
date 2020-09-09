@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.iutlaval.myapplication.ERROR_CODE;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.InvalidDataException;
 
@@ -33,32 +34,17 @@ public class Drawable {
         this.name=name;
     }
 
-    /**
-     * cree un drawable depuis une bitmap est des coordonnés
-     * @param bitmap bitmap
-     * @param x coordoné x compris entre 0 et 100
-     * @param y coordoné y comrpis entre 0 et 100
-     * @param name nom du drawable agit comme un identifiant mais doit être unique
-     *
-     * deprecier car non adapter a la resolution de l'ecran
-     */
-    @Deprecated
-    public Drawable(Bitmap bitmap,float x,float y,String name){
-        this(x,y,name);
-        this.bitmap=bitmap;
-    }
 
     /**
-     * cree un drawable depuis une bitmap est des coordonnés
-     * @param bitmap bitmap
-     * @param x_pos coordoné x compris entre 0 et 100
-     * @param y_pos coordoné y comrpis entre 0 et 100
-     * @param name nom du drawable agit comme un identifiant mais doit être unique
-     * deprecier car non adapter a la resolution de l'ecran
-     *
-     *  TODO : echelle dynamique avec l'ecran
+     * @param  bitmap a dessiner
+     * @param x_pos position en x du texte
+     * @param y_pos position en y du texte
+     * @param name nom du Drawable
+     * @param x_size taille du drawable entre 0 et 100
+     * @param y_size taille du drawable entre 0 et 100
+     * @throws InvalidDataException
      */
-    public Drawable(@NonNull Bitmap bitmap, float x_pos, float y_pos, String name, float x_size, float y_size) throws InvalidDataException {
+    public Drawable(@NonNull Bitmap bitmap, float x_pos, float y_pos, String name, float x_size, float y_size){
         this(x_pos,y_pos,name);
 
         float x_scaled_size = x_size* GameActivity.screenWidth/100;
@@ -70,13 +56,14 @@ public class Drawable {
 
         if(x_scaled_size <=0 || y_scaled_size <=0)
         {
-            throw new InvalidDataException(name,x_scaled_size,y_scaled_size);
+            Log.e("TEXTURE :","ERREUR DE MISE A L'ECHELLE");
+            System.exit(ERROR_CODE.ERROR_TEXTURE_DIMENSIONS_INVALID.ordinal());
         }
 
         this.bitmap = Bitmap.createScaledBitmap(bitmap, (int)x_scaled_size, (int)y_scaled_size, GameActivity.bilinearFiltering);
     }
 
-    /**TODO : limiter la longeur des lignes et implementer le retour a la ligne
+    /**TODO : corriger les deformation due au changement de ratio (x_size,y_size)
      * ce constructeur permet de rendre du texte
      * @param text le texte a rendre
      * @param x_pos position en x du texte
@@ -119,14 +106,14 @@ public class Drawable {
      * ce constructeur n'est pas rapide essayer de l'utiliser le moin possible
      * TODO : optimize it and remove the deprecated flag
      *
-     * this contructor create a Drawable object from a rectangle and a color
+     * ce constructeur dessine un rectangle avec la texture donner en argument
      * @param rectangle recange cooresspondant a la surface a dessiner
      * @param name nom du drawable agit comme un identifiant mais doit être unique
      * @param color couleur du rectangle
      */
     @Deprecated
     public Drawable(Rectangle rectangle, String name, int color) throws InvalidDataException {
-        this(null,rectangle.getPositionX(),rectangle.getPositionY(),name);
+        this(rectangle.getPositionX(),rectangle.getPositionY(),name);
         if(rectangle.getHeight() <= 0 || rectangle.getWidth() <=0)throw new InvalidDataException(name,rectangle);
 
         rectangle.scaleRectangleToScreen();
@@ -136,25 +123,33 @@ public class Drawable {
         this.bitmap=bitmap;
     }
 
+
     /**
-     * ce constructeur n'est pas rapide essayer de l'utiliser le moin possible
-     * TODO : optimize it and remove the deprecated flag
-     *TODO update javadoc
-     *
-     * this contructor create a Drawable object from a rectangle and a color
+     * ce constructeur n'est pas tres rapide donc a eviter il utilse pas mal de ram mais sava encore le gc de java s'en ocupe vite
+     * ce constructeur dessine un rectangle avec la texture donner en argument
+     * @param bitmap
      * @param rectangle recange cooresspondant a la surface a dessiner
      * @param name nom du drawable agit comme un identifiant mais doit être unique
      * @param color couleur du rectangle
+     * @throws InvalidDataException
      */
+    //TODO verifier l'utiliter de ce constructeur
     @Deprecated
     public Drawable(Bitmap bitmap,Rectangle rectangle, String name, int color) throws InvalidDataException {
-        this(bitmap,rectangle.getPositionX(),rectangle.getPositionY(),name);
+        this(rectangle.getPositionX(),rectangle.getPositionY(),name);
         if(rectangle.getHeight() <= 0 || rectangle.getWidth() <=0 || bitmap == null)throw new InvalidDataException(name,rectangle);
 
         rectangle.scaleRectangleToScreen();
         rectangle.bitmapRectangleBuilder(bitmap,color,p);
+        this.bitmap = bitmap;
     }
 
+    /**
+     * NE PAS UTLISER CETTE FONCTION EST RESERVER AU FONCTIONNEMENT DU MOTEUR GRAPHIQUE
+     * SI VOUS EN AVEZ BESOIN ENTRE EN CONTACT AVEC MARC POUR AJOUTER AU MOTEUR LA FONCTIONNALITER QUE VOUS AVEZ BESOIN
+     * @param c canevas sur le quel dessiner
+     * @param p pinceau
+     */
     public void drawOn(Canvas c, Paint p)
     {
         //drawings
@@ -177,6 +172,11 @@ public class Drawable {
         return name;
     }
 
+    /**
+     * retourne vrai si l'objet passer en argument est un drawble qui a le meme nom
+     * @param o l'objet passer en argument
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if(o instanceof Drawable)
@@ -186,6 +186,13 @@ public class Drawable {
         return false;
     }
 
+    /**
+     * permet de changer les coordonnés sur l'ecran de l'objet
+     * TOUT LES OBJET SONT DESSINER DEPUIS LE COIN HAUT GAUCHE LES COODONNE DESIGNE DONC CE COIN
+     * ET NON PAS LE CENTRE DE LA CARTE
+     * @param x
+     * @param y
+     */
     public void setCoordinates(float x, float y) {
         this.x=x;
         this.y=y;
@@ -204,6 +211,12 @@ public class Drawable {
      */
     public void onDeletion(Renderer r){}
 
+    /**
+     * coupe le texte a une certaine longeur
+     * @param charPerLines nombre de caractére par lignes
+     * @param text texte a afficher
+     * @return liste de lignes de texte
+     */
     private List<String> cutText(int charPerLines,String text)
     {
         List<String> output = new ArrayList<>();

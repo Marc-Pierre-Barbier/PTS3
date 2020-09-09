@@ -2,40 +2,35 @@ package com.iutlaval.myapplication.Game;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Player.Player;
-import com.iutlaval.myapplication.Game.Player.PlayerBot;
-import com.iutlaval.myapplication.Game.Player.PlayerOnlineAdversary;
 import com.iutlaval.myapplication.Game.Player.PlayerLocal;
-import com.iutlaval.myapplication.GameActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
     private static final int MAX_CARD_ON_BOARD=10;
-    private List<Card> AdvCardsOnBoard;
-    private List<Card> PlayerCardsOnBoard;
-    private PlayerLocal player1;
-    private Player player2;
+    private List<Card> advCardsOnBoard;
+    private List<Card> playerCardsOnBoard;
 
     public Board()
     {
-        AdvCardsOnBoard = new ArrayList<>();
-        PlayerCardsOnBoard = new ArrayList<>();
-        player1 = new PlayerLocal();
+        advCardsOnBoard = new ArrayList<>();
+        playerCardsOnBoard = new ArrayList<>();
+    }
 
-        if(GameActivity.isMultiplayer())
+    /**
+     * joue une carte et l'ajoute au terrain du joueur correspondant
+     * @param card
+     * @param player
+     */
+    public void playCard(Card card,Player player)
+    {
+        if(player instanceof PlayerLocal)
         {
-            player2 = new PlayerOnlineAdversary();
+            playerCardsOnBoard.add(card);
         }else{
-            player2 = new PlayerBot();
+            advCardsOnBoard.add(card);
         }
-
-        //TODO fill decks
-        if(GameActivity.isHosting())
-        {
-
-        }else{
-
-        }
+        card.onCardPlayed(this,player);
     }
 }
