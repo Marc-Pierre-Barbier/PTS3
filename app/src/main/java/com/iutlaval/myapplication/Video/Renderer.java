@@ -10,6 +10,8 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import com.iutlaval.myapplication.Game.GameLogicThread;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder;
     private Paint p;
     private DrawingThread drawingThread;
+    private GameLogicThread engine;
 
 
     private List<Drawable> toDraw;
@@ -42,7 +45,14 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      */
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        drawingThread.start();
+        this.holder=holder;
+        if(drawingThread.getState() == Thread.State.TERMINATED)
+        {
+            drawingThread = new DrawingThread();
+        }
+        if(!drawingThread.isAlive()){
+            drawingThread.start();
+        }
     }
 
     /**
@@ -60,6 +70,8 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * on surface destruction stop the thread
+     * la surface ce fait detruire aussi quand le jeu est en pause
+     * TODO kill proprement le thread et ajouter une relance sur le GameActivity
      * @param surfaceHolder
      */
     @Override
@@ -96,6 +108,8 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
             while (keepDrawing) {
                 Canvas canvas = null;
 
+                long time = System.nanoTime();
+
                 try {
                     // On récupère le canvas pour dessiner dessus
                     canvas = holder.lockCanvas();
@@ -112,7 +126,8 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
 
                 //empecher d'aller plus vite que le taux de rafraichissement de l'ecran
                 //sauve de la baterie
-                FpsTime.waitFrameTime();
+                FpsTime.waitFrameTime(time);
+                if(engine != null && engine.isReady())engine.onFrameDoneRendering();
             }
         }
     }
@@ -187,5 +202,9 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         return drawable;
+    }
+
+    public void setEngine(GameLogicThread engine) {
+        this.engine = engine;
     }
 }

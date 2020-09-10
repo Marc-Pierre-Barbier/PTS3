@@ -16,8 +16,8 @@ public class DrawableCard extends Drawable{
 
     private static final int CARD_WITH = 14;
     private static final int CARD_HEIGHT = 32;
-    private static final float HP_ATK_FONT_SIZE_BIG_CARD =10F;
-    private static final float HP_ATK_FONT_SIZE_BOARD =20F;
+    private static final float HP_ATK_FONT_SIZE_BIG_CARD =50F;
+    private static final float HP_ATK_FONT_SIZE_BOARD =80F;
 
     private String color;
 
@@ -30,6 +30,10 @@ public class DrawableCard extends Drawable{
 
     private Drawable cardHpDrawable;
     private Drawable cardAtkDrawable;
+
+    //DEPENDANCE CIRCULAIRE NE PAS CHANGER DE GC NON Tracing
+    //https://www.baeldung.com/java-gc-cyclic-references
+    private Card card;
 
     /**
      * ce constructeur permet de crée un drawable simplifier pour les carte qui integre :
@@ -50,9 +54,11 @@ public class DrawableCard extends Drawable{
     public DrawableCard(Card c, float x, float y, String name, Context context){
         super(c.getFrameBitmap(context),x,y,name,CARD_WITH,CARD_HEIGHT);
 
-        onBoard=false;
+        card=c;
 
-        cardDescription = new Drawable(c.getDescription(),x+1F,y+CARD_HEIGHT/2,toString()+"description",CARD_WITH,CARD_HEIGHT/2,10F);
+        onBoard=true;
+
+        cardDescription = new Drawable(c.getDescription(),x+CARD_WITH*0.07F,y+CARD_HEIGHT/2.2F,toString()+"description",CARD_WITH*0.8F,CARD_HEIGHT*0.35F,30F);
         updateHpAndAtk(c.getAttack(),c.getHealth());
 
         color = c.getColor();//CARD_WITH+x
@@ -77,18 +83,18 @@ public class DrawableCard extends Drawable{
         cardOnBoardFrame.scaleRectangleToScreen();
 
         int offset = CARD_HEIGHT/2 - CARD_HEIGHT/8;
-        Rectangle cardOnBoardHp = new Rectangle(x,offset,CARD_WITH/2,CARD_HEIGHT/8);
-        cardOnBoardHp.scaleRectangleToScreen();
-        Rectangle cardOnBoardAtk = new Rectangle(CARD_WITH/2,offset,CARD_WITH/2,CARD_HEIGHT/8);
+        Rectangle cardOnBoardAtk = new Rectangle(x,offset,CARD_WITH/2,CARD_HEIGHT/8);
         cardOnBoardAtk.scaleRectangleToScreen();
+        Rectangle cardOnBoardHp = new Rectangle(CARD_WITH/2,offset,CARD_WITH/2,CARD_HEIGHT/8);
+        cardOnBoardHp.scaleRectangleToScreen();
 
         //creation de la bitmap qui va être rendu
         Bitmap cardOnBoardBitmap= Bitmap.createBitmap((int)cardOnBoardFrame.getWidth(),(int)cardOnBoardFrame.getHeight(), Bitmap.Config.ARGB_8888);
 
         //on dessine nos rectangle sur la bitmap
         cardOnBoardFrame.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor(removeAlpha(c.getColor())));
-        cardOnBoardHp.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FF00FF00"));
         cardOnBoardAtk.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FFFF0000"));
+        cardOnBoardHp.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FF00FF00"));
 
         cardOnBardDrawable = new Drawable(cardOnBoardBitmap,x,y,toString()+"BOARD",CARD_WITH,CARD_HEIGHT*2/3);
 
@@ -110,9 +116,9 @@ public class DrawableCard extends Drawable{
                 cardHpDrawable = new Drawable(hp + "    ", getX() + 2.4F + CARD_WITH / 2, getY() + CARD_HEIGHT/2, toString() + "hp", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BOARD);
         }else{
             if (atk != null)
-                cardAtkDrawable = new Drawable(atk + "    ", getX() + 0.6F, getY() + CARD_HEIGHT - 5F, toString() + "atk", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
+                cardAtkDrawable = new Drawable(atk + "    ", getX() + 1F, getY() +CARD_HEIGHT-6F, toString() + "atk", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
             if (hp != null)
-                cardHpDrawable = new Drawable(hp + "    ", getX() + 2.4F + CARD_WITH / 2, getY() + CARD_HEIGHT - 5F, toString() + "hp", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
+                cardHpDrawable = new Drawable(hp + "    ", getX() + 2.8F + CARD_WITH / 2, getY() + CARD_HEIGHT - 6F, toString() + "hp", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
         }
     }
 
@@ -166,9 +172,9 @@ public class DrawableCard extends Drawable{
             super.setCoordinates(x, y);
             OpacityRectangleDrawable.setCoordinates(x, y);
             PictureDrawable.setCoordinates(x + 1.1F, y + 2.5F);
-            cardDescription.setCoordinates(x+CARD_WITH*0.1F,y+CARD_HEIGHT/2);
-            cardAtkDrawable.setCoordinates(x + 0.6F,y+CARD_HEIGHT-5F);
-            cardHpDrawable.setCoordinates(x+ 2.4F+CARD_WITH/2,y+CARD_HEIGHT-5F);
+            cardDescription.setCoordinates(x+CARD_WITH*0.07F,y+CARD_HEIGHT/2.2F);
+            cardAtkDrawable.setCoordinates(x + 1F,y+CARD_HEIGHT-6F);
+            cardHpDrawable.setCoordinates(x+ 3F+CARD_WITH/2,y+CARD_HEIGHT-6F);
         }
     }
 
@@ -181,5 +187,6 @@ public class DrawableCard extends Drawable{
         this.onBoard = onBoard;
         //force recalculate coodinates
         setCoordinates(getX(), getY());
+        updateHpAndAtk(card.getAttack(),card.getHealth());
     }
 }

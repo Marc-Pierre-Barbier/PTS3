@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.util.Log;
 
 import com.iutlaval.myapplication.Game.Board;
 import com.iutlaval.myapplication.Game.Player.Player;

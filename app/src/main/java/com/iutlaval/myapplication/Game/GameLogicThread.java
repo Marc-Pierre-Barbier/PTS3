@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.util.Log;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.DemoCard;
@@ -18,28 +17,33 @@ import com.iutlaval.myapplication.Video.Renderer;
 
 public class GameLogicThread extends Thread{
 
-    Context cont;
-    Renderer renderer;
+    private Context cont;
+    private Renderer renderer;
+    private boolean ready;
 
     public GameLogicThread(Context cont, Renderer renderer)
     {
+        ready=false;
         this.cont = cont;
         this.renderer = renderer;
+        renderer.setEngine(this);
     }
+
+    private float i=0;
+    private float increm = 1F;
+
 
     @Override
     public void run() {
-
-        Bitmap bm = BitmapFactory.decodeResource(cont.getResources(), R.drawable.debug_card);
 
         try {
             renderer.addToDraw(new Drawable(new Rectangle(0,0,100,100),"background", Color.BLUE));
             //renderer.addToDraw(new Drawable(bm,0.0F,0.0F,"running",8F,16F));
             //renderer.addToDraw(new DrawableCard(new DemoCard(),0.0F,0.0F,"card2",cont));
             Card card2 = new DemoCard("card3",cont);
-            if(!renderer.addToDraw(card2.getDrawableCard())) Log.e("F","WTF");
+            renderer.addToDraw(card2.getDrawableCard());
             Card card1 = new DemoCard("card1",cont);
-            if(!renderer.addToDraw(card1.getDrawableCard())) Log.e("F","WTF");
+            renderer.addToDraw(card1.getDrawableCard());
         } catch (InvalidDataException e) {
             //cette erreur est lance si un carre est invalid
             System.err.println(e.getDetail());
@@ -47,25 +51,37 @@ public class GameLogicThread extends Thread{
         }
 
 
-        int i=0;
-        int increm = 1;
+        ready=true;
         while(true)
         {
-             if(i < 100)
-            {
-                i+=increm;
-            }else{
-                increm=-increm;
-                i+=increm;
-             }
-            if(i==0)increm=-increm;
-
-            //TODO get x,y coordinate form name
-            //r.moveToDraw(i,i,"card2");
-            renderer.moveToDraw(1,1,"card3");
+            //Do Stuff
             renderer.moveToDraw(20,1,"card1");
-            FpsTime.waitFrameTime();
+            break;
         }
+    }
+
+    public void onFrameDoneRendering()
+    {
+        if(i < 100)
+        {
+            i+=increm;
+            //((DrawableCard)renderer.getDrawAble("card3")).setOnBoard(increm <= 0);
+        }else{
+            increm=-increm;
+            i+=increm;
+            //((DrawableCard)renderer.getDrawAble("card3")).setOnBoard(increm > 0);
+        }
+        if(i==0)increm=-increm;
+
+        ((DrawableCard)renderer.getDrawAble("card3")).setOnBoard(false);
+        //TODO get x,y coordinate form name
+        //r.moveToDraw(i,i,"card2");
+        //renderer.moveToDraw(i,i,"card3");
+
+    }
+
+    public boolean isReady() {
+        return ready;
     }
 
     //placeOnBoard()

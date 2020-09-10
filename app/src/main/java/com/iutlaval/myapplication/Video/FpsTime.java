@@ -18,6 +18,14 @@ public class FpsTime {
     /**
      * atten exactement la durée d'une image a l'ecran a la vitesse optimal de l'ecran
      */
+    public static void waitFrameTime(long time){
+        time = (System.nanoTime()-time)/1000;
+        if(time >= frametime)return;
+        try {
+            Thread.sleep((frametime-time));
+        } catch (InterruptedException e) {}
+    }
+
     public static void waitFrameTime(){
         try {
             Thread.sleep((frametime));

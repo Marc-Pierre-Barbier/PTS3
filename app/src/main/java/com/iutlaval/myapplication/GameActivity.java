@@ -3,6 +3,7 @@ package com.iutlaval.myapplication;
 //N'oubliez pas de déclarer le bon package dans lequel se trouve le fichier !
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +34,9 @@ public class GameActivity extends Activity {
         return false;//TODO implement it
     }
 
+    Renderer renderer;
+    GameLogicThread t;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +59,10 @@ public class GameActivity extends Activity {
             screenHeight = size.y;
         }
 
-        Thread t = new GameLogicThread(this,renderer);
+        t = new GameLogicThread(this,renderer);
         t.start();
 
         setContentView(renderer);
     }
-
 }
 
