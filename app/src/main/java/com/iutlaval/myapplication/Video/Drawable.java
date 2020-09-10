@@ -83,64 +83,18 @@ public class Drawable {
 
         List<String> linesOfText = cutText(20,text);
         p.setTextSize(textSize);
-        /*float size = 0;
-        for(String str : linesOfText)
-        {
-            float i;
-            if((i = getTextSizeForWidth(p,x_scaled_size,y_scaled_size,str)) > size)
-            {
-                size = i;
-            }
-        }
-        p.setTextSize(size);*/
 
         //+10 permet d'e prendre en compte les p,q,j qui dessende plus bas que les autres
         bitmap = Bitmap.createBitmap(x_scaled_size, y_scaled_size+10, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
 
-        /*List<String> linesOfText = cutText(20,text);
-
-        bitmap = Bitmap.createBitmap((int)(textSize * 9), (int) 40*linesOfText.size(), Bitmap.Config.ARGB_8888);
-
-        checkPaint();
-        p.setTextSize(textSize);
-        p.setColor(Color.BLACK);
-
-        Canvas c = new Canvas(bitmap);
-*/
         int index = 1;
         for(String line : linesOfText)
         {
             c.drawText(line ,0,index*y_scaled_size/linesOfText.size(),p);
             index++;
         }
-/*
-        float x_scaled_size = x_size* GameActivity.screenWidth/100;
-        float y_scaled_size = y_size* GameActivity.screenHeight/100;
-        bitmap = Bitmap.createScaledBitmap(bitmap, (int)x_scaled_size, (int)y_scaled_size, GameActivity.bilinearFiltering);*/
-    }
 
-    private String arrangeText(int charPerLines, String text) {
-        //TODO cut text in lines
-        StringBuilder nextLine = new StringBuilder(text);
-        int index = 0;
-        int size=0;
-        for (String word : text.split(" ")) {
-            if(word.length() < charPerLines)
-            {
-                if(word.length() + size +1 < charPerLines)
-                {
-                    index +=word.length();
-                    size += word.length();
-                }else{
-                    size=0;
-                    nextLine.insert(index++,'\n');
-                }
-            }else{
-                Log.e("TextRender","ERROR WORD TOO LONG :" + word);
-            }
-        }
-        return nextLine.toString();
     }
 
 
@@ -286,39 +240,5 @@ public class Drawable {
             output.add(nextLine.toString());
         }
         return output;
-    }
-
-    private void fillWithSpace(StringBuilder nextLine, int charPerLines) {
-        for(int i=0 ; i < charPerLines-nextLine.length();i++)
-        {
-            nextLine.append(' ');
-        }
-    }
-
-    /**
-     * https://stackoverflow.com/questions/12166476/android-canvas-drawtext-set-font-size-from-width
-     * @param paint
-     * @param desiredWidth
-     * @param text
-     */
-    private static float getTextSizeForWidth(Paint paint, float desiredWidth,
-                                            String text) {
-
-        // Pick a reasonably large value for the test. Larger values produce
-        // more accurate results, but may cause problems with hardware
-        // acceleration. But there are workarounds for that, too; refer to
-        // http://stackoverflow.com/questions/6253528/font-size-too-large-to-fit-in-cache
-        final float testTextSize = 48f;
-
-        // Get the bounds of the text, using our testTextSize.
-        paint.setTextSize(testTextSize);
-        Rect bounds = new Rect();
-        paint.getTextBounds(text, 0, text.length(), bounds);
-
-        // Calculate the desired size as a proportion of our testTextSize.
-        float desiredTextWidth = testTextSize * desiredWidth / bounds.width();
-
-        // Set the paint for that size.
-        return desiredTextWidth;
     }
 }
