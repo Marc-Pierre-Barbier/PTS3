@@ -1,10 +1,26 @@
 package com.iutlaval.myapplication.Game.Cards;
 
+import android.content.Context;
 import android.graphics.Color;
 
 import com.iutlaval.myapplication.R;
 
 public class DemoCard extends Card{
+
+    public DemoCard()
+    {
+        super();
+    }
+
+    /**
+     * cree une carte est lui definit un drawable
+     *
+     * @param UID
+     * @param c
+     */
+    public DemoCard(String UID, Context c) {
+        super(UID, c);
+    }
 
     @Override
     public int getCardPicture() {
@@ -15,7 +31,7 @@ public class DemoCard extends Card{
     //#AARRGGBB
     @Override
     public String getColor() {
-        return "#70000000";
+        return "#00000000";
     }
 
     @Override

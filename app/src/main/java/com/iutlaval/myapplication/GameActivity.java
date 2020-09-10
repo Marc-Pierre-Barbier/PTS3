@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Display;
 
 import com.iutlaval.myapplication.Game.Cards.DemoCard;
+import com.iutlaval.myapplication.Game.GameLogicThread;
 import com.iutlaval.myapplication.Video.Drawable;
 import com.iutlaval.myapplication.Video.DrawableCard;
 import com.iutlaval.myapplication.Video.FpsTime;
@@ -40,7 +41,7 @@ public class GameActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         FpsTime.init(display);
 
-        Renderer v = new Renderer(getBaseContext());
+        Renderer renderer = new Renderer(getBaseContext());
 
         //return portrait mode resolution so we need to flip them
         Point size = new Point();
@@ -54,56 +55,10 @@ public class GameActivity extends Activity {
             screenHeight = size.y;
         }
 
-
-        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.debug_card);
-
-        try {
-            v.addToDraw(new Drawable(new Rectangle(0,0,100,100),"background",Color.BLUE));
-            v.addToDraw(new Drawable(bm,0.0F,0.0F,"running",8F,16F));
-            v.addToDraw(new DrawableCard(new DemoCard(),0.0F,0.0F,"card2",this));
-        } catch (InvalidDataException e) {
-            //cette erreur est lance si un carre est invalid
-            System.err.println(e.getDetail());
-            e.printStackTrace();
-        }
-
-        Thread t = new MainThread(v);
+        Thread t = new GameLogicThread(this,renderer);
         t.start();
 
-        setContentView(v);
-    }
-
-    //TODO a supprime quand le moteur de jeu pour être utliser a des fin de teste
-    private class MainThread extends Thread
-    {
-        Renderer view;
-        public MainThread(Renderer view)
-        {
-            super();
-            this.view=view;
-        }
-
-        @Override
-        public void run() {
-            int i=0;
-            int increm = 1;
-            while(true)
-            {
-                if(i < 100)
-                {
-                    i+=increm;
-                }else{
-                    increm=-increm;
-                    i+=increm;
-                }
-                if(i==0)increm=-increm;
-
-                //TODO get x,y coordinate form name
-                view.moveToDraw(i,i,"card2");
-                //view.moveToDraw(1,1,"card2");
-                FpsTime.waitFrameTime();
-            }
-        }
+        setContentView(renderer);
     }
 
 }

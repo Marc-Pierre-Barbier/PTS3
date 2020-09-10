@@ -76,7 +76,8 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      */
     @Override
     protected void onDraw(Canvas canvas) {
-        for(Drawable d : toDraw)
+        //le to Array patch les crash
+        for(Drawable d : toDraw.toArray(new Drawable[0]))
         {
             d.drawOn(canvas,p);
         }
@@ -121,6 +122,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      * @return retourne faux si l'element existe deja
      */
     public boolean addToDraw(Drawable newElement){
+        if(newElement == null)return false;
         for(Drawable d : toDraw)
         {
             if(d.equals(newElement))

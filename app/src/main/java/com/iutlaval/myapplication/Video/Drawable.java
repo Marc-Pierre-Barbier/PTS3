@@ -2,6 +2,7 @@ package com.iutlaval.myapplication.Video;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
@@ -85,6 +86,7 @@ public class Drawable {
 
         checkPaint();
         p.setTextSize(textSize*2);
+        p.setColor(Color.BLACK);
 
         Canvas c = new Canvas(bitmap);
 
@@ -118,7 +120,7 @@ public class Drawable {
 
         rectangle.scaleRectangleToScreen();
         Bitmap bitmap = Bitmap.createBitmap((int)rectangle.getWidth(),(int)rectangle.getHeight(), Bitmap.Config.ARGB_8888);
-        rectangle.bitmapRectangleBuilder(bitmap,color,p);
+        rectangle.bitmapRectangleBuilder(bitmap,color);
 
         this.bitmap=bitmap;
     }
@@ -140,7 +142,7 @@ public class Drawable {
         if(rectangle.getHeight() <= 0 || rectangle.getWidth() <=0 || bitmap == null)throw new InvalidDataException(name,rectangle);
 
         rectangle.scaleRectangleToScreen();
-        rectangle.bitmapRectangleBuilder(bitmap,color,p);
+        rectangle.bitmapRectangleBuilder(bitmap,color);
         this.bitmap = bitmap;
     }
 

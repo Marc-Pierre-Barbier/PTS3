@@ -9,9 +9,27 @@ import android.util.Log;
 import com.iutlaval.myapplication.Game.Board;
 import com.iutlaval.myapplication.Game.Player.Player;
 import com.iutlaval.myapplication.R;
+import com.iutlaval.myapplication.Video.DrawableCard;
 
 public abstract class Card {
     private static Bitmap frameBitmap = null;
+    private DrawableCard drawableCard = null;
+
+
+
+    public Card()
+    {
+
+    }
+    /**
+     * cree une carte est lui definit un drawable
+     * @param UID
+     * @param c
+     */
+    public Card(String UID,Context c)
+    {
+        drawableCard = new DrawableCard(this,0,0,UID,c);
+    }
 
     /**
      * *cette methode est appeler a chaque fois que la carte attaque
@@ -111,5 +129,22 @@ public abstract class Card {
      * @return
      */
     public abstract int getHealth();
+
+    /**
+     * NE PAS TOUCHER CETTE FONCTION SI VOUS N'ÊTES PAS SUR DE CE QUE VOUS FAITES
+     * cette fonction permet de redefinir le drawable de la carte
+     * @param drawableCard
+     */
+    public void setDrawableCard(DrawableCard drawableCard) {
+        this.drawableCard = drawableCard;
+    }
+
+    /**
+     * NE PAS OVERRIDE CETTE FONCTION
+     * @return
+     */
+    public DrawableCard getDrawableCard() {
+        return drawableCard;
+    }
 }
 

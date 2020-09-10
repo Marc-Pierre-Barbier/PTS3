@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import com.iutlaval.myapplication.GameActivity;
 
 public class Rectangle {
-
+    public static Paint p;
     float positionX,positionY,width,height;
 
     /**
@@ -72,9 +72,8 @@ public class Rectangle {
      * retourne la bitmap entre mais avec un rectangle dessiner dedans
      * @param bitmap la bitmap sur la quelle dessiner
      * @param color la couleur du carre
-     * @param p le pinceau utiliser pour le canevas
      */
-    public void bitmapRectangleBuilder(Bitmap bitmap, int color,Paint p)
+    public void bitmapRectangleBuilder(Bitmap bitmap, int color)
     {
         RectangleCanevas c = new RectangleCanevas(bitmap);
         if(p==null)p = new Paint();
