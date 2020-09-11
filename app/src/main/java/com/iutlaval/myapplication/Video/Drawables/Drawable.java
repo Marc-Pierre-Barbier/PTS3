@@ -1,10 +1,9 @@
-package com.iutlaval.myapplication.Video;
+package com.iutlaval.myapplication.Video.Drawables;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,6 +11,8 @@ import androidx.annotation.NonNull;
 import com.iutlaval.myapplication.ERROR_CODE;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.InvalidDataException;
+import com.iutlaval.myapplication.Video.Rectangle;
+import com.iutlaval.myapplication.Video.Renderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Drawable {
     private float x,y;
     private String name;
     private Bitmap bitmap;
-    private static Paint p;
+    protected static Paint p;
 
     /**
      * cree un drawable a partir de coordonné est d'un nom
@@ -198,7 +199,7 @@ public class Drawable {
     /**
      * cette fonction permet d'initialiser le pinceau
      */
-    private void checkPaint() {
+    protected void checkPaint() {
         if(p==null)
             p = new Paint();
     }
@@ -214,7 +215,7 @@ public class Drawable {
      * @param text texte a afficher
      * @return liste de lignes de texte
      */
-    private List<String> cutText(int charPerLines,String text)
+    protected List<String> cutText(int charPerLines,String text)
     {
         List<String> output = new ArrayList<>();
         //TODO cut text in lines

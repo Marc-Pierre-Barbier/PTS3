@@ -59,7 +59,7 @@ public class Rectangle {
      * /!\ ne pas le lancer plus d'une fois sinon les mesures devienderons n'importequoi /!\
      * /!\ toutes les dimention du rectangle doivent être comprise entre 0 et 100 sinon elle sortiron de l'ecran/!\
      */
-    protected void scaleRectangleToScreen()
+    public void scaleRectangleToScreen()
     {
         set(getPositionX()* GameActivity.screenWidth/100,
                 getPositionY()*GameActivity.screenHeight/100,

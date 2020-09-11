@@ -3,12 +3,11 @@ package com.iutlaval.myapplication.Game.Cards;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 
 import com.iutlaval.myapplication.Game.Board;
 import com.iutlaval.myapplication.Game.Player.Player;
 import com.iutlaval.myapplication.R;
-import com.iutlaval.myapplication.Video.DrawableCard;
+import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 
 public abstract class Card {
     private static Bitmap frameBitmap = null;

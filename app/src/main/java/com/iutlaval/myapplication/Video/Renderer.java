@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 
 import com.iutlaval.myapplication.Game.GameLogicThread;
+import com.iutlaval.myapplication.Video.Drawables.Drawable;
 
 import java.util.ArrayList;
 import java.util.List;

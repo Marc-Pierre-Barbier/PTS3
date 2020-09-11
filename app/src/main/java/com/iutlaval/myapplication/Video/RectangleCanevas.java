@@ -20,4 +20,6 @@ public class RectangleCanevas extends Canvas {
                 r.getPositionY()+r.getHeight(),
                 paint);
     }
+
+    
 }
