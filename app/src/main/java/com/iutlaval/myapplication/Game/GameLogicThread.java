@@ -36,19 +36,16 @@ public class GameLogicThread extends Thread{
     @Override
     public void run() {
 
-        try {
-            renderer.addToDraw(new Drawable(new Rectangle(0,0,100,100),"background", Color.BLUE));
-            //renderer.addToDraw(new Drawable(bm,0.0F,0.0F,"running",8F,16F));
-            //renderer.addToDraw(new DrawableCard(new DemoCard(),0.0F,0.0F,"card2",cont));
-            Card card2 = new DemoCard("card3",cont);
-            renderer.addToDraw(card2.getDrawableCard());
-            Card card1 = new DemoCard("card1",cont);
-            renderer.addToDraw(card1.getDrawableCard());
-        } catch (InvalidDataException e) {
-            //cette erreur est lance si un carre est invalid
-            System.err.println(e.getDetail());
-            e.printStackTrace();
-        }
+        //renderer.addToDraw(new Drawable(new Rectangle(0,0,100,100),"background", Color.BLUE));
+        Bitmap bitmap=BitmapFactory.decodeResource(cont.getResources(), R.drawable.background);
+        renderer.addToDraw(new Drawable(bitmap, 0,0, "background", 100, 100 ));
+        //renderer.addToDraw(new Drawable(bm,0.0F,0.0F,"running",8F,16F));
+        //renderer.addToDraw(new DrawableCard(new DemoCard(),0.0F,0.0F,"card2",cont));
+        Card card2 = new DemoCard("card3",cont);
+        renderer.addToDraw(card2.getDrawableCard());
+        Card card1 = new DemoCard("card1",cont);
+        renderer.addToDraw(card1.getDrawableCard());
+
 
 
         ready=true;
