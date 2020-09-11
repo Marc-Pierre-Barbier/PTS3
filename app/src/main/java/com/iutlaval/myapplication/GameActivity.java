@@ -3,21 +3,13 @@ package com.iutlaval.myapplication;
 //N'oubliez pas de déclarer le bon package dans lequel se trouve le fichier !
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 
-import com.iutlaval.myapplication.Game.Cards.DemoCard;
 import com.iutlaval.myapplication.Game.GameLogicThread;
-import com.iutlaval.myapplication.Video.Drawable;
-import com.iutlaval.myapplication.Video.DrawableCard;
 import com.iutlaval.myapplication.Video.FpsTime;
-import com.iutlaval.myapplication.Video.Rectangle;
 import com.iutlaval.myapplication.Video.Renderer;
 
 public class GameActivity extends Activity {
@@ -30,13 +22,6 @@ public class GameActivity extends Activity {
         return false;//TODO implement it
     }
 
-    public static boolean isHosting() {
-        return false;//TODO implement it
-    }
-
-    Renderer renderer;
-    GameLogicThread t;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +32,13 @@ public class GameActivity extends Activity {
 
         Renderer renderer = new Renderer(getBaseContext());
 
-        //return portrait mode resolution so we need to flip them
+        //nous donne la resolution
         Point size = new Point();
         display.getSize(size);
+
+        //vu que l'on verouille en mode portrait en veut juste la resolution en 16:9 et non en 9:16
+        //donc on prend celui le plus large
+        //en cas de la de la machine les  peuvent s'inverser d'ou l'interet du test
         if(size.y > size.x)
         {
             screenWidth = size.y;
@@ -59,8 +48,8 @@ public class GameActivity extends Activity {
             screenHeight = size.y;
         }
 
-        t = new GameLogicThread(this,renderer);
-        t.start();
+        GameLogicThread gameEngine = new GameLogicThread(this,renderer);
+        gameEngine.start();
 
         setContentView(renderer);
     }

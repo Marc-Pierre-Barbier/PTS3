@@ -25,10 +25,4 @@ public class FpsTime {
             Thread.sleep((frametime-time));
         } catch (InterruptedException e) {}
     }
-
-    public static void waitFrameTime(){
-        try {
-            Thread.sleep((frametime));
-        } catch (InterruptedException e) {}
-    }
 }
