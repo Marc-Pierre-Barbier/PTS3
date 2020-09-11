@@ -17,8 +17,8 @@ public class DrawableCard extends Drawable{
 
     private static final int CARD_WITH = 14;
     private static final int CARD_HEIGHT = 32;
-    private static final float HP_ATK_FONT_SIZE_BIG_CARD =50F;
-    private static final float HP_ATK_FONT_SIZE_BOARD =80F;
+    private static final float HP_ATK_FONT_SIZE_BIG_CARD =30F;
+    private static final float HP_ATK_FONT_SIZE_BOARD =70F;
 
     private String color;
 
@@ -59,11 +59,12 @@ public class DrawableCard extends Drawable{
 
         onBoard=true;
 
-        cardDescription = new Drawable(c.getDescription(),x+CARD_WITH*0.07F,y+CARD_HEIGHT/2.2F,toString()+"description",CARD_WITH*0.8F,CARD_HEIGHT*0.35F,30F);
+        cardDescription = new DrawableCardDescription(c.getDescription(),x+CARD_WITH*0.07F,y+CARD_HEIGHT/2.2F,toString()+"description",CARD_WITH*0.8F,CARD_HEIGHT*0.35F,30F);
         updateHpAndAtk(c.getAttack(),c.getHealth());
 
         color = c.getColor();//CARD_WITH+x
         Rectangle cardRect = new Rectangle(x,y,(float)(CARD_WITH+x),(float)(CARD_HEIGHT+x));
+
         Bitmap pictureBitmap = BitmapFactory.decodeResource(context.getResources(),c.getCardPicture());
 
         try {
@@ -112,14 +113,14 @@ public class DrawableCard extends Drawable{
     {
         if(onBoard) {
             if (atk != null)
-                cardAtkDrawable = new Drawable(atk + "    ", getX() + 0.6F, getY() + CARD_HEIGHT/2, toString() + "atk", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BOARD);
+                cardAtkDrawable = new DrawableHpAtk(atk+"", getX() + CARD_WITH*0.05F, getY() - CARD_HEIGHT*0.48F, toString() + "atk", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BOARD);
             if (hp != null)
-                cardHpDrawable = new Drawable(hp + "    ", getX() + 2.4F + CARD_WITH / 2, getY() + CARD_HEIGHT/2, toString() + "hp", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BOARD);
+                cardHpDrawable = new DrawableHpAtk(hp+"", getX() + CARD_WITH*0.55F, getY() + CARD_HEIGHT*0.48F, toString() + "hp", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BOARD);
         }else{
             if (atk != null)
-                cardAtkDrawable = new Drawable(atk + "    ", getX() + 1F, getY() +CARD_HEIGHT-6F, toString() + "atk", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
+                cardAtkDrawable = new DrawableHpAtk(atk + "    ", getX() + CARD_WITH*0.1F, getY() +CARD_HEIGHT-8F, toString() + "atk", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
             if (hp != null)
-                cardHpDrawable = new Drawable(hp + "    ", getX() + 2.8F + CARD_WITH / 2, getY() + CARD_HEIGHT - 6F, toString() + "hp", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
+                cardHpDrawable = new DrawableHpAtk(hp + "    ", getX() + CARD_WITH *0.7F, getY() + CARD_HEIGHT - 8F, toString() + "hp", CARD_WITH / 2, CARD_HEIGHT / 8, HP_ATK_FONT_SIZE_BIG_CARD);
         }
     }
 
@@ -167,15 +168,15 @@ public class DrawableCard extends Drawable{
         if (onBoard) {
             cardOnBardDrawable.setCoordinates(x,y);
             PictureDrawable.setCoordinates(x +1, y +2);
-            cardAtkDrawable.setCoordinates(x+1F,y + CARD_HEIGHT/2 );
-            cardHpDrawable.setCoordinates(x+1F+CARD_WITH/2,y + CARD_HEIGHT/2 );
+            cardAtkDrawable.setCoordinates(x+CARD_WITH*0.05F,y + CARD_HEIGHT*0.48F );
+            cardHpDrawable.setCoordinates(x+CARD_WITH*0.55F,y + CARD_HEIGHT*0.48F );
         }else{
             super.setCoordinates(x, y);
             OpacityRectangleDrawable.setCoordinates(x, y);
             PictureDrawable.setCoordinates(x + 1.1F, y + 2.5F);
             cardDescription.setCoordinates(x+CARD_WITH*0.07F,y+CARD_HEIGHT/2.2F);
-            cardAtkDrawable.setCoordinates(x + 1F,y+CARD_HEIGHT-6F);
-            cardHpDrawable.setCoordinates(x+ 3F+CARD_WITH/2,y+CARD_HEIGHT-6F);
+            cardAtkDrawable.setCoordinates(x + CARD_WITH*0.1F,getY() + CARD_HEIGHT - 7F);
+            cardHpDrawable.setCoordinates(x + CARD_WITH*0.7F,getY() + CARD_HEIGHT - 8F);
         }
     }
 

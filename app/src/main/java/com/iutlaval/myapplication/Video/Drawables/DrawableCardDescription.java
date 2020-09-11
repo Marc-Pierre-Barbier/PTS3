@@ -36,7 +36,7 @@ public class DrawableCardDescription extends Drawable {
         int index = 1;
         for(String line : linesOfText)
         {
-            c.drawText(line ,0,index*y_scaled_size/linesOfText.size(),p);
+            c.drawText(line ,0,index*TEXT_Y_RES/linesOfText.size(),p);
             index++;
         }
 

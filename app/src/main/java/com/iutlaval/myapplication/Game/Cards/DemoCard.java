@@ -24,7 +24,7 @@ public class DemoCard extends Card{
 
     @Override
     public int getCardPicture() {
-        return R.drawable.guerrier_nul;
+        return R.drawable.elfe_fournisseur;
     }
 
 
