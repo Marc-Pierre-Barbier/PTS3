@@ -1,17 +1,13 @@
 package com.iutlaval.myapplication.Game;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.DemoCard;
 import com.iutlaval.myapplication.InvalidDataException;
-import com.iutlaval.myapplication.R;
-import com.iutlaval.myapplication.Video.Drawable;
-import com.iutlaval.myapplication.Video.DrawableCard;
-import com.iutlaval.myapplication.Video.FpsTime;
+import com.iutlaval.myapplication.Video.Drawables.Drawable;
+import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Rectangle;
 import com.iutlaval.myapplication.Video.Renderer;
 
