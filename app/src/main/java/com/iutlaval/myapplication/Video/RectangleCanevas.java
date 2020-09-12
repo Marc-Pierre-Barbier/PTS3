@@ -13,6 +13,11 @@ public class RectangleCanevas extends Canvas {
         super(bitmap);
     }
 
+    /**
+     * dessine un rectangle sur le canevas
+     * @param r le rectangle a dessiner
+     * @param paint le pinceau a utiliser
+     */
     public void drawRect(@NonNull Rectangle r, @NonNull Paint paint) {
         super.drawRect(r.getPositionX(),
                 r.getPositionY(),
@@ -21,5 +26,5 @@ public class RectangleCanevas extends Canvas {
                 paint);
     }
 
-    
+
 }

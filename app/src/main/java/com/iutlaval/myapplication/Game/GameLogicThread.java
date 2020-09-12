@@ -1,14 +1,14 @@
 package com.iutlaval.myapplication.Game;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.DemoCard;
-import com.iutlaval.myapplication.InvalidDataException;
+import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
-import com.iutlaval.myapplication.Video.Rectangle;
 import com.iutlaval.myapplication.Video.Renderer;
 
 public class GameLogicThread extends Thread{
@@ -33,7 +33,7 @@ public class GameLogicThread extends Thread{
     public void run() {
 
         //renderer.addToDraw(new Drawable(new Rectangle(0,0,100,100),"background", Color.BLUE));
-        Bitmap bitmap=BitmapFactory.decodeResource(cont.getResources(), R.drawable.background);
+        Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.background);
         renderer.addToDraw(new Drawable(bitmap, 0,0, "background", 100, 100 ));
         //renderer.addToDraw(new Drawable(bm,0.0F,0.0F,"running",8F,16F));
         //renderer.addToDraw(new DrawableCard(new DemoCard(),0.0F,0.0F,"card2",cont));
@@ -48,11 +48,19 @@ public class GameLogicThread extends Thread{
         while(true)
         {
             //Do Stuff
-            renderer.moveToDraw(20,1,"card1");
+            renderer.moveToDraw(20,20,"card1");
+            renderer.moveToDraw(40,20,"card3");
             break;
         }
     }
 
+    /**
+     * cette fonction est appeller a chaque fin de frame
+     * CETTE FONCTION A UN IMPACT DIRRECT SUR LES FPS ELLE SE DOIT D'être OPTIMAL
+     * TOUT CALCUL REDONDANT CE DOIT D'AVOIR ETE PRE FAIT
+     *
+     * TOUT APELLE DE CETTE FONCTION SE DOIT D'ÊTRE PROTEGER PAR isReady()
+     */
     public void onFrameDoneRendering()
     {
         if(i < 100)
@@ -73,6 +81,10 @@ public class GameLogicThread extends Thread{
 
     }
 
+    /**
+     * retourne vrai sir le moteur est pret a avoir sont evenemnt onFrameDoneRendering d'appeler
+     * @return
+     */
     public boolean isReady() {
         return ready;
     }

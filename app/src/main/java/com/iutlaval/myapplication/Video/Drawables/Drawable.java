@@ -94,19 +94,22 @@ public class Drawable {
             index++;
         }
 
+        int scalled_x_size = (int)(GameActivity.screenWidth*x_size/100);
+        int scalled_y_size = (int)(GameActivity.screenHeight*y_size/100);
+
+        bitmap = Bitmap.createScaledBitmap(bitmap,scalled_x_size,scalled_y_size,GameActivity.bilinearFiltering);
     }
 
 
     /**
      * ce constructeur n'est pas rapide essayer de l'utiliser le moin possible
-     * TODO : optimize it and remove the deprecated flag
+     * TODO : optimize it
      *
      * ce constructeur dessine un rectangle avec la texture donner en argument
      * @param rectangle recange cooresspondant a la surface a dessiner
      * @param name nom du drawable agit comme un identifiant mais doit être unique
      * @param color couleur du rectangle
      */
-    @Deprecated
     public Drawable(Rectangle rectangle, String name, int color) throws InvalidDataException {
         this(rectangle.getPositionX(),rectangle.getPositionY(),name);
         if(rectangle.getHeight() <= 0 || rectangle.getWidth() <=0)throw new InvalidDataException(name,rectangle);

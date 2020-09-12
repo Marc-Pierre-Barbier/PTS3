@@ -13,12 +13,6 @@ public abstract class Card {
     private static Bitmap frameBitmap = null;
     private DrawableCard drawableCard = null;
 
-
-
-    public Card()
-    {
-
-    }
     /**
      * cree une carte est lui definit un drawable
      * @param UID
@@ -144,5 +138,12 @@ public abstract class Card {
     public DrawableCard getDrawableCard() {
         return drawableCard;
     }
+
+    /**
+     * cette fonction retourne le nom de la carte qui sera afficher
+     * @return le nom
+     */
+    public abstract String getName();
+
 }
 

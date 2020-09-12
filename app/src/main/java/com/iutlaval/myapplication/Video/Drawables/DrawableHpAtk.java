@@ -1,12 +1,5 @@
 package com.iutlaval.myapplication.Video.Drawables;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-
-import com.iutlaval.myapplication.GameActivity;
-
-import java.util.List;
 
 public class DrawableHpAtk extends Drawable {
         private static int TEXT_X_RES = 110;
