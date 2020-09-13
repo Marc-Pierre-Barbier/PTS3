@@ -3,9 +3,12 @@ package com.iutlaval.myapplication.Game;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.MotionEvent;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.DemoCard;
+import com.iutlaval.myapplication.GameActivity;
+import com.iutlaval.myapplication.MainActivity;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
@@ -16,6 +19,7 @@ public class GameLogicThread extends Thread{
     private Context cont;
     private Renderer renderer;
     private boolean ready;
+    private TouchHandler touch;
 
     public GameLogicThread(Context cont, Renderer renderer)
     {
@@ -23,6 +27,7 @@ public class GameLogicThread extends Thread{
         this.cont = cont;
         this.renderer = renderer;
         renderer.setEngine(this);
+        touch = new TouchHandler(renderer);
     }
 
     private float i=0;
@@ -89,5 +94,12 @@ public class GameLogicThread extends Thread{
         return ready;
     }
 
-    //placeOnBoard()
+
+    /**
+     * relais l'evenement directement au touch Handler
+     * @param event
+     */
+    public void onTouchEvent(MotionEvent event) {
+        if(isReady())touch.onTouchEvent(event);
+    }
 }

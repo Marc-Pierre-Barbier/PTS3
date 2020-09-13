@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.iutlaval.myapplication.Game.GameLogicThread;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
+import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -206,5 +207,29 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
 
     public void setEngine(GameLogicThread engine) {
         this.engine = engine;
+    }
+
+    /**
+     * retourne une carte au coodonés donné
+     * @param x coordoné en x
+     * @param y coodoné en y
+     * @return
+     */
+    public DrawableCard getCardOn(float x, float y) {
+        for(Drawable d : toDraw)
+        {
+            if(d instanceof DrawableCard)
+            {
+                DrawableCard card = ((DrawableCard)d);
+                if(x >= card.getX() && x <= card.getX()+card.getCardWith())
+                {
+                    if(y >= card.getY() && y <= card.getY()+card.getCardHeight())
+                    {
+                        return card;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

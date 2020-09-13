@@ -218,4 +218,12 @@ public class DrawableCard extends Drawable{
         setCoordinates(getX(), getY());
         updateHpAndAtk(card.getAttack(),card.getHealth());
     }
+
+    public static int getCardWith() {
+        return CARD_WITH;
+    }
+
+    public static int getCardHeight() {
+        return CARD_HEIGHT;
+    }
 }
