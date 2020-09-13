@@ -182,7 +182,6 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      * @param toRemove the element toRemove
      */
     public void removeToDraw(Drawable toRemove){
-        toRemove.onDeletion(this);
         toDraw.remove(toRemove);
     }
 

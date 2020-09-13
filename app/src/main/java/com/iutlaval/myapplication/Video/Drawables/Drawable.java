@@ -206,11 +206,6 @@ public class Drawable {
     }
 
     /**
-     * cette fonction est appeler quand le drawable est retirer de la liste toDraw
-     */
-    public void onDeletion(Renderer r){}
-
-    /**
      * coupe le texte a une certaine longeur
      * @param charPerLines nombre de caractére par lignes
      * @param text texte a afficher
