@@ -41,8 +41,10 @@ public class DrawableCard extends Drawable{
     /**
      * ce constructeur permet de crée un drawable simplifier pour les carte qui integre :
      *  _le supoort de la description
+     *  _le support du titre
      *  _le changement d'etat entre grand et terrain
      *  _les point de vie
+     *  _les point attaque
      *  _l'image
      *  _les deplacement du tout
      *

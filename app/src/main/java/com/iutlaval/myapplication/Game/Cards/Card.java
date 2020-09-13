@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.iutlaval.myapplication.Game.Board;
-import com.iutlaval.myapplication.Game.Player.Player;
+import com.iutlaval.myapplication.Game.Players.Player;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 
@@ -56,12 +56,11 @@ public abstract class Card {
      */
     public Bitmap getFrameBitmap(Context c)
     {
-        //TODO add a frame
         if(frameBitmap == null) {
-            frameBitmap=BitmapFactory.decodeResource(c.getResources(), R.drawable.cadre_carte);
+            frameBitmap=BitmapFactory.decodeResource(c.getResources(), R.drawable.t_cc_defaut);
         }
 
-        if(getFrameTexture() == R.drawable.cadre_carte)
+        if(getFrameTexture() == R.drawable.t_cc_defaut)
         {
             return frameBitmap;
         }else{
@@ -79,7 +78,7 @@ public abstract class Card {
      */
     public int getFrameTexture()
     {
-        return R.drawable.cadre_carte;
+        return R.drawable.t_cc_defaut;
     }
 
 

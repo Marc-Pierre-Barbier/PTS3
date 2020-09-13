@@ -1,11 +1,10 @@
-package com.iutlaval.myapplication.Game.Player;
+package com.iutlaval.myapplication.Game.Players;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public abstract class Player {
     private static final int MAX_HAND_SIZE = 10;

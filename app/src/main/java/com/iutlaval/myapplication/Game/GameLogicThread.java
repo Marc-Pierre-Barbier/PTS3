@@ -33,7 +33,7 @@ public class GameLogicThread extends Thread{
     public void run() {
 
         //renderer.addToDraw(new Drawable(new Rectangle(0,0,100,100),"background", Color.BLUE));
-        Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.background);
+        Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
         renderer.addToDraw(new Drawable(bitmap, 0,0, "background", 100, 100 ));
         //renderer.addToDraw(new Drawable(bm,0.0F,0.0F,"running",8F,16F));
         //renderer.addToDraw(new DrawableCard(new DemoCard(),0.0F,0.0F,"card2",cont));
