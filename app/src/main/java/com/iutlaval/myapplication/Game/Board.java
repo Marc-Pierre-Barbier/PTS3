@@ -1,8 +1,8 @@
 package com.iutlaval.myapplication.Game;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
-import com.iutlaval.myapplication.Game.Player.Player;
-import com.iutlaval.myapplication.Game.Player.PlayerLocal;
+import com.iutlaval.myapplication.Game.Players.Player;
+import com.iutlaval.myapplication.Game.Players.PlayerLocal;
 
 import java.util.ArrayList;
 import java.util.List;

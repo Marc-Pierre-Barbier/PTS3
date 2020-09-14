@@ -7,12 +7,15 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.MotionEvent;
 
 import com.iutlaval.myapplication.Game.GameLogicThread;
 import com.iutlaval.myapplication.Video.FpsTime;
 import com.iutlaval.myapplication.Video.Renderer;
 
 public class GameActivity extends Activity {
+
+    private static GameLogicThread gameEngine;
 
     public static int screenWidth=0;
     public static int screenHeight=0;
@@ -21,6 +24,7 @@ public class GameActivity extends Activity {
     public static boolean isMultiplayer() {
         return false;//TODO implement it
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +52,24 @@ public class GameActivity extends Activity {
             screenHeight = size.y;
         }
 
-        GameLogicThread gameEngine = new GameLogicThread(this,renderer);
+        gameEngine = new GameLogicThread(this,renderer);
         gameEngine.start();
 
         setContentView(renderer);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(gameEngine != null)gameEngine.onTouchEvent(event);
+        System.out.println(event.getX());
+        return super.onTouchEvent(event);
+
+    }
+
+    @Override
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        System.out.println(event.getX());
+        return super.onGenericMotionEvent(event);
     }
 }
 

@@ -7,11 +7,6 @@ import com.iutlaval.myapplication.R;
 
 public class DemoCard extends Card{
 
-    public DemoCard()
-    {
-        super();
-    }
-
     /**
      * cree une carte est lui definit un drawable
      *
@@ -22,9 +17,10 @@ public class DemoCard extends Card{
         super(UID, c);
     }
 
+
     @Override
     public int getCardPicture() {
-        return R.drawable.guerrier_nul;
+        return R.drawable.t_cp_elfe_fournisseur;
     }
 
 
@@ -47,5 +43,10 @@ public class DemoCard extends Card{
     @Override
     public int getHealth() {
         return 10;
+    }
+
+    @Override
+    public String getName() {
+        return "DEMO";
     }
 }
