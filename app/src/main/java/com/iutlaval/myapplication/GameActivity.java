@@ -61,15 +61,8 @@ public class GameActivity extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(gameEngine != null)gameEngine.onTouchEvent(event);
-        System.out.println(event.getX());
         return super.onTouchEvent(event);
 
-    }
-
-    @Override
-    public boolean onGenericMotionEvent(MotionEvent event) {
-        System.out.println(event.getX());
-        return super.onGenericMotionEvent(event);
     }
 }
 

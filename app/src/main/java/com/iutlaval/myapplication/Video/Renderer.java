@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 
 import com.iutlaval.myapplication.Game.GameLogicThread;
+import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 
@@ -67,7 +68,9 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      */
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
+        //mise a jour de la valleur de la resolution car la premiere obtenus est inexact et prends en compte la bare menu
+        GameActivity.screenHeight=surfaceHolder.getSurfaceFrame().height();
+        GameActivity.screenWidth=surfaceHolder.getSurfaceFrame().width();
     }
 
     /**
