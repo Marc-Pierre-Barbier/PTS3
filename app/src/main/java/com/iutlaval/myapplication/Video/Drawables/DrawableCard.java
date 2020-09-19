@@ -27,7 +27,10 @@ public class DrawableCard extends Drawable{
     private static final float TITLE_FONT_SIZE =30F;
     private static int DESCRIPTION_TEXT_X_RES = 281;
     private static int DESCRIPTION_TEXT_Y_RES = 195;
-
+    private static int TEXT_TITLE_X_RES = 281;
+    private static int TEXT_TITLE_Y_RES = 60;
+    private static int TEXT_ATK_HP_X_RES = 110;
+    private static int TEXT_ATK_HP_Y_RES = 60;
 
     //des floats sont utiliser card ils prenne moin de ram que des doubles et que l'on a pas besoin de la precision supplementaire
     //dimentions
@@ -121,7 +124,7 @@ public class DrawableCard extends Drawable{
 
         //to string retourne le hash code de l'objet qui est donc unique ce qui fait de lui un id parfait
         cardDescription = new Drawable(c.getDescription(),0,0,toString()+"description",DESCRIPTION_WIDTH,DESCRIPTION_HEIGHT,DESCRIPTION_FONT_SIZE,DESCRIPTION_TEXT_X_RES,DESCRIPTION_TEXT_Y_RES);
-        cardTitle = new DrawableCardTitle(c.getName(),0,0,toString()+"name",TITLE_WIDTH,TITLE_HEIGHT,TITLE_FONT_SIZE);
+        cardTitle = new Drawable(c.getName(),0,0,toString()+"name",TITLE_WIDTH,TITLE_HEIGHT,TITLE_FONT_SIZE,TEXT_TITLE_X_RES,TEXT_TITLE_Y_RES);
 
         Rectangle opacityRect = new Rectangle(x,y,OPACITY_RECT_WIDTH+x,OPACITY_RECT_HEIGHT+x);
         Bitmap pictureBitmap = BitmapFactory.decodeResource(context.getResources(),c.getCardPicture());
@@ -178,14 +181,14 @@ public class DrawableCard extends Drawable{
     {
         if(onBoard) {
             if (atk != null)
-                cardAtkDrawable = new DrawableHpAtk(atk+"", 0, 0, toString() + "atk", ONBOARD_ATK_HP_WIDTH, ONBOARD_ATK_HP_HEIGHT, HP_ATK_FONT_SIZE_BOARD);
+                cardAtkDrawable = new Drawable(atk+"", 0, 0, toString() + "atk", ONBOARD_ATK_HP_WIDTH, ONBOARD_ATK_HP_HEIGHT, HP_ATK_FONT_SIZE_BOARD,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
             if (hp != null)
-                cardHpDrawable = new DrawableHpAtk(hp+"", 0, 0, toString() + "hp", ONBOARD_ATK_HP_WIDTH, ONBOARD_ATK_HP_HEIGHT, HP_ATK_FONT_SIZE_BOARD);
+                cardHpDrawable = new Drawable(hp+"", 0, 0, toString() + "hp", ONBOARD_ATK_HP_WIDTH, ONBOARD_ATK_HP_HEIGHT, HP_ATK_FONT_SIZE_BOARD,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
         }else{
             if (atk != null)
-                cardAtkDrawable = new DrawableHpAtk(atk + "", 0, 0, toString() + "atk", OFFBOARD_ATK_HP_WIDTH, OFFBOARD_ATK_HP_HEIGHT, HP_ATK_FONT_SIZE_BIG_CARD);
+                cardAtkDrawable = new Drawable(atk + "", 0, 0, toString() + "atk", OFFBOARD_ATK_HP_WIDTH, OFFBOARD_ATK_HP_HEIGHT, HP_ATK_FONT_SIZE_BIG_CARD,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
             if (hp != null)
-                cardHpDrawable = new DrawableHpAtk(hp + "", 0, 0, toString() + "hp", OFFBOARD_ATK_HP_WIDTH, OFFBOARD_ATK_HP_HEIGHT, HP_ATK_FONT_SIZE_BIG_CARD);
+                cardHpDrawable = new Drawable(hp + "", 0, 0, toString() + "hp", OFFBOARD_ATK_HP_WIDTH, OFFBOARD_ATK_HP_HEIGHT, HP_ATK_FONT_SIZE_BIG_CARD,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
         }
         setCoordinates(getX(), getY());
     }
