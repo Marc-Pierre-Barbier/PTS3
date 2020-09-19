@@ -39,6 +39,7 @@ public class TouchHandler {
                 deltaX = 0;
             } else if (moveEventCard != null) {
                 moveEventCard.setCoordinates(unscalled_X - deltaX, unscalled_Y - deltaY);
+                renderer.updateFrame();
             }
         }
     }

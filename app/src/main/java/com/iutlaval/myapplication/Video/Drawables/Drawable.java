@@ -12,7 +12,6 @@ import com.iutlaval.myapplication.ERROR_CODE;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.InvalidDataException;
 import com.iutlaval.myapplication.Video.Rectangle;
-import com.iutlaval.myapplication.Video.Renderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +76,7 @@ public class Drawable {
 
         checkPaint();
         p.setColor(Color.BLACK);
+        p.setAntiAlias(true);
 
 
 
@@ -188,9 +188,10 @@ public class Drawable {
     /**
      * permet de changer les coordonnés sur l'ecran de l'objet
      * TOUT LES OBJET SONT DESSINER DEPUIS LE COIN HAUT GAUCHE LES COODONNE DESIGNE DONC CE COIN
-     * ET NON PAS LE CENTRE DE LA CARTE
+     * ET NON PAS LE CENTRE DE L'OBJET
      * @param x
      * @param y
+     * /!\ PENSER A APPELER renderer.updateFrame(); AFFIN D'AFFICHER LE CHANGEMENT /!\
      */
     public void setCoordinates(float x, float y) {
         this.x=x;

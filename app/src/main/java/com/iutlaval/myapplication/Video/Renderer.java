@@ -24,7 +24,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     private Paint p;
     private DrawingThread drawingThread;
     private GameLogicThread engine;
-
+    private boolean contentChanged;
 
     private List<Drawable> toDraw;
 
@@ -101,6 +101,15 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
+     * le moteur arrete toute forme de rendu si rien ne change MAIS il ne peut pas detecter des changement qui
+     * ne passe pas par la classe Renderer donc si vous modifier un drawable il faut appeler updateFrame() pour
+     * demander au moteur de faire sont travaille
+     */
+    public void updateFrame() {
+        contentChanged=true;
+    }
+
+    /**
      * main drawing thread render each frame
      */
     private class DrawingThread extends Thread {
@@ -133,6 +142,15 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
                 //sauve de la baterie
                 FpsTime.waitFrameTime(time);
                 if(engine != null && engine.isReady())engine.onFrameDoneRendering();
+                while(!contentChanged)
+                {
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                contentChanged=false;
             }
         }
     }
@@ -151,6 +169,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         toDraw.add(newElement);
+        contentChanged=true;
         return true;
     }
 
@@ -166,6 +185,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
             if(d.getName().equals(name))
             {
                 d.setCoordinates(x,y);
+                contentChanged=true;
                 return;
             }
         }
@@ -180,6 +200,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
         Drawable d = getDrawAble(name);
         if(d != null)
             toDraw.remove(d);
+        contentChanged=true;
     }
     /**
      * remove the element from the draw list
@@ -187,6 +208,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      */
     public void removeToDraw(Drawable toRemove){
         toDraw.remove(toRemove);
+        contentChanged=true;
     }
 
 
@@ -228,11 +250,14 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
                 {
                     if(y >= card.getY() && y <= card.getY()+card.getCardHeight())
                     {
+                        //on considére que si on prend la carte c'est pour changer ses valeurs
+                        contentChanged=true;
                         return card;
                     }
                 }
             }
         }
         return null;
+
     }
 }

@@ -57,6 +57,8 @@ public class GameLogicThread extends Thread{
             renderer.moveToDraw(40,20,"card3");
             break;
         }
+        ((DrawableCard)renderer.getDrawAble("card3")).setOnBoard(false);
+        renderer.updateFrame();
     }
 
     /**
@@ -65,6 +67,9 @@ public class GameLogicThread extends Thread{
      * TOUT CALCUL REDONDANT CE DOIT D'AVOIR ETE PRE FAIT
      *
      * TOUT APELLE DE CETTE FONCTION SE DOIT D'ÊTRE PROTEGER PAR isReady()
+     *
+     * /!\ renderer.updateFrame(); va forcer le system a redessiner l'afficher qui ensuite reappelera onFrameDoneRendering() ce qui peut causer si le updateFrame() n'est pas proteger
+     * une utilisation de la batterie massivz
      */
     public void onFrameDoneRendering()
     {
@@ -79,7 +84,8 @@ public class GameLogicThread extends Thread{
         }
         if(i==0)increm=-increm;
 
-        ((DrawableCard)renderer.getDrawAble("card3")).setOnBoard(false);
+
+        //
         //TODO get x,y coordinate form name
         //r.moveToDraw(i,i,"card2");
         //renderer.moveToDraw(i,i,"card3");
