@@ -1,16 +1,19 @@
 package com.iutlaval.myapplication.Game;
 
+import android.content.Intent;
 import android.view.MotionEvent;
 
 import com.iutlaval.myapplication.GameActivity;
+import com.iutlaval.myapplication.MainActivity;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Renderer;
 
 public class TouchHandler {
 
-    //TODO mettre sa dans une classe isolé
-    private float deltaX = 0;
-    private float deltaY = 0;
+    private float TouchDeltaX = 0;
+    private float TouchDeltaY = 0;
+    private float originalPositionX = 0;
+    private float originalPositionY = 0;
     private DrawableCard moveEventCard = null;
     private Renderer renderer;
 
@@ -28,17 +31,23 @@ public class TouchHandler {
             float unscalled_Y = event.getY() / GameActivity.screenHeight * 100;
 
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                moveEventCard = renderer.getCardOn(unscalled_X, unscalled_Y);
-                if(moveEventCard != null) {
-                    deltaY = unscalled_Y - moveEventCard.getY();
-                    deltaX = unscalled_X - moveEventCard.getX();
+                if(unscalled_Y <= 90F) {
+                    moveEventCard = renderer.getCardOn(unscalled_X, unscalled_Y);
+                    if (moveEventCard != null) {
+                        TouchDeltaY = unscalled_Y - moveEventCard.getY();
+                        TouchDeltaX = unscalled_X - moveEventCard.getX();
+                        originalPositionX = moveEventCard.getX();
+                        originalPositionY = moveEventCard.getY();
+                    }
                 }
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                TouchDeltaY = 0;
+                TouchDeltaX = 0;
+                //TODO detect zones
+                if(moveEventCard != null)renderer.moveToDraw(originalPositionX,originalPositionY,moveEventCard.getName());
                 moveEventCard = null;
-                deltaY = 0;
-                deltaX = 0;
             } else if (moveEventCard != null) {
-                moveEventCard.setCoordinates(unscalled_X - deltaX, unscalled_Y - deltaY);
+                moveEventCard.setCoordinates(unscalled_X - TouchDeltaX, unscalled_Y - TouchDeltaY);
                 renderer.updateFrame();
             }
         }

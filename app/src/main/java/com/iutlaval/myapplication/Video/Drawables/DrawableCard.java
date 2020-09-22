@@ -19,7 +19,7 @@ import com.iutlaval.myapplication.Video.Rectangle;
  */
 public class DrawableCard extends Drawable{
 
-    private static final int CARD_WITH = 14;
+    public static final int CARD_WITH = 14;
     private static final int CARD_HEIGHT = 40;
     private static final float HP_ATK_FONT_SIZE_BIG_CARD =30F;
     private static final float HP_ATK_FONT_SIZE_BOARD =70F;
