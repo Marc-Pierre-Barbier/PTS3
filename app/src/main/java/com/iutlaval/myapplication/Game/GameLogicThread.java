@@ -1,14 +1,11 @@
 package com.iutlaval.myapplication.Game;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.view.MotionEvent;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
-import com.iutlaval.myapplication.Game.Cards.DemoCard;
 import com.iutlaval.myapplication.Game.Decks.Deck;
 import com.iutlaval.myapplication.Game.Decks.DeckDemo;
 import com.iutlaval.myapplication.GameActivity;
@@ -76,7 +73,7 @@ public class GameLogicThread extends Thread{
         for(Card c : localPlayerHand.getHand())
         {
             renderer.addToDraw(c.getDrawableCard());
-            renderer.moveToDraw(i*DrawableCard.CARD_WITH,90F,c.getDrawableCard().getName());
+            renderer.moveToDraw(i* DrawableCard.CARD_WITH,90F,c.getDrawableCard().getName());
             i++;
         }
 
@@ -105,6 +102,10 @@ public class GameLogicThread extends Thread{
     }
 
 
+
+
+    private DrawableCard currentlySelected = null;
+    private static final float SELECTING_OFFSET = 20F;
     /**
      * relais l'evenement directement au touch Handler
      * @param event
@@ -114,22 +115,21 @@ public class GameLogicThread extends Thread{
             float unscalled_Y = event.getY() / GameActivity.screenHeight * 100;
             if(unscalled_Y >= 90F) {
                 float unscalled_X = event.getX() / GameActivity.screenWidth * 100;
-                //TODO : display fullscreen cards
-                Intent HandActivity = new Intent(gameActivity, HandActivity.class);
-                String[] serializedHand = new String[localPlayerHand.getHand().size() +1];
-                int i = 0;
-                serializedHand[i] = localPlayerDeck.getDeckName();
-                for(Card c : localPlayerHand.getHand())
+                DrawableCard smallCArd = renderer.getCardOn(unscalled_X,unscalled_Y);
+                if(smallCArd !=null)
                 {
-                    i++;
-                    serializedHand[i] = c.getName();
-
+                    if(currentlySelected !=null)
+                    {
+                        currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
+                        renderer.removeToDraw(currentlySelected.getName()+"BIG");
+                    }
+                    currentlySelected = smallCArd;
+                    DrawableCard bigCard = new DrawableCard(smallCArd,cont,2);
+                    renderer.addToDraw(bigCard);
+                    bigCard.setCoordinates(50F,50F);
+                    smallCArd.setCoordinates(smallCArd.getX(),smallCArd.getY() - SELECTING_OFFSET);
+                    touch.onTouchEvent(event);
                 }
-                HandActivity.putExtra("hand",serializedHand);
-                Bundle cardSelectedBundle = new Bundle();
-                gameActivity.startActivity(HandActivity,cardSelectedBundle);
-
-
             }else{
                 touch.onTouchEvent(event);
             }

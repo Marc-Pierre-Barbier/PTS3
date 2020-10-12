@@ -2,7 +2,6 @@ package com.iutlaval.myapplication.Game.Decks;
 
 import android.content.Context;
 
-import com.iutlaval.myapplication.Game.HandActivity;
 
 import java.util.Objects;
 

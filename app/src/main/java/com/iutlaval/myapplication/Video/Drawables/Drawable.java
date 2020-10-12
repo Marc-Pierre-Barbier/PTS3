@@ -1,6 +1,7 @@
 package com.iutlaval.myapplication.Video.Drawables;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -238,5 +239,9 @@ public class Drawable {
             output.add(nextLine.toString());
         }
         return output;
+    }
+
+    protected void scale(float i) {
+        bitmap = Bitmap.createScaledBitmap(this.bitmap,(int)(bitmap.getWidth()*i),(int)(bitmap.getHeight()*i),GameActivity.bilinearFiltering);
     }
 }
