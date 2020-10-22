@@ -3,6 +3,7 @@ package com.iutlaval.myapplication.Game;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
@@ -25,19 +26,18 @@ public class GameLogicThread extends Thread{
     private Deck localPlayerDeck;
     private Hand localPlayerHand;
 
-
     public GameLogicThread(GameActivity gameActivity, Renderer renderer)
     {
         ready=false;
         this.cont = gameActivity;
         this.renderer = renderer;
-        renderer.setEngine(this);
         touch = new TouchHandler(renderer);
         localPlayerDeck = new DeckDemo("local",cont);
         localPlayerDeck.suffle();
         localPlayerHand = new Hand();
         localPlayerHand.fillHand(localPlayerDeck);
         this.gameActivity=gameActivity;
+        GameActivity.setGameEngine(this);
     }
 
     private float i=0;
@@ -46,17 +46,10 @@ public class GameLogicThread extends Thread{
 
     @Override
     public void run() {
+        Log.e("RESOLUTION:",""+GameActivity.screenWidth+"x"+GameActivity.screenHeight);
         //affichage de l'arriere plan
         Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
         renderer.addToDraw(new Drawable(bitmap, 0,0, "background", 100, 100 ));
-
-        //renderer.addToDraw(new Drawable(bm,0.0F,0.0F,"running",8F,16F));
-        //renderer.addToDraw(new DrawableCard(new DemoCard(),0.0F,0.0F,"card2",cont));
-       /*Card card2 = new DemoCard("card3",cont);
-        renderer.addToDraw(card2.getDrawableCard());
-        Card card1 = new DemoCard("card1",cont);
-        renderer.addToDraw(card1.getDrawableCard());*/
-
         drawHandPreview();
 
         ready=true;
@@ -113,7 +106,7 @@ public class GameLogicThread extends Thread{
     public void onTouchEvent(MotionEvent event) {
         if(isReady()){
             float unscalled_Y = event.getY() / GameActivity.screenHeight * 100;
-            if(unscalled_Y >= 90F) {
+            if(unscalled_Y >= 90F && event.getAction() == MotionEvent.ACTION_DOWN) {
                 float unscalled_X = event.getX() / GameActivity.screenWidth * 100;
                 DrawableCard smallCArd = renderer.getCardOn(unscalled_X,unscalled_Y);
                 if(smallCArd !=null)
@@ -121,14 +114,24 @@ public class GameLogicThread extends Thread{
                     if(currentlySelected !=null)
                     {
                         currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
-                        renderer.removeToDraw(currentlySelected.getName()+"BIG");
+                        //on update pas affin d'avoir un rendu plus fluide au moment de mettre l'aure carte
+                        renderer.removeToDrawWithoutUpdate(currentlySelected.getName()+"BIG");
                     }
                     currentlySelected = smallCArd;
                     DrawableCard bigCard = new DrawableCard(smallCArd,cont,2);
                     renderer.addToDraw(bigCard);
-                    bigCard.setCoordinates(50F,50F);
+                    bigCard.setCoordinates(72F,10F);
                     smallCArd.setCoordinates(smallCArd.getX(),smallCArd.getY() - SELECTING_OFFSET);
                     touch.onTouchEvent(event);
+                }
+            }else if(event.getAction() == MotionEvent.ACTION_UP){
+                //currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
+                touch.onTouchEvent(event);
+                if(currentlySelected !=null)
+                {
+                    renderer.removeToDraw(currentlySelected.getName()+"BIG");
+                    currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
+                    currentlySelected=null;
                 }
             }else{
                 touch.onTouchEvent(event);

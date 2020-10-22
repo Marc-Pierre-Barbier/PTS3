@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 
@@ -24,7 +25,7 @@ public class GameActivity extends Activity {
     public static boolean isMultiplayer() {
         return false;//TODO implement it
     }
-
+    private Renderer renderer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,35 +35,21 @@ public class GameActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         FpsTime.init(display);
 
-        Renderer renderer = new Renderer(getBaseContext());
+        renderer = new Renderer(getBaseContext(),this);
 
-        //nous donne la resolution
-        Point size = new Point();
-        display.getSize(size);
 
-        //vu que l'on verouille en mode portrait en veut juste la resolution en 16:9 et non en 9:16
-        //donc on prend celui le plus large
-        //en cas de la de la machine les  peuvent s'inverser d'ou l'interet du test
-        if(size.y > size.x)
-        {
-            screenWidth = size.y;
-            screenHeight = size.x;
-        }else{
-            screenWidth = size.x;
-            screenHeight = size.y;
-        }
-
-        gameEngine = new GameLogicThread(this,renderer);
-        gameEngine.start();
 
         setContentView(renderer);
+    }
+
+    public static void setGameEngine(GameLogicThread gameEngine) {
+        GameActivity.gameEngine = gameEngine;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(gameEngine != null)gameEngine.onTouchEvent(event);
         return super.onTouchEvent(event);
-
     }
 }
 

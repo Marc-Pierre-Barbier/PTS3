@@ -55,50 +55,11 @@ public class Drawable {
 
         if(x_scaled_size <=0 || y_scaled_size <=0)
         {
-            Log.e("TEXTURE :","ERREUR DE MISE A L'ECHELLE");
+            Log.e("DRAWABLE_TEXTURE :","ERREUR DE MISE A L'ECHELLE");
             System.exit(ERROR_CODE.ERROR_TEXTURE_DIMENSIONS_INVALID.ordinal());
         }
 
         this.bitmap = Bitmap.createScaledBitmap(bitmap, (int)x_scaled_size, (int)y_scaled_size, GameActivity.bilinearFiltering);
-    }
-
-    /**TODO : corriger les deformation due au changement de ratio (x_size,y_size)
-     * ce constructeur permet de rendre du texte
-     * @param text le texte a rendre
-     * @param x_pos position en x du texte
-     * @param y_pos position en y du texte
-     * @param name nom du Drawable
-     * @param x_size taille du drawable entre 0 et 100
-     * @param y_size taille du drawable entre 0 et 100
-     */
-    public Drawable(String text,float x_pos,float y_pos,String name, float x_size,float y_size,float textSize , int x_canvasRatio, int y_canvasRatio)
-    {
-        this(x_pos,y_pos,name);
-
-        checkPaint();
-        p.setColor(Color.BLACK);
-        p.setAntiAlias(true);
-
-
-
-        List<String> linesOfText = cutText(20,text);
-        p.setTextSize(textSize);
-
-        //+10 permet d'e prendre en compte les p,q,j qui dessende plus bas que les autres
-        bitmap = Bitmap.createBitmap(x_canvasRatio, y_canvasRatio, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bitmap);
-
-        int index = 1;
-        for(String line : linesOfText)
-        {
-            c.drawText(line ,0,index*y_canvasRatio/linesOfText.size(),p);
-            index++;
-        }
-
-        int scalled_x_size = (int)(GameActivity.screenWidth*x_size/100);
-        int scalled_y_size = (int)(GameActivity.screenHeight*y_size/100);
-
-        bitmap = Bitmap.createScaledBitmap(bitmap,scalled_x_size,scalled_y_size,GameActivity.bilinearFiltering);
     }
 
 
@@ -243,5 +204,18 @@ public class Drawable {
 
     protected void scale(float i) {
         bitmap = Bitmap.createScaledBitmap(this.bitmap,(int)(bitmap.getWidth()*i),(int)(bitmap.getHeight()*i),GameActivity.bilinearFiltering);
+    }
+
+    /**
+     * retourne si le drawable peut être deplacer en drag and drop
+     * @return
+     */
+    public boolean isDraggable() {
+        return false;
+    }
+
+    protected void setBitmap(Bitmap bitmap)
+    {
+        this.bitmap=bitmap;
     }
 }

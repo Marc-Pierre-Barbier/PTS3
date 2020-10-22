@@ -131,10 +131,9 @@ public abstract class Card {
     }
 
     /**
-     * NE PAS OVERRIDE CETTE FONCTION
      * @return
      */
-    public DrawableCard getDrawableCard() {
+    public final DrawableCard getDrawableCard() {
         return drawableCard;
     }
 

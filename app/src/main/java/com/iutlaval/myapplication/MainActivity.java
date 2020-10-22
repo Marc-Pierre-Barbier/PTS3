@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         final Button playButton = (Button) findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "click sur button", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "click sur button", Toast.LENGTH_LONG).show();
                 Intent gameActivity = new Intent(MainActivity.this, GameActivity.class);
 
                 startActivity(gameActivity);

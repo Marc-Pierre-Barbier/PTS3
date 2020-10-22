@@ -24,16 +24,19 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     private Paint p;
     private DrawingThread drawingThread;
     private GameLogicThread engine;
+    private GameActivity gameActivity;
     private boolean contentChanged;
 
     private List<Drawable> toDraw;
 
-    public Renderer(Context context) {
+    public Renderer(Context context, GameActivity gameActivity) {
         super(context);
+        this.gameActivity=gameActivity;
+
         holder = getHolder();
         holder.addCallback(this);
 
-        drawingThread = new DrawingThread();
+        drawingThread = new DrawingThread(this);
 
         p = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         p.setColor(Color.RED);
@@ -51,7 +54,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
         this.holder=holder;
         if(drawingThread.getState() == Thread.State.TERMINATED)
         {
-            drawingThread = new DrawingThread();
+            drawingThread = new DrawingThread(this);
         }
         if(!drawingThread.isAlive()){
             drawingThread.start();
@@ -68,9 +71,6 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      */
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-        //mise a jour de la valleur de la resolution car la premiere obtenus est inexact et prends en compte la bare menu
-        GameActivity.screenHeight=surfaceHolder.getSurfaceFrame().height();
-        GameActivity.screenWidth=surfaceHolder.getSurfaceFrame().width();
     }
 
     /**
@@ -113,12 +113,25 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      * main drawing thread render each frame
      */
     private class DrawingThread extends Thread {
+        private  Renderer renderer;
+
+        public DrawingThread(Renderer renderer)
+        {
+            super();
+            this.renderer=renderer;
+        }
 
         public boolean keepDrawing = true;
 
         @SuppressLint("WrongCall")
         @Override
         public void run() {
+            while(getWidth()==0);
+            GameActivity.screenHeight=renderer.getHeight() < renderer.getWidth() ? renderer.getHeight() : renderer.getWidth();
+            GameActivity.screenWidth=renderer.getHeight() > renderer.getWidth() ? renderer.getHeight() : renderer.getWidth();
+            engine = new GameLogicThread(gameActivity,renderer);
+            engine.start();
+
             while (keepDrawing) {
                 Canvas canvas = null;
 
@@ -193,13 +206,21 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
+     * supprime le drawable possedant le nom indique mais n'upate pas le renderer
+     * @param name le nom
+     */
+    public void removeToDrawWithoutUpdate(String name){
+        Drawable d = getDrawAble(name);
+        if(d != null)
+            toDraw.remove(d);
+    }
+
+    /**
      * supprime le drawable possedant le nom indique
      * @param name le nom
      */
     public void removeToDraw(String name){
-        Drawable d = getDrawAble(name);
-        if(d != null)
-            toDraw.remove(d);
+        removeToDrawWithoutUpdate(name);
         contentChanged=true;
     }
     /**
@@ -236,6 +257,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * retourne une carte au coodonés donné
+     * MAIS ne met pas ajour le rendu
      * @param x coordoné en x
      * @param y coodoné en y
      * @return
@@ -243,15 +265,15 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     public DrawableCard getCardOn(float x, float y) {
         for(Drawable d : toDraw)
         {
-            if(d instanceof DrawableCard)
+            //on n'a pas d'objet non card a deplacer
+            //si on venais a en avoir besoin crée une interface draggable s'avererais utile
+            if(d instanceof DrawableCard && d.isDraggable())
             {
                 DrawableCard card = ((DrawableCard)d);
                 if(x >= card.getX() && x <= card.getX()+card.getCardWith())
                 {
                     if(y >= card.getY() && y <= card.getY()+card.getCardHeight())
                     {
-                        //on considére que si on prend la carte c'est pour changer ses valeurs
-                        contentChanged=true;
                         return card;
                     }
                 }
