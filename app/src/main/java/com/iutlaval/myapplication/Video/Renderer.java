@@ -64,10 +64,6 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * cette fonction est appeler a chaque fois que l'utilisateur tourne son ecran
      * this function is unused since the screen is locked
-     * @param surfaceHolder
-     * @param i
-     * @param i1
-     * @param i2
      */
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
@@ -173,6 +169,16 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      * @return retourne faux si l'element existe deja
      */
     public boolean addToDraw(Drawable newElement){
+        boolean returnValue = addToDrawWithoutUpdate(newElement);
+        contentChanged=true;
+        return returnValue;
+    }
+
+    /**
+     * permet d'ajouter un element a afficher
+     * @return retourne faux si l'element existe deja
+     */
+    public boolean addToDrawWithoutUpdate(Drawable newElement){
         if(newElement == null)return false;
         for(Drawable d : toDraw)
         {
@@ -182,7 +188,6 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         toDraw.add(newElement);
-        contentChanged=true;
         return true;
     }
 
@@ -213,6 +218,14 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
         Drawable d = getDrawAble(name);
         if(d != null)
             toDraw.remove(d);
+    }
+
+    /**
+     * supprime le drawable possedant le nom indique mais n'upate pas le renderer
+     * @param drawable le drawable
+     */
+    public void removeToDrawWithoutUpdate(Drawable drawable){
+        removeToDrawWithoutUpdate(drawable.getName());
     }
 
     /**

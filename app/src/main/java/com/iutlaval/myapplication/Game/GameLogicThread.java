@@ -3,6 +3,7 @@ package com.iutlaval.myapplication.Game;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -10,11 +11,16 @@ import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Decks.Deck;
 import com.iutlaval.myapplication.Game.Decks.DeckDemo;
 import com.iutlaval.myapplication.GameActivity;
+import com.iutlaval.myapplication.InvalidDataException;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
+import com.iutlaval.myapplication.Video.Drawables.DrawableRectangle;
+import com.iutlaval.myapplication.Video.Rectangle;
 import com.iutlaval.myapplication.Video.Renderer;
+
+import java.util.List;
 
 public class GameLogicThread extends Thread{
 
@@ -27,9 +33,11 @@ public class GameLogicThread extends Thread{
     private Deck localPlayerDeck;
     private Hand localPlayerHand;
     private Board board;
+    private PlayableZonesHandler playableZonesHandler;
 
     public GameLogicThread(GameActivity gameActivity, Renderer renderer)
     {
+        Log.e("RESOLUTION:",""+GameActivity.screenWidth+"x"+GameActivity.screenHeight);
         ready=false;
         this.cont = gameActivity;
         this.renderer = renderer;
@@ -40,6 +48,7 @@ public class GameLogicThread extends Thread{
         localPlayerHand.fillHand(localPlayerDeck);
         this.gameActivity=gameActivity;
         board=new Board();
+        playableZonesHandler = new PlayableZonesHandler(board);
         GameActivity.setGameEngine(this);
     }
 
@@ -49,11 +58,11 @@ public class GameLogicThread extends Thread{
 
     @Override
     public void run() {
-        Log.e("RESOLUTION:",""+GameActivity.screenWidth+"x"+GameActivity.screenHeight);
         //affichage de l'arriere plan
         Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
         renderer.addToDraw(new DrawableBitmap(bitmap, 0,0, "background", 100, 100 ));
         drawHandPreview();
+        //Rectangle pos = new Rectangle(0F,0F,100F,100F);
 
         ready=true;
         while(true)
@@ -72,7 +81,7 @@ public class GameLogicThread extends Thread{
         for(Card c : localPlayerHand.getHand())
         {
             renderer.addToDraw(c.getDrawableCard());
-            renderer.moveToDraw(i* DrawableCard.CARD_WITH,90F,c.getDrawableCard().getName());
+            renderer.moveToDraw(i* DrawableCard.getCardWith(),90F,c.getDrawableCard().getName());
             i++;
         }
 
@@ -119,6 +128,9 @@ public class GameLogicThread extends Thread{
                 DrawableCard smallCArd = renderer.getCardOn(unscalled_X,scalled_Y);
                 if(smallCArd !=null)
                 {
+                    renderer.removeToDrawWithoutUpdate(smallCArd);
+                    playableZonesHandler.displayPlayableZones(renderer);
+                    renderer.addToDraw(smallCArd);
                     if(currentlySelected !=null)
                     {
                         currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
@@ -130,6 +142,7 @@ public class GameLogicThread extends Thread{
                     renderer.addToDraw(bigCard);
                     bigCard.setCoordinates(72F,10F);
                     smallCArd.setCoordinates(smallCArd.getX(),smallCArd.getY() - SELECTING_OFFSET);
+
                 }
                 touch.onTouchEvent(event);
             }else if(event.getAction() == MotionEvent.ACTION_UP){
@@ -141,6 +154,7 @@ public class GameLogicThread extends Thread{
                     currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
                     currentlySelected=null;
                 }
+                playableZonesHandler.HidePlayableZones(renderer);
             }else{
                 touch.onTouchEvent(event);
             }
@@ -148,18 +162,5 @@ public class GameLogicThread extends Thread{
 
     }
 
-    public void displayPlayableZones()
-    {
-        Card[] cardsOnBoard = board.getPlayerCardsOnBoard();
-        for(int i=0 ; i < cardsOnBoard.length ;i++)
-        {
-            if(cardsOnBoard[i] == null)
-            {
-                displayPlayableZoneOn(i);
-            }
-        }
-    }
 
-    private void displayPlayableZoneOn(int i) {
-    }
 }
