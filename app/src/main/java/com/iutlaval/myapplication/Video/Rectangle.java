@@ -2,6 +2,7 @@ package com.iutlaval.myapplication.Video;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.util.Log;
 
 import com.iutlaval.myapplication.GameActivity;
 
@@ -61,6 +62,7 @@ public class Rectangle {
      */
     public void scaleRectangleToScreen()
     {
+        Log.e("resize",""+getWidth()*GameActivity.screenWidth/100);
         set(getPositionX()* GameActivity.screenWidth/100,
                 getPositionY()*GameActivity.screenHeight/100,
                 getWidth()*GameActivity.screenWidth/100,
