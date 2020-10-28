@@ -37,8 +37,6 @@ public class GameActivity extends Activity {
 
         renderer = new Renderer(getBaseContext(),this);
 
-
-
         setContentView(renderer);
     }
 

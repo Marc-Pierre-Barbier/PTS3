@@ -151,7 +151,7 @@ public class DrawableCard extends Drawable{
         this.ratio=ratio;
         this.card=c;
 
-        frameDrawable = new Drawable(c.getFrameBitmap(context),0,0,name+"frame",CARD_WITH*ratio,CARD_HEIGHT*ratio);
+        frameDrawable = new DrawableBitmap(c.getFrameBitmap(context),0,0,name+"frame",CARD_WITH*ratio,CARD_HEIGHT*ratio);
         //to string retourne le hash code de l'objet qui est donc unique ce qui fait de lui un id parfait
         cardDescription = new DrawableText(c.getDescription(),0,0,toString()+"description",DESCRIPTION_WIDTH*ratio,DESCRIPTION_HEIGHT*ratio,DESCRIPTION_FONT_SIZE,DESCRIPTION_TEXT_X_RES,DESCRIPTION_TEXT_Y_RES);
         cardTitle = new DrawableText(c.getName(),0,0,toString()+"name",TITLE_WIDTH*ratio,TITLE_HEIGHT*ratio,TITLE_FONT_SIZE,TEXT_TITLE_X_RES,TEXT_TITLE_Y_RES);
@@ -160,8 +160,8 @@ public class DrawableCard extends Drawable{
         Bitmap pictureBitmap = BitmapFactory.decodeResource(context.getResources(),c.getCardPicture());
 
         try {
-            opacityRectangleDrawable = new Drawable(opacityRect,toString()+"Opacity", Color.parseColor(c.getColor()));
-            pictureDrawable = new Drawable(pictureBitmap,0,0,toString()+"Picture",PICTURE_WIDTH*ratio,PICTURE_HEIGHT*ratio);
+            opacityRectangleDrawable = new DrawableRectangle(opacityRect,toString()+"Opacity", Color.parseColor(c.getColor()));
+            pictureDrawable = new DrawableBitmap(pictureBitmap,0,0,toString()+"Picture",PICTURE_WIDTH*ratio,PICTURE_HEIGHT*ratio);
         } catch (InvalidDataException e) {
             e.printStackTrace();
             Log.e("CARTE :","forme de la carte invalide !");
@@ -187,7 +187,7 @@ public class DrawableCard extends Drawable{
         cardOnBoardAtk.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FFFF0000"));
         cardOnBoardHp.bitmapRectangleBuilder(cardOnBoardBitmap,Color.parseColor("#FF00FF00"));
 
-        cardOnBoardDrawable = new Drawable(cardOnBoardBitmap,x,y,toString()+"BOARD",CARD_ON_BOARD_DRAWABLE_WIDTH*ratio,CARD_ON_BOARD_DRAWABLE_HEIGHT*ratio);
+        cardOnBoardDrawable = new DrawableBitmap(cardOnBoardBitmap,x,y,toString()+"BOARD",CARD_ON_BOARD_DRAWABLE_WIDTH*ratio,CARD_ON_BOARD_DRAWABLE_HEIGHT*ratio);
 
         c.setDrawableCard(this);
 

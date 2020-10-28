@@ -12,6 +12,7 @@ import com.iutlaval.myapplication.Game.Decks.DeckDemo;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
+import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Renderer;
 
@@ -25,6 +26,7 @@ public class GameLogicThread extends Thread{
 
     private Deck localPlayerDeck;
     private Hand localPlayerHand;
+    private Board board;
 
     public GameLogicThread(GameActivity gameActivity, Renderer renderer)
     {
@@ -37,6 +39,7 @@ public class GameLogicThread extends Thread{
         localPlayerHand = new Hand();
         localPlayerHand.fillHand(localPlayerDeck);
         this.gameActivity=gameActivity;
+        board=new Board();
         GameActivity.setGameEngine(this);
     }
 
@@ -49,7 +52,7 @@ public class GameLogicThread extends Thread{
         Log.e("RESOLUTION:",""+GameActivity.screenWidth+"x"+GameActivity.screenHeight);
         //affichage de l'arriere plan
         Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
-        renderer.addToDraw(new Drawable(bitmap, 0,0, "background", 100, 100 ));
+        renderer.addToDraw(new DrawableBitmap(bitmap, 0,0, "background", 100, 100 ));
         drawHandPreview();
 
         ready=true;
@@ -61,6 +64,9 @@ public class GameLogicThread extends Thread{
         renderer.updateFrame();
     }
 
+    /**
+     * cette methode est UNIQUEMENT a bute de test elle ne sert a rien d'autre ne pas s'en servir
+     */
     private void drawHandPreview() {
         int i = 0;
         for(Card c : localPlayerHand.getHand())
@@ -74,7 +80,7 @@ public class GameLogicThread extends Thread{
 
     /**
      * cette fonction est appeller a chaque fin de frame
-     * CETTE FONCTION A UN IMPACT DIRRECT SUR LES FPS ELLE SE DOIT D'être OPTIMAL
+     * CETTE FONCTION A UN IMPACT DIRECT SUR LES FPS ELLE SE DOIT D'être OPTIMAL
      * TOUT CALCUL REDONDANT CE DOIT D'AVOIR ETE PRE FAIT
      *
      * TOUT APELLE DE CETTE FONCTION SE DOIT D'ÊTRE PROTEGER PAR isReady()
@@ -105,10 +111,12 @@ public class GameLogicThread extends Thread{
      */
     public void onTouchEvent(MotionEvent event) {
         if(isReady()){
-            float unscalled_Y = event.getY() / GameActivity.screenHeight * 100;
-            if(unscalled_Y >= 90F && event.getAction() == MotionEvent.ACTION_DOWN) {
+            //calcul y sur une echelle de 0 a 100
+            float scalled_Y = event.getY() / GameActivity.screenHeight * 100;
+            //si on clique sur une carte dans la main
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
                 float unscalled_X = event.getX() / GameActivity.screenWidth * 100;
-                DrawableCard smallCArd = renderer.getCardOn(unscalled_X,unscalled_Y);
+                DrawableCard smallCArd = renderer.getCardOn(unscalled_X,scalled_Y);
                 if(smallCArd !=null)
                 {
                     if(currentlySelected !=null)
@@ -122,8 +130,8 @@ public class GameLogicThread extends Thread{
                     renderer.addToDraw(bigCard);
                     bigCard.setCoordinates(72F,10F);
                     smallCArd.setCoordinates(smallCArd.getX(),smallCArd.getY() - SELECTING_OFFSET);
-                    touch.onTouchEvent(event);
                 }
+                touch.onTouchEvent(event);
             }else if(event.getAction() == MotionEvent.ACTION_UP){
                 //currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
                 touch.onTouchEvent(event);
@@ -138,5 +146,20 @@ public class GameLogicThread extends Thread{
             }
         }
 
+    }
+
+    public void displayPlayableZones()
+    {
+        Card[] cardsOnBoard = board.getPlayerCardsOnBoard();
+        for(int i=0 ; i < cardsOnBoard.length ;i++)
+        {
+            if(cardsOnBoard[i] == null)
+            {
+                displayPlayableZoneOn(i);
+            }
+        }
+    }
+
+    private void displayPlayableZoneOn(int i) {
     }
 }
