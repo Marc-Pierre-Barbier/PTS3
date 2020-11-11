@@ -11,6 +11,7 @@ import com.iutlaval.myapplication.Game.Decks.Deck;
 import com.iutlaval.myapplication.Game.Decks.DeckDemo;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.R;
+import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Renderer;
@@ -137,8 +138,17 @@ public class GameLogicThread extends Thread{
                 touch.onTouchEvent(event);
                 if(currentlySelected !=null)
                 {
+                    //jouer une carte
+                    int zone = playableZonesHandler.getHoveredZone(currentlySelected);
+                    if(zone != -1)
+                    {
+                        currentlySelected.setOnBoard(true);
+                        currentlySelected.setCoordinates((DrawableCard.getCardWith()+1)*zone,55F);
+                        currentlySelected.setDraggable(false);
+                    }else{
+                        currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
+                    }
                     renderer.removeToDraw(currentlySelected.getName()+"BIG");
-                    currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
                     currentlySelected=null;
                 }
                 playableZonesHandler.hidePlayableZones(renderer);

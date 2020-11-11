@@ -1,21 +1,10 @@
 package com.iutlaval.myapplication.Video.Drawables;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
-
-import com.iutlaval.myapplication.ERROR_CODE;
 import com.iutlaval.myapplication.GameActivity;
-import com.iutlaval.myapplication.InvalidDataException;
-import com.iutlaval.myapplication.Video.Rectangle;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Drawable {
 

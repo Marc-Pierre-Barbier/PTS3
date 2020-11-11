@@ -1,6 +1,7 @@
 package com.iutlaval.myapplication.Game;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.InvalidDataException;
@@ -14,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayableZonesHandler {
-    //90F au lieu de 100F car on n'a pas la pioche
-    private static final float CARD_SPACING = 90F / Board.MAX_CARD_ON_BOARD;
     private List<Drawable> playableZones;
     private Board board;
 
@@ -51,6 +50,7 @@ public class PlayableZonesHandler {
 
     }
 
+
     public void hidePlayableZones(Renderer renderer)
     {
         for(Drawable d : playableZones)
@@ -58,5 +58,27 @@ public class PlayableZonesHandler {
             renderer.removeToDraw(d);
         }
         playableZones.clear();
+    }
+
+    /**
+     * retourne le numero de la zone survolé par le drawable si la zone est vite
+     * sinon retourne -1
+     * @param card
+     * @return
+     */
+    public int getHoveredZone(Drawable card) {
+        for(int i=0 ; i< board.MAX_CARD_ON_BOARD;i++)
+        {
+            int cardX =(DrawableCard.getCardWith()+1)*i+1;
+            //es que on survole sur l'axe x
+            if(cardX > card.getX() && card.getY() < 90F && card.getY() > 50F)
+            {
+                //on a trouvé l'emplacement de la carte
+                if(board.getPlayerCardsOnBoard()[i] == null)return i;
+                else break;
+            }
+        }
+
+        return -1;
     }
 }

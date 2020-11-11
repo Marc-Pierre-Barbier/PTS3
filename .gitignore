@@ -1,4 +1,5 @@
 *.iml
+build.gradle
 .gradle
 /local.properties
 /.idea
@@ -15,3 +16,4 @@
 .cxx
 /app/release/
 /app/release/app-release.apk
+gradle/wrapper/gradle-wrapper.properties

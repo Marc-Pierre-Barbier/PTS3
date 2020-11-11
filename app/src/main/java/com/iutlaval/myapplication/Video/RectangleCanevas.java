@@ -19,10 +19,10 @@ public class RectangleCanevas extends Canvas {
      * @param paint le pinceau a utiliser
      */
     public void drawRect(@NonNull Rectangle r, @NonNull Paint paint) {
-        super.drawRect(0,
-                0F,
-                r.getWidth(),
-                r.getHeight(),
+        super.drawRect(r.getPositionX(),
+                r.getPositionY(),
+                r.getWidth()+r.getPositionX(),
+                r.getHeight()+r.getPositionY(),
                 paint);
     }
 

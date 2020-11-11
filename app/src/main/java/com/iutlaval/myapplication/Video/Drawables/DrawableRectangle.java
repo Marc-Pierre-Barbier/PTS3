@@ -20,11 +20,9 @@ public class DrawableRectangle extends Drawable{
         super(rectangle.getPositionX(),rectangle.getPositionY(),name);
         if(rectangle.getHeight() <= 0 || rectangle.getWidth() <=0)throw new InvalidDataException(name,rectangle);
 
-        Log.e("rect1",rectangle.getWidth()+"");
         rectangle.scaleRectangleToScreen();
-        Log.e("rect2",rectangle.getWidth()+"");
         Bitmap bitmap = Bitmap.createBitmap((int)rectangle.getWidth(),(int)rectangle.getHeight(), Bitmap.Config.ARGB_8888);
-        rectangle.bitmapRectangleBuilder(bitmap,color);
+        rectangle.bitmapRectangleBuilderNoCoordinates(bitmap,color);
 
         setBitmap(bitmap);
     }

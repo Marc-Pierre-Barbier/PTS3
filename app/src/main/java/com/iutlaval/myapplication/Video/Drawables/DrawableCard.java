@@ -22,8 +22,7 @@ public class DrawableCard extends Drawable{
     //ces données ne sont pas dans les digrames car sa renderais la lecture impossible
     private static final int CARD_WITH = 14;
     private static final int CARD_HEIGHT = 40;
-    private static final float HP_ATK_FONT_SIZE_OFFBOARD =60F;
-    private static final float HP_ATK_FONT_SIZE_BOARD =70F;
+    private static final float HP_ATK_FONT_SIZE =60F;
     private static final float DESCRIPTION_FONT_SIZE =26F;
     private static final float TITLE_FONT_SIZE =30F;
     private static int DESCRIPTION_TEXT_X_RES = 281;
@@ -36,9 +35,12 @@ public class DrawableCard extends Drawable{
     //des floats sont utiliser car ils prenne moin de ram que des doubles et que l'on a pas besoin de la precision supplementaire
     //dimentions
     private static final float ONBOARD_RECTANGLE_ATK_HP_WIDTH = CARD_WITH * 0.5F;
-    private static final float ONBOARD_RECTANGLE_ATK_HP_HEIGHT = CARD_HEIGHT * 0.2F;
-    private static final float ONBOARD_ATK_HP_WIDTH = 0.4F * CARD_WITH;
-    private static final float ONBOARD_ATK_HP_HEIGHT = 0.125F  * CARD_HEIGHT;
+    private static final float ONBOARD_RECTANGLE_ATK_HP_HEIGHT = CARD_HEIGHT * 0.175F;
+    private static final float ONBOARD_FRAME_X_SIZE = CARD_WITH;
+    private static final float ONBOARD_FRAME_Y_SIZE = CARD_HEIGHT*0.5F;
+    private static final float ONBOARD_ATK_HP_WIDTH = 0.45F * CARD_WITH;
+    private static final float ONBOARD_ATK_HP_HEIGHT = 0.170F  * CARD_HEIGHT;
+
     private static final float OFFBOARD_ATK_HP_WIDTH = 0.25F * CARD_WITH;
     private static final float OFFBOARD_ATK_HP_HEIGHT = 0.08F  * CARD_HEIGHT;
 
@@ -54,16 +56,14 @@ public class DrawableCard extends Drawable{
     //variables de posisions
     private final float ONBOARD_PICTURE_X = 0.0714F * CARD_WITH;
     private final float ONBOARD_PICTURE_Y = 0.0625F * CARD_HEIGHT;
-    private final float ONBOARD_ATK_X = 0.05F * CARD_WITH;
-    private final float ONBOARD_ATK_HP_Y = 0.52F * CARD_HEIGHT;
-    private final float ONBOARD_HP_X = 0.55F * CARD_WITH;
+    private final float ONBOARD_TEXT_ATK_X = 0.05F * CARD_WITH;
+    private final float ONBOARD_TEXT_ATK_HP_Y = 0.48F * CARD_HEIGHT;
+    private final float ONBOARD_TEXT_HP_X = 0.55F * CARD_WITH;
     private final float ONBOARD_TITLE_X = 0.1F * CARD_WITH;
-    private final float ONBOARD_TITLE_Y = 0.05F * CARD_HEIGHT;
+    private final float ONBOARD_TITLE_Y = 0.00F * CARD_HEIGHT;
 
-    private static final float ONBOARD_FRAME_X_SIZE = CARD_WITH;
-    private static final float ONBOARD_FRAME_Y_SIZE = CARD_HEIGHT*0.5F;
-    private static final float ONBOARD_RECTANGLE_ATK_HP_Y = CARD_HEIGHT * 0.385F;
-    private static final float ONBOARD_RECTANGLE_ATK_X = CARD_HEIGHT * 0F;
+    private static final float ONBOARD_RECTANGLE_ATK_HP_Y = CARD_HEIGHT*0.375F;
+    private static final float ONBOARD_RECTANGLE_ATK_X = CARD_WITH * 0F;
     private static final float ONBOARD_RECTANGLE_HP_X = CARD_WITH * 0.5F;
 
     private static final float OFFBOARD_PICTURE_X = 0.0787F * CARD_WITH;
@@ -180,9 +180,9 @@ public class DrawableCard extends Drawable{
         Rectangle cardOnBoardFrame = new Rectangle(x,y,ONBOARD_FRAME_X_SIZE*ratio,ONBOARD_FRAME_Y_SIZE*ratio);
         cardOnBoardFrame.scaleRectangleToScreen();
 
-        Rectangle cardOnBoardAtk = new Rectangle(x + ONBOARD_RECTANGLE_ATK_X*ratio, ONBOARD_RECTANGLE_ATK_HP_Y*ratio,ONBOARD_RECTANGLE_ATK_HP_WIDTH*ratio,ONBOARD_RECTANGLE_ATK_HP_HEIGHT*ratio);
+        Rectangle cardOnBoardAtk = new Rectangle(x + ONBOARD_RECTANGLE_ATK_X, ONBOARD_RECTANGLE_ATK_HP_Y*ratio,ONBOARD_RECTANGLE_ATK_HP_WIDTH*ratio,ONBOARD_RECTANGLE_ATK_HP_HEIGHT*ratio);
         cardOnBoardAtk.scaleRectangleToScreen();
-        Rectangle cardOnBoardHp = new Rectangle(x + ONBOARD_RECTANGLE_HP_X*ratio, ONBOARD_RECTANGLE_ATK_HP_Y*ratio,ONBOARD_RECTANGLE_ATK_HP_WIDTH*ratio,ONBOARD_RECTANGLE_ATK_HP_HEIGHT*ratio);
+        Rectangle cardOnBoardHp = new Rectangle(x + ONBOARD_RECTANGLE_HP_X, ONBOARD_RECTANGLE_ATK_HP_Y*ratio,ONBOARD_RECTANGLE_ATK_HP_WIDTH*ratio,ONBOARD_RECTANGLE_ATK_HP_HEIGHT*ratio);
         cardOnBoardHp.scaleRectangleToScreen();
 
         //creation de la bitmap qui va être rendu
@@ -228,14 +228,14 @@ public class DrawableCard extends Drawable{
     {
         if(onBoard) {
             if (atk != null)
-                cardAtkDrawable = new DrawableText(atk+"", 0, 0, toString() + "atk", ONBOARD_ATK_HP_WIDTH*ratio, ONBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE_BOARD,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
+                cardAtkDrawable = new DrawableText(atk+"", 0, 0, toString() + "atk", ONBOARD_ATK_HP_WIDTH*ratio, ONBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
             if (hp != null)
-                cardHpDrawable = new DrawableText(hp+"", 0, 0, toString() + "hp", ONBOARD_ATK_HP_WIDTH*ratio, ONBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE_BOARD,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
+                cardHpDrawable = new DrawableText(hp+"", 0, 0, toString() + "hp", ONBOARD_ATK_HP_WIDTH*ratio, ONBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
         }else{
             if (atk != null)
-                cardAtkDrawable = new DrawableText(atk + "", 0, 0, toString() + "atk", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE_OFFBOARD, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES);
+                cardAtkDrawable = new DrawableText(atk + "", 0, 0, toString() + "atk", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES);
             if (hp != null)
-                cardHpDrawable = new DrawableText(hp + "", 0, 0, toString() + "hp", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE_OFFBOARD, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES);
+                cardHpDrawable = new DrawableText(hp + "", 0, 0, toString() + "hp", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES);
         }
         setCoordinates(getX(), getY());
     }
@@ -300,8 +300,8 @@ public class DrawableCard extends Drawable{
         if (onBoard) {
             cardOnBoardDrawable.setCoordinates(x,y);
             pictureDrawable.setCoordinates(x + ONBOARD_PICTURE_X*ratio, y +ONBOARD_PICTURE_Y*ratio);
-            cardAtkDrawable.setCoordinates(x+ONBOARD_ATK_X*ratio,y + ONBOARD_ATK_HP_Y*ratio);
-            cardHpDrawable.setCoordinates(x+ONBOARD_HP_X*ratio,y + ONBOARD_ATK_HP_Y*ratio);
+            cardAtkDrawable.setCoordinates(x+ ONBOARD_TEXT_ATK_X *ratio,y + ONBOARD_TEXT_ATK_HP_Y *ratio);
+            cardHpDrawable.setCoordinates(x+ ONBOARD_TEXT_HP_X *ratio,y + ONBOARD_TEXT_ATK_HP_Y *ratio);
             cardTitle.setCoordinates(x+ONBOARD_TITLE_X*ratio,y - ONBOARD_TITLE_Y*ratio);
         }else{
             frameDrawable.setCoordinates(x,y);
@@ -343,5 +343,9 @@ public class DrawableCard extends Drawable{
     @Override
     public boolean isDraggable() {
         return draggable;
+    }
+
+    public void setDraggable(Boolean draggable) {
+        this.draggable = draggable;
     }
 }
