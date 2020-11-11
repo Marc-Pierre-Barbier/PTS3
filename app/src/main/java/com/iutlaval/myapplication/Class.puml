@@ -3,7 +3,6 @@ package Game <<Folder>> {
   package Cards <<Folder>> {
     abstract class Card {
       {static}- frameBitmap : Bitmap
-      - drawablecard :DrawableCard
       --
       + Card(String UID,Context c)
       + onCardAttack(Board board,Card enemy) : void
@@ -31,6 +30,28 @@ package Game <<Folder>> {
       + getHealth() : int
       + getName() : String
     }
+    class PlayableZonesHandler
+    {
+       --
+       + PlayableZonesHandler(Board board)
+       + displayPlayableZones(Renderer renderer)
+       + displayPlayableZonesOn(int i,Renderer renderer)
+       + hidePlayableZones(Renderer renderer)
+    }
+  }
+  class Hand
+  {
+    --
+    +Hand()
+    +pickCardFromDeck(Deck deck,int amount)
+    +fillHand(Deck deck)
+  }
+  class TouchHandler
+  {
+    - TouchDeltaX : float
+    - TouchDeltaY : float
+    - originalPositionX : float
+    - originalPositionY : float
   }
   package Players <<Folder>> {
     class Player
@@ -48,14 +69,7 @@ package Game <<Folder>> {
   class GameLogicThread
   {
     - Context cont
-    - Renderer renderer
     - boolean ready
-    - TouchHandler touch
-    - GameActivity gameActivity
-    - Deck localPlayerDeck
-    - Hand localPlayerHand
-    - Board board
-    - PlayableZonesHandler playableZonesHandler
     --
     + GameLogicThread(GameActivity gameActivity, Renderer renderer)
     + run()
@@ -65,14 +79,36 @@ package Game <<Folder>> {
     + onTouchEvent(MotionEvent event)
   }
   class Board
+  {
+    --
+    + Board()
+    + playCard() : boolean
+    + getPlayerCardsOnBoard() : Card[]
+  }
+  package Decks <<Folder>>
+  {
+    abstract class Deck
+    {
+      --
+      +shuffle()
+      + abstract getDeckName()
+    }
+    class DeckDemo
+    {
+      --
+      + DeckDemo(String id,Context context)
+      + getCards() : Stack<Card>
+      {abstract}+ getDeckName() : String
+    }
+  }
 }
 
 
 package Video <<Folder>> {
   package Drawables <<Folder>> {
-    class Drawable {
-      - x : int
-      - y : int
+    abstract class Drawable {
+      - x : float
+      - y : float
       - name : String
       - bitmap : Bitmap
       - p : Paint
@@ -82,26 +118,31 @@ package Video <<Folder>> {
       + equals(Object o) : boolean
       + setCoordinates(float x, float y) : void
       # checkPaint() : void
+      # setBitmap(Bitmap bitmap) : void
     }
     class DrawableRectangle
     {
-      # Drawable(Rectangle rectangle, String name, int color)
+      + DrawableRectangle(Rectangle rectangle, String name, int color)
+      + DrawableRectangle(Bitmap bitmap,Rectangle rectangle, String name, int color)
     }
     class DrawableBitmap
     {
-      # Drawable(Bitmap bitmap, float x_pos, float y_pos, String name, float x_size, float y_size)
-      # Drawable(Bitmap bitmap,Rectangle rectangle, String name, int color)
+      + DrawableBitmap(Bitmap bitmap, float x_pos, float y_pos, String name, float x_size, float y_size)
     }
     class DrawableText
     {
-      # Drawable(String text,float x_pos,float y_pos,String name, float x_size,float y_size,float textSize , int x_canvasRatio, int y_canvasRatio)
+      + DrawableText(String text,float x_pos,float y_pos,String name, float x_size,float y_size,float textSize , int x_canvasRatio, int y_canvasRatio)
       - cutText(int charPerLines,String text) : List<String>
     }
-    class DrawableCard
+    abstract class DrawableCard
     {
+     - ratio : int
      - onBoard : boolean
+     - draggable : boolean
      --
      + DrawableCard(Card c, float x, float y, String name, Context context)
+     + DrawableCard(Card c, float x, float y, String name, Context context,int ratio)
+     + DrawableCard(DrawableCard smallCArd, Context cont,int ratio)
      + updateHpAndAtk(Integer atk,Integer hp)
      - removeAlpha(String color)
      + drawOn(Canvas c, Paint p)
@@ -112,22 +153,31 @@ package Video <<Folder>> {
   class Renderer {
     - holder : SurfaceHolder
     - p : Paint
-    - drawingThread : DrawingThread
-    - engine : GameLogicThread
-    - toDraw : List<Drawable>
+    - needToUpdate : boolean
     --
-    + Renderer(Context context)
+    + Renderer(Context context,GameActivity gameActivity)
     + surfaceCreated(SurfaceHolder holder) : void
     + surfaceChanged(urfaceHolder surfaceHolder, int i, int i1, int i2) : void
     + surfaceDestroyed(SurfaceHolder surfaceHolder) : void
     + onDraw(Canvas canvas) : void
+    + updateFrame() : void
     + addToDraw(Drawable newElement) : boolean
+    + addToDrawWithoutUpdate(Drawable newElement) : boolean
     + moveToDraw(float x, float y, String name) : void
+    + removeToDrawWithoutUpdate(String name) : void
+    + removeToDrawWithoutUpdate(Drawable drawable) : void
     + removeToDraw(String name) : void
     + removeToDraw(Drawable toRemove) : void
     + getDrawAble(String name) : Drawable
+    + getCardOn(float x, float y) : DrawableCard
     + setEngine(GameLogicThread engine) : void
-    + updateFrame() : void
+  }
+  class DrawingThread{
+    -renderer Renderer
+    +keepdrawing boolean
+    --
+    +DrawingThread(Renderer renderer)
+    +run()
   }
   class RectangleCanevas {
     --
@@ -141,6 +191,8 @@ package Video <<Folder>> {
      + width : float
      + height : float
      --
+     + Rectange(float prostionX,float positionY,float width,float height)
+     - set(float positionX,float positionY,float width,float height)
      + scaleRectangleToScreen() : void
      + bitmapRectangleBuilder(Bitmap bitmap, int color) : void
    }
@@ -159,35 +211,56 @@ Drawable <|-- DrawableRectangle
 Drawable <|-- DrawableBitmap
 Drawable <|-- DrawableText
 
+Renderer "1" *-- DrawingThread : -drawingThread
+Renderer "1" *-- GameLogicThread : -engine
+Renderer "*" *-- Drawable : toDraw
+
 Player <|-- PlayerBot
 Player <|-- PlayerLocal
 Player <|-- PlayerAdversary
 
+DrawableCard o-- Drawable : frameDrawable
+DrawableCard *-- Drawable : OpacityRectangleDrawable
+DrawableCard *-- Drawable : PictureDrawable
+DrawableCard *-- Drawable : cardOnBoardDrawable
+DrawableCard *-- Drawable : cardDescription
+DrawableCard *-- Drawable : cardTitle
+DrawableCard *-- Drawable : cardHpDrawable
+DrawableCard *-- Drawable : cardAtkDrawable
 
-DrawableCard o-- Drawable : OpacityRectangleDrawable
-DrawableCard o-- Drawable : PictureDrawable
-DrawableCard o-- Drawable : cardOnBoardDrawable
-DrawableCard o-- Drawable : cardDescription
-DrawableCard o-- Drawable : cardTitle
-DrawableCard o-- Drawable : cardHpDrawable
-DrawableCard o-- Drawable : cardAtkDrawable
+TouchHandler *-- DrawableCard : moveEventCard
+
+
+
+PlayableZonesHandler "*" *-- Drawable : playableZones
+PlayableZonesHandler "1" *-- Board : board
+
 DrawableCard o-- Card : card
 
 DrawableCard "1" *-- "1" Rectangle : cardOnBoardFrame
 DrawableCard "1" *-- "1" Rectangle : cardOnBoardAtk
 DrawableCard "1" *-- "1" Rectangle : cardOnBoardHp
-RectangleCanevas *-- Rectangle : +rectangle
+
+Card "1" *-- DrawableCard : drawableCard
+
 
 
 Renderer "1" *-- "0_*" Drawable : toDraw
 
 GameActivity "1" *-- "1" Renderer : renderer
 
-GameLogicThread o-- Renderer
-GameLogicThread *-- Board
+GameLogicThread *-- TouchHandler : touchHandler
+GameLogicThread o-- Renderer : renderer
+GameLogicThread *-- Board : board
+GameLogicThread *-- Deck : localPlayerDeck
+GameLogicThread *-- Hand : fillHand
+GameLogicThread *-- PlayableZonesHandler : playableZonesHandler
+GameLogicThread *-- GameActivity : gameActivity
 
 Board *-- PlayerLocal : player
 Board *-- Player : adversary
+
+Deck <|-- DeckDemo
 
 Renderer o-- GameLogicThread
 @enduml

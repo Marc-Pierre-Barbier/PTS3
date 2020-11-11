@@ -3,7 +3,6 @@ package com.iutlaval.myapplication.Game;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -11,16 +10,10 @@ import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Decks.Deck;
 import com.iutlaval.myapplication.Game.Decks.DeckDemo;
 import com.iutlaval.myapplication.GameActivity;
-import com.iutlaval.myapplication.InvalidDataException;
 import com.iutlaval.myapplication.R;
-import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
-import com.iutlaval.myapplication.Video.Drawables.DrawableRectangle;
-import com.iutlaval.myapplication.Video.Rectangle;
 import com.iutlaval.myapplication.Video.Renderer;
-
-import java.util.List;
 
 public class GameLogicThread extends Thread{
 
@@ -34,6 +27,8 @@ public class GameLogicThread extends Thread{
     private Hand localPlayerHand;
     private Board board;
     private PlayableZonesHandler playableZonesHandler;
+    private DrawableCard currentlySelected = null;
+    private static final float SELECTING_OFFSET = 20F;
 
     public GameLogicThread(GameActivity gameActivity, Renderer renderer)
     {
@@ -43,7 +38,7 @@ public class GameLogicThread extends Thread{
         this.renderer = renderer;
         touch = new TouchHandler(renderer);
         localPlayerDeck = new DeckDemo("local",cont);
-        localPlayerDeck.suffle();
+        localPlayerDeck.shuffle();
         localPlayerHand = new Hand();
         localPlayerHand.fillHand(localPlayerDeck);
         this.gameActivity=gameActivity;
@@ -51,10 +46,6 @@ public class GameLogicThread extends Thread{
         playableZonesHandler = new PlayableZonesHandler(board);
         GameActivity.setGameEngine(this);
     }
-
-    private float i=0;
-    private float increm = 1F;
-
 
     @Override
     public void run() {
@@ -97,6 +88,7 @@ public class GameLogicThread extends Thread{
      * /!\ renderer.updateFrame(); va forcer le system a redessiner l'afficher qui ensuite reappelera onFrameDoneRendering() ce qui peut causer si le updateFrame() n'est pas proteger
      * une utilisation de la batterie massive
      */
+    //TODO : supprimer cette fonction si on a rien a en faire
     public void onFrameDoneRendering()
     {
     }
@@ -109,11 +101,6 @@ public class GameLogicThread extends Thread{
         return ready;
     }
 
-
-
-
-    private DrawableCard currentlySelected = null;
-    private static final float SELECTING_OFFSET = 20F;
     /**
      * relais l'evenement directement au touch Handler
      * @param event
@@ -154,7 +141,7 @@ public class GameLogicThread extends Thread{
                     currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
                     currentlySelected=null;
                 }
-                playableZonesHandler.HidePlayableZones(renderer);
+                playableZonesHandler.hidePlayableZones(renderer);
             }else{
                 touch.onTouchEvent(event);
             }

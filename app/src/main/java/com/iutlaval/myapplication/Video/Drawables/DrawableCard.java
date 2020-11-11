@@ -18,8 +18,8 @@ import com.iutlaval.myapplication.Video.Rectangle;
  * TODO : tout mettre dans des finals
  */
 public class DrawableCard extends Drawable{
-    private int ratio;
-
+    //propriéte de base utilisé pour calculer toutes les tailles est positoins
+    //ces données ne sont pas dans les digrames car sa renderais la lecture impossible
     private static final int CARD_WITH = 14;
     private static final int CARD_HEIGHT = 40;
     private static final float HP_ATK_FONT_SIZE_OFFBOARD =60F;
@@ -33,7 +33,7 @@ public class DrawableCard extends Drawable{
     private static int TEXT_ATK_HP_X_RES = 110;
     private static int TEXT_ATK_HP_Y_RES = 60;//60
 
-    //des floats sont utiliser card ils prenne moin de ram que des doubles et que l'on a pas besoin de la precision supplementaire
+    //des floats sont utiliser car ils prenne moin de ram que des doubles et que l'on a pas besoin de la precision supplementaire
     //dimentions
     private static final float ONBOARD_RECTANGLE_ATK_HP_WIDTH = CARD_WITH * 0.5F;
     private static final float ONBOARD_RECTANGLE_ATK_HP_HEIGHT = CARD_HEIGHT * 0.2F;
@@ -79,6 +79,11 @@ public class DrawableCard extends Drawable{
     private static final float CARD_ON_BOARD_DRAWABLE_WIDTH = CARD_WITH;
     private static final float CARD_ON_BOARD_DRAWABLE_HEIGHT = CARD_HEIGHT*0.667F;
 
+    /**
+     * ratio définissant la taille de l'objet
+     */
+    private int ratio;
+
     private Boolean onBoard;
     private Boolean draggable;
 
@@ -86,6 +91,7 @@ public class DrawableCard extends Drawable{
     private Drawable opacityRectangleDrawable;
     private Drawable pictureDrawable;
 
+    //TODO : optimiser si la couleur est déja en mémoire
     private Drawable cardOnBoardDrawable;
 
     private Drawable cardDescription;
@@ -195,6 +201,13 @@ public class DrawableCard extends Drawable{
         setCoordinates(getX(), getY());
     }
 
+    /**
+     * permet de crée une grande carte a partir d'une carte plus petite
+     * @param smallCArd car parante
+     * @param cont context
+     * @param ratio ratio de taille
+     * /!\ ne pas s'en servir pour juste changer la taille d'une carte/!\
+     */
     public DrawableCard(DrawableCard smallCArd, Context cont,int ratio) {
         this(smallCArd.card,smallCArd.getX(),smallCArd.getY(),smallCArd.getName()+"BIG",cont,ratio);
         draggable =false;
@@ -210,6 +223,7 @@ public class DrawableCard extends Drawable{
      * @param atk l'attaque de la carte
      * @param hp les point de vie de la carte
      */
+    //TODO supprimer la possibilité null si non utilisé
     public void updateHpAndAtk(Integer atk,Integer hp)
     {
         if(onBoard) {

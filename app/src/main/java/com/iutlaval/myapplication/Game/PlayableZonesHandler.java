@@ -25,6 +25,7 @@ public class PlayableZonesHandler {
         this.board=board;
     }
 
+    //TODO verifier si elle ne sont pas deja afficher
     public void displayPlayableZones(Renderer renderer)
     {
         Card[] cardsOnBoard = board.getPlayerCardsOnBoard();
@@ -50,7 +51,7 @@ public class PlayableZonesHandler {
 
     }
 
-    public void HidePlayableZones(Renderer renderer)
+    public void hidePlayableZones(Renderer renderer)
     {
         for(Drawable d : playableZones)
         {

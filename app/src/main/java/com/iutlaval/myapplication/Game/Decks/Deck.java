@@ -11,7 +11,7 @@ import java.util.Stack;
 public abstract class Deck {
     public abstract Stack<Card> getCards();
 
-    public void suffle()
+    public void shuffle()
     {
         Collections.shuffle(getCards());
     }

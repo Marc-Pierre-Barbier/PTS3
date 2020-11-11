@@ -25,7 +25,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     private DrawingThread drawingThread;
     private GameLogicThread engine;
     private GameActivity gameActivity;
-    private boolean contentChanged;
+    private boolean needToUpdate;
 
     private List<Drawable> toDraw;
 
@@ -65,6 +65,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      * cette fonction est appeler a chaque fois que l'utilisateur tourne son ecran
      * this function is unused since the screen is locked
      */
+    //TODO : a supprimer si elle set a rien (surment importante avec la veille)
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
     }
@@ -72,7 +73,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * on surface destruction stop the thread
      * la surface ce fait detruire aussi quand le jeu est en pause
-     * TODO kill proprement le thread et ajouter une relance sur le GameActivity
+     * TODO ajouter une relance sur le GameActivity
      * @param surfaceHolder
      */
     @Override
@@ -102,7 +103,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      * demander au moteur de faire sont travaille
      */
     public void updateFrame() {
-        contentChanged=true;
+        needToUpdate =true;
     }
 
     /**
@@ -151,7 +152,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
                 //sauve de la baterie
                 FpsTime.waitFrameTime(time);
                 if(engine != null && engine.isReady())engine.onFrameDoneRendering();
-                while(!contentChanged)
+                while(!needToUpdate)
                 {
                     try {
                         Thread.sleep(20);
@@ -159,7 +160,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
                         e.printStackTrace();
                     }
                 }
-                contentChanged=false;
+                needToUpdate =false;
             }
         }
     }
@@ -170,7 +171,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      */
     public boolean addToDraw(Drawable newElement){
         boolean returnValue = addToDrawWithoutUpdate(newElement);
-        contentChanged=true;
+        updateFrame();
         return returnValue;
     }
 
@@ -203,7 +204,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
             if(d.getName().equals(name))
             {
                 d.setCoordinates(x,y);
-                contentChanged=true;
+                updateFrame();
                 return;
             }
         }
@@ -234,7 +235,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      */
     public void removeToDraw(String name){
         removeToDrawWithoutUpdate(name);
-        contentChanged=true;
+        updateFrame();
     }
     /**
      * remove the element from the draw list
@@ -242,7 +243,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      */
     public void removeToDraw(Drawable toRemove){
         toDraw.remove(toRemove);
-        contentChanged=true;
+        updateFrame();
     }
 
 
@@ -262,10 +263,6 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         return drawable;
-    }
-
-    public void setEngine(GameLogicThread engine) {
-        this.engine = engine;
     }
 
     /**

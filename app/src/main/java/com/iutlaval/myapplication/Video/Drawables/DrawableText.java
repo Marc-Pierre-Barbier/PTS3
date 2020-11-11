@@ -10,6 +10,10 @@ import com.iutlaval.myapplication.GameActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ce code a éte particuliérement dur a implementé de maniére correct
+ * tout modification de ce code doit passer par marc car seul moi sait a quel point il est complex
+ */
 public class DrawableText extends Drawable{
     /**TODO : corriger les deformation due au changement de ratio (x_size,y_size)
      * ce constructeur permet de rendre du texte

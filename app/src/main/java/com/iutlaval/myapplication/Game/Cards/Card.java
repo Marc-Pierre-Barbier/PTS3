@@ -92,7 +92,7 @@ public abstract class Card {
      * retourne la culeur de la carte
      * la couleur s'affiche comme un filtre sur la carte
      * /!\ attention a l'opacite /!\ le format n'est PAS rgba MAIS argb
-     * #AARRGGBB
+     * #AARRGGB    //TODOB
      * je recomander une opaciter en 44 et 70
      * @return
      */
@@ -106,7 +106,6 @@ public abstract class Card {
      * @return la description
      */
     public abstract String getDescription();
-    //TODO
 
 
     /**

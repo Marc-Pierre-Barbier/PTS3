@@ -17,6 +17,7 @@ public class FpsTime {
 
     /**
      * atten exactement la durée d'une image a l'ecran a la vitesse optimal de l'ecran
+     * prend en argument un offset qui permet de reduire l'attente si le systeme a pris beaucoup de temps a génerer une image
      */
     public static void waitFrameTime(long time){
         time = (System.nanoTime()-time)/1000;

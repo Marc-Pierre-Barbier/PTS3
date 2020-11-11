@@ -31,7 +31,7 @@ public class Rectangle {
      * @param width une largeur
      * @param height une hauteur
      */
-    public void set(float positionX,float positionY,float width,float height)
+    private void set(float positionX,float positionY,float width,float height)
     {
         this.positionX=positionX;
         this.positionY=positionY;
@@ -85,4 +85,7 @@ public class Rectangle {
 
         c.drawRect(this,p);
     }
+
+    public boolean isDrawable() {
+        return getHeight() <= 0 || getWidth() <=0;}
 }

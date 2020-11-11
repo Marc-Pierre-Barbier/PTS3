@@ -101,10 +101,6 @@ public abstract class Drawable {
             p = new Paint();
     }
 
-    protected void scale(float i) {
-        bitmap = Bitmap.createScaledBitmap(this.bitmap,(int)(bitmap.getWidth()*i),(int)(bitmap.getHeight()*i),GameActivity.bilinearFiltering);
-    }
-
     /**
      * retourne si le drawable peut être deplacer en drag and drop
      * @return

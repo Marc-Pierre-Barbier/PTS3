@@ -19,12 +19,13 @@ public class Hand {
 
     public void pickCardFromDeck(Deck deck,int amount)
     {
-        for(int i = 0 ; i < NUMBER_OF_CARDS_IN_STARTING_HAND;i++)
+        for(int i = 0 ; i < amount;i++)
         {
             hand.add(deck.getCards().pop());
         }
     }
 
+    //TODO check number of card in hand
     public void fillHand(Deck deck)
     {
         pickCardFromDeck(deck,NUMBER_OF_CARDS_IN_STARTING_HAND);
