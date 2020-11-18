@@ -7,14 +7,19 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
+import com.iutlaval.myapplication.Game.Cards.CardRegistery;
 import com.iutlaval.myapplication.Game.Decks.Deck;
-import com.iutlaval.myapplication.Game.Decks.DeckDemo;
+import com.iutlaval.myapplication.Game.Decks.NetWorkDeck;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.R;
-import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Renderer;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class GameLogicThread extends Thread{
 
@@ -33,15 +38,13 @@ public class GameLogicThread extends Thread{
 
     public GameLogicThread(GameActivity gameActivity, Renderer renderer)
     {
+        new CardRegistery();
         Log.e("RESOLUTION:",""+GameActivity.screenWidth+"x"+GameActivity.screenHeight);
         ready=false;
         this.cont = gameActivity;
         this.renderer = renderer;
         touch = new TouchHandler(renderer);
-        localPlayerDeck = new DeckDemo("local",cont);
-        localPlayerDeck.shuffle();
         localPlayerHand = new Hand();
-        localPlayerHand.fillHand(localPlayerDeck);
         this.gameActivity=gameActivity;
         board=new Board();
         playableZonesHandler = new PlayableZonesHandler(board);
@@ -53,16 +56,55 @@ public class GameLogicThread extends Thread{
         //affichage de l'arriere plan
         Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
         renderer.addToDraw(new DrawableBitmap(bitmap, 0,0, "background", 100, 100 ));
-        drawHandPreview();
+        //drawHandPreview();
         //Rectangle pos = new Rectangle(0F,0F,100F,100F);
+
+        //TODO : choix du deck avant de se co au serv
+
+        final String host = "4.tcp.ngrok.io";//192.168.43.251
+        final int port = 18567;
+        ObjectInputStream clientIn=null;
+        ObjectOutputStream clientOut=null;
+        try {
+            Socket client = new Socket(host, port);
+            clientIn = new ObjectInputStream(client.getInputStream());
+            clientOut = new ObjectOutputStream(client.getOutputStream());
+        } catch (IOException e) {
+            Log.e("ERROR SERVER DEAD","srv");
+            //TODO display error and don't crash the game;
+            System.exit(1);
+        }
+        renderer.updateFrame();
 
         ready=true;
         while(true)
         {
-            //Do Stuff
-            break;
+            try {
+                String serveurCmd = (String)clientIn.readObject();
+                switch (serveurCmd)
+                {
+                    case "getDeck":
+                        //TODO get deck from player
+                        clientOut.writeObject("deckDemo");
+                        //TODO assing this deck
+                        String deckstr = (String)clientIn.readObject();
+                        localPlayerDeck = new NetWorkDeck(deckstr,gameActivity.getBaseContext());
+                        Log.e("got deck",deckstr);
+
+                        Log.e("recived","getdeck");
+                        break;
+                    case "draw":
+                        int nbcard = (Integer)clientIn.readObject();
+                        localPlayerHand.pickCardFromDeck(localPlayerDeck,nbcard);
+                        Log.e("picked",nbcard+"card");
+                        drawHandPreview();
+                        break;
+                }
+            } catch (Exception e) {
+                Log.e("ERROR DURING COMS","SERVER DIED");
+                e.printStackTrace();
+            }
         }
-        renderer.updateFrame();
     }
 
     /**
