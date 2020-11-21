@@ -14,6 +14,7 @@ import com.iutlaval.myapplication.Game.GameLogicThread;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
+import com.iutlaval.myapplication.Video.Drawables.DrawableSelfRemoving;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,13 +89,29 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
      * function ran for each frame to draw all the drawables
      * @param canvas canevas on wich to draw on
      */
+    List<Drawable> toremove = new ArrayList<>();
     @Override
     protected void onDraw(Canvas canvas) {
         //le to Array patch les crash
+
         for(Drawable d : toDraw.toArray(new Drawable[0]))
         {
+            if(d instanceof DrawableSelfRemoving)
+            {
+                if(((DrawableSelfRemoving)d).isDone())
+                {
+                    toremove.add(d);
+                }
+            }
             d.drawOn(canvas,p);
         }
+        for(Drawable d : toremove)
+        {
+            removeToDrawWithoutUpdate(d);
+        }
+        if(toremove.size() > 0)updateFrame();
+        toremove.clear();
+
     }
 
     /**

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import androidx.annotation.NonNull;
 import com.iutlaval.myapplication.GameActivity;
+import com.iutlaval.myapplication.exception.BadDrawableName;
 
 public abstract class Drawable {
 
@@ -23,7 +24,12 @@ public abstract class Drawable {
     {
         this.x=x;
         this.y=y;
+        if(name == null || name.equals("")) {
+            throw new BadDrawableName(name);
+        }
         this.name=name;
+
+
     }
 
     /**

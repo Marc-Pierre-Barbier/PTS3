@@ -14,6 +14,7 @@ import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
+import com.iutlaval.myapplication.Video.Drawables.DrawableSelfRemoving;
 import com.iutlaval.myapplication.Video.Renderer;
 
 import java.io.IOException;
@@ -32,9 +33,10 @@ public class GameLogicThread extends Thread{
     private Deck localPlayerDeck;
     private Hand localPlayerHand;
     private Board board;
-    private PlayableZonesHandler playableZonesHandler;
-    private DrawableCard currentlySelected = null;
-    private static final float SELECTING_OFFSET = 20F;
+
+
+
+    private boolean isYourTurn;
 
     public GameLogicThread(GameActivity gameActivity, Renderer renderer)
     {
@@ -43,26 +45,29 @@ public class GameLogicThread extends Thread{
         ready=false;
         this.cont = gameActivity;
         this.renderer = renderer;
-        touch = new TouchHandler(renderer);
+        touch = new TouchHandler(renderer,this,gameActivity);
         localPlayerHand = new Hand();
         this.gameActivity=gameActivity;
         board=new Board();
-        playableZonesHandler = new PlayableZonesHandler(board);
         GameActivity.setGameEngine(this);
+        isYourTurn=false;
     }
 
     @Override
     public void run() {
-        //affichage de l'arriere plan
+        //loading textures
+        Bitmap bitmapYourTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_your_turn);
         Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
+
+        //adding the background
         renderer.addToDraw(new DrawableBitmap(bitmap, 0,0, "background", 100, 100 ));
         //drawHandPreview();
         //Rectangle pos = new Rectangle(0F,0F,100F,100F);
 
         //TODO : choix du deck avant de se co au serv
 
-        final String host = "4.tcp.ngrok.io";//192.168.43.251
-        final int port = 18567;
+        final String host = "4.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
+        final int port = 17531;
         ObjectInputStream clientIn=null;
         ObjectOutputStream clientOut=null;
         try {
@@ -76,6 +81,8 @@ public class GameLogicThread extends Thread{
         }
         renderer.updateFrame();
 
+        //principe de fonctionnement : on attends une comande du server et on l'execute
+        //si quelquechose se passe alors c'est le server qu'il l'a dit
         ready=true;
         while(true)
         {
@@ -83,7 +90,7 @@ public class GameLogicThread extends Thread{
                 String serveurCmd = (String)clientIn.readObject();
                 switch (serveurCmd)
                 {
-                    case "getDeck":
+                    case COMMAND.GET_DECK:
                         //TODO get deck from player
                         clientOut.writeObject("deckDemo");
                         //TODO assing this deck
@@ -93,12 +100,19 @@ public class GameLogicThread extends Thread{
 
                         Log.e("recived","getdeck");
                         break;
-                    case "draw":
+                    case COMMAND.DRAW:
                         int nbcard = (Integer)clientIn.readObject();
                         localPlayerHand.pickCardFromDeck(localPlayerDeck,nbcard);
                         Log.e("picked",nbcard+"card");
                         drawHandPreview();
                         break;
+
+                    case COMMAND.YOURTURN:
+                        isYourTurn=true;
+                        renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapYourTurn,0,0,"yourTurn",100F,50F),1));
+                        break;
+                    default:
+                        Log.e("UNKOWN COMMAND",serveurCmd);
                 }
             } catch (Exception e) {
                 Log.e("ERROR DURING COMS","SERVER DIED");
@@ -145,61 +159,19 @@ public class GameLogicThread extends Thread{
     }
 
     /**
-     * relais l'evenement directement au touch Handler
+     * délegue l'evenement directement au touch Handler
      * @param event
      */
     public void onTouchEvent(MotionEvent event) {
-        if(isReady()){
-            //calcul y sur une echelle de 0 a 100
-            float scalled_Y = event.getY() / GameActivity.screenHeight * 100;
-            //si on clique sur une carte dans la main
-            if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                float unscalled_X = event.getX() / GameActivity.screenWidth * 100;
-                DrawableCard smallCArd = renderer.getCardOn(unscalled_X,scalled_Y);
-                if(smallCArd !=null)
-                {
-                    renderer.removeToDrawWithoutUpdate(smallCArd);
-                    playableZonesHandler.displayPlayableZones(renderer);
-                    renderer.addToDraw(smallCArd);
-                    if(currentlySelected !=null)
-                    {
-                        currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
-                        //on update pas affin d'avoir un rendu plus fluide au moment de mettre l'aure carte
-                        renderer.removeToDrawWithoutUpdate(currentlySelected.getName()+"BIG");
-                    }
-                    currentlySelected = smallCArd;
-                    DrawableCard bigCard = new DrawableCard(smallCArd,cont,2);
-                    renderer.addToDraw(bigCard);
-                    bigCard.setCoordinates(72F,10F);
-                    smallCArd.setCoordinates(smallCArd.getX(),smallCArd.getY() - SELECTING_OFFSET);
+        //if(isReady())touch.onTouchEvent(event);
+    }
 
-                }
-                touch.onTouchEvent(event);
-            }else if(event.getAction() == MotionEvent.ACTION_UP){
-                //currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
-                touch.onTouchEvent(event);
-                if(currentlySelected !=null)
-                {
-                    //jouer une carte
-                    int zone = playableZonesHandler.getHoveredZone(currentlySelected);
-                    if(zone != -1)
-                    {
-                        currentlySelected.setOnBoard(true);
-                        currentlySelected.setCoordinates((DrawableCard.getCardWith()+1)*zone,55F);
-                        currentlySelected.setDraggable(false);
-                    }else{
-                        currentlySelected.setCoordinates(currentlySelected.getX(),currentlySelected.getY() + SELECTING_OFFSET);
-                    }
-                    renderer.removeToDraw(currentlySelected.getName()+"BIG");
-                    currentlySelected=null;
-                }
-                playableZonesHandler.hidePlayableZones(renderer);
-            }else{
-                touch.onTouchEvent(event);
-            }
-        }
-
+    public boolean isYourTurn() {
+        return isYourTurn;
     }
 
 
+    public Board getBoard() {
+        return board;
+    }
 }

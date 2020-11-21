@@ -33,4 +33,5 @@ public class DrawableBitmap extends Drawable{
 
         setBitmap(Bitmap.createScaledBitmap(bitmap, (int)x_scaled_size, (int)y_scaled_size, GameActivity.bilinearFiltering));
     }
+
 }
