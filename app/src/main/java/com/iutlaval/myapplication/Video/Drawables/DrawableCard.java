@@ -345,6 +345,11 @@ public class DrawableCard extends Drawable{
         return draggable;
     }
 
+    public boolean isOnBoard()
+    {
+        return onBoard;
+    }
+
     public void setDraggable(Boolean draggable) {
         this.draggable = draggable;
     }

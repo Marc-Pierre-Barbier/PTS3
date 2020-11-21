@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -24,7 +25,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder;
     private Paint p;
     private DrawingThread drawingThread;
-    private GameLogicThread engine;
+    private static GameLogicThread engine;
     private GameActivity gameActivity;
     private boolean needToUpdate;
 
@@ -143,8 +144,20 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
             while(getWidth()==0);
             GameActivity.screenHeight=renderer.getHeight() < renderer.getWidth() ? renderer.getHeight() : renderer.getWidth();
             GameActivity.screenWidth=renderer.getHeight() > renderer.getWidth() ? renderer.getHeight() : renderer.getWidth();
+
+            if(engine != null && engine.isAlive())
+            {
+                Log.e("RENDERER","OLD ENGINE DETECTED TERMINATING");
+                engine.terminate();
+                while (!engine.isAlive());
+            }
+
+            Log.i("RENDERER","STARTING ENGINE");
             engine = new GameLogicThread(gameActivity,renderer);
             engine.start();
+            while (!engine.isReady());
+            Log.i("RENDERER","ENGINE STARTED");
+
 
             while (keepDrawing) {
                 Canvas canvas = null;
@@ -308,5 +321,11 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
         }
         return null;
 
+    }
+
+    public void terminate()
+    {
+        if(drawingThread != null)drawingThread.keepDrawing=false;
+        if(engine !=null)engine.terminate();
     }
 }

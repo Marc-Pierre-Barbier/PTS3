@@ -71,7 +71,7 @@ public class PlayableZonesHandler {
         {
             int cardX =(DrawableCard.getCardWith()+1)*i+1;
             //es que on survole sur l'axe x
-            if(cardX > card.getX() && card.getY() < 90F && card.getY() > 50F)
+            if(cardX > card.getX() && card.getY() < 75F/*90F orrigine */ && card.getY() > 50F)
             {
                 //on a trouvé l'emplacement de la carte
                 if(board.getPlayerCardsOnBoard()[i] == null)return i;

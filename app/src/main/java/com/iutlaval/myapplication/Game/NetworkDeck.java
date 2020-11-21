@@ -1,4 +1,4 @@
-package com.iutlaval.myapplication.Game.Decks;
+package com.iutlaval.myapplication.Game;
 
 import android.content.Context;
 
@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class NetWorkDeck extends Deck{
+public class NetworkDeck{
     Stack<Card> cards;
-    public NetWorkDeck(String deckstring, Context context)
+    public NetworkDeck(String deckstring, Context context)
     {
         cards = new Stack<>();
         int nbcarte=0;
@@ -33,13 +33,7 @@ public class NetWorkDeck extends Deck{
         }
     }
 
-    @Override
     public Stack<Card> getCards() {
         return cards;
-    }
-
-    @Override
-    public String getDeckName() {
-        return null;
     }
 }

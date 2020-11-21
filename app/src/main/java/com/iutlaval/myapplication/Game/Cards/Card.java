@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.iutlaval.myapplication.Game.Board;
-import com.iutlaval.myapplication.Game.Players.Player;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 
@@ -22,31 +21,6 @@ public abstract class Card {
     {
         drawableCard = new DrawableCard(this,0,0,UID,c);
     }
-
-    /**
-     * *cette methode est appeler a chaque fois que la carte attaque
-     * @param board
-     */
-    public void onCardAttack(Board board,Card enemy){}
-
-    /**
-     * cette methode est appeler quand la carte est jouer
-     * elle se fait appler par board.java
-     * @param board
-     */
-    public void onCardPlayed(Board board, Player p){}
-
-    /**
-     * cette methode est appeler quand la carte est detruite
-     * @param board
-     */
-    public void onCardDeath(Board board){}
-
-    /**
-     * cette methode est appeler quand le tour commance
-     * @param board
-     */
-    public void onTurnBegin(Board board){}
 
     /**
      * SURTOUT NE PAS @OVERRIDE

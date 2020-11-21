@@ -43,6 +43,21 @@ public class GameActivity extends Activity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //kill les threads
+        System.exit(0);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (renderer != null) renderer.terminate();
+        gameEngine = null;
+        renderer = null;
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(gameEngine != null)gameEngine.onTouchEvent(event);
         return super.onTouchEvent(event);
