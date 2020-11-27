@@ -1,14 +1,20 @@
 package com.iutlaval.myapplication.Game;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import androidx.fragment.app.DialogFragment;
+
+import com.iutlaval.myapplication.DeckPickDialogue;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.CardRegistery;
 import com.iutlaval.myapplication.GameActivity;
+import com.iutlaval.myapplication.MainActivity;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
@@ -38,10 +44,12 @@ public class GameLogicThread extends Thread{
     private boolean isYourTurn;
     private boolean cancelled;
     private Socket client;
+    private String deckName;
 
-    public GameLogicThread(GameActivity gameActivity, Renderer renderer)
+    public GameLogicThread(GameActivity gameActivity, String deckName, Renderer renderer)
     {
         new CardRegistery();
+        this.deckName=deckName;
         Log.e("RESOLUTION:",""+GameActivity.screenWidth+"x"+GameActivity.screenHeight);
         ready=false;
         this.cont = gameActivity;
@@ -57,6 +65,8 @@ public class GameLogicThread extends Thread{
 
     @Override
     public void run() {
+        //pickDeck();
+
         //loading textures
         Bitmap bitmapYourTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_your_turn);
         Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
@@ -71,7 +81,7 @@ public class GameLogicThread extends Thread{
         //TODO : choix du deck avant de se co au serv
 
         final String host = "4.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 17531;
+        final int port = 18240;
 
         try {
             client = new Socket(host, port);
@@ -94,8 +104,7 @@ public class GameLogicThread extends Thread{
                 switch (serveurCmd)
                 {
                     case COMMAND.GET_DECK:
-                        //TODO get deck from player
-                        clientOut.writeObject("deckDemo");
+                        clientOut.writeObject(deckName);
                         //TODO assing this deck
                         String deckstr = (String)clientIn.readObject();
                         deck = new NetworkDeck(deckstr,gameActivity.getBaseContext());
@@ -194,6 +203,10 @@ public class GameLogicThread extends Thread{
         return board;
     }
 
+    /**
+     * cette fonction a pour rôle de kill le thread
+     * vu que Thread.destroy() est déprecier c'est la seul methode possible;
+     */
     public void terminate() {
         ready=false;
         try {

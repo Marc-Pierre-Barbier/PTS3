@@ -53,12 +53,6 @@ package Game <<Folder>> {
     - originalPositionX : float
     - originalPositionY : float
   }
-  package Players <<Folder>> {
-    class Player
-    class PlayerBot
-    class PlayerLocal
-    class PlayerAdversary
-  }
   class GameActivity
   {
     + onCreate()
@@ -215,10 +209,6 @@ Renderer "1" *-- DrawingThread : -drawingThread
 Renderer "1" *-- GameLogicThread : -engine
 Renderer "*" *-- Drawable : toDraw
 
-Player <|-- PlayerBot
-Player <|-- PlayerLocal
-Player <|-- PlayerAdversary
-
 DrawableCard o-- Drawable : frameDrawable
 DrawableCard *-- Drawable : OpacityRectangleDrawable
 DrawableCard *-- Drawable : PictureDrawable
@@ -256,9 +246,6 @@ GameLogicThread *-- Deck : localPlayerDeck
 GameLogicThread *-- Hand : fillHand
 GameLogicThread *-- PlayableZonesHandler : playableZonesHandler
 GameLogicThread *-- GameActivity : gameActivity
-
-Board *-- PlayerLocal : player
-Board *-- Player : adversary
 
 Deck <|-- DeckDemo
 

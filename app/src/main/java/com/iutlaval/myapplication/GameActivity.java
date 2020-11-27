@@ -33,7 +33,11 @@ public class GameActivity extends Activity {
         Display display = getWindowManager().getDefaultDisplay();
         FpsTime.init(display);
 
-        renderer = new Renderer(getBaseContext(),this);
+        String deck = getIntent().getStringExtra("DECK");
+
+        renderer = new Renderer(getBaseContext(),deck,this);
+
+
 
         setContentView(renderer);
     }

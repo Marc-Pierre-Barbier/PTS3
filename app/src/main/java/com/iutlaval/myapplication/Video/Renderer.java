@@ -30,10 +30,12 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     private boolean needToUpdate;
 
     private List<Drawable> toDraw;
+    private String deckName;
 
-    public Renderer(Context context, GameActivity gameActivity) {
+    public Renderer(Context context, String deck, GameActivity gameActivity) {
         super(context);
         this.gameActivity=gameActivity;
+        this.deckName=deck;
 
         holder = getHolder();
         holder.addCallback(this);
@@ -153,7 +155,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             Log.i("RENDERER","STARTING ENGINE");
-            engine = new GameLogicThread(gameActivity,renderer);
+            engine = new GameLogicThread(gameActivity,deckName,renderer);
             engine.start();
             while (!engine.isReady());
             Log.i("RENDERER","ENGINE STARTED");
