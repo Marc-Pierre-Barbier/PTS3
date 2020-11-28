@@ -4,12 +4,9 @@ import android.content.Context;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.CardRegistery;
-import com.iutlaval.myapplication.Game.Cards.DemoCard;
-import com.iutlaval.myapplication.Game.Cards.DemoCard2;
+import com.iutlaval.myapplication.Game.Cards.Mythes_Perséphone;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 public class NetworkDeck{
@@ -27,7 +24,7 @@ public class NetworkDeck{
                 cards.add((Card) con.newInstance("nas"+nbcarte,context));
             } catch (Exception e) {
                 e.printStackTrace();
-                cards.add(new DemoCard("nas"+nbcarte,context));
+                cards.add(new Mythes_Perséphone("nas"+nbcarte,context));
             }
             nbcarte++;
         }

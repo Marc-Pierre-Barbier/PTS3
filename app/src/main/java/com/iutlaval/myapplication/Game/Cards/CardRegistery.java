@@ -10,8 +10,8 @@ public class CardRegistery {
     {
         registry = new ArrayList<>();
 
-        registry.add(DemoCard.class);
-        registry.add(DemoCard2.class);
+        registry.add(Mythes_Perséphone.class);
+        registry.add(Mythes_Chiron.class);
 
 
 

@@ -116,5 +116,22 @@ public abstract class Card {
      */
     public abstract String getName();
 
+    /**
+     * cette fonction retourne le coût en mana de la carte qui sera afficher
+     * @return le cout
+     */
+    public abstract int getCost();
+
+    /**
+     * cette fonction retourne le lien wikipédia de la carte qui sera afficher
+     * @return le lien wikipedia
+     */
+    public abstract String getWikipediaLink();
+
+    /**
+     * cette fonction retourne la catégorie de la carte qui sera afficher
+     * @return la categorie
+     */
+    public abstract String getCategorie();
 }
 
