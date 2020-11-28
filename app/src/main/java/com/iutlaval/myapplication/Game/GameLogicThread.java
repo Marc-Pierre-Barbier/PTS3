@@ -124,6 +124,29 @@ public class GameLogicThread extends Thread{
                         renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapYourTurn,0,0,"yourTurn",100F,50F),1));
                         break;
 
+                    case COMMAND.PUT_CARD:
+                        //TODO put card on the battlefield
+                        break;
+
+                    case COMMAND.SHUFFLE_DECK:
+                        //TODO shuffle deck
+                        break;
+
+                    case COMMAND.SELECT_CARD:
+                        //TODO select a card
+                        break;
+                    case COMMAND.ATTACK:
+                        //TODO attack
+                        break;
+                    case COMMAND.DEFEND:
+                        //TODO defend
+                        break;
+                    case COMMAND.CAST_SPELL:
+                        //TODO cast spell
+                        break;
+                    case COMMAND.PASS_TURN:
+                        //TODO pass turn
+                        break;
                     default:
                         Log.e("UNKOWN COMMAND",serveurCmd);
                 }
