@@ -51,7 +51,7 @@ public class Mythes_Perséphone extends Card{
     }
 
     /**
-     * cette fonction retourne la catégorie de la carte qui sera afficher
+     * cette fonction retourne la catégorie de la carte qui sera affichée
      *
      * @return la categorie
      */

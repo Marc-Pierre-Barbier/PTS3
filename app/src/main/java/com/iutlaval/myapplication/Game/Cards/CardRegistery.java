@@ -11,6 +11,7 @@ public class CardRegistery {
         registry = new ArrayList<>();
 
         //Ce sont les cartes du deck Mythes et légendes grecs
+        //Créatures
         registry.add(Mythes_Perséphone.class);
         registry.add(Mythes_Chiron.class);
         registry.add(Mythes_Dédale.class);
@@ -30,7 +31,7 @@ public class CardRegistery {
         registry.add(Mythes_Hermione.class);
         registry.add(Mythes_Amazones.class);
         registry.add(Mythes_Eole.class);
-
+        //Sorts
         registry.add(Mythes_Titanomachie.class);
         registry.add(Mythes_12_Travaux.class);
         registry.add(Mythes_Icar.class);
@@ -43,10 +44,39 @@ public class CardRegistery {
         registry.add(Mythes_Kunée.class);
         registry.add(Mythes_Guerre_Sept_Chefs.class);
 
-
-
-
-
+        //Cartes du deck Rennaissance
+        //créatures
+        registry.add(Renaissance_Soliman.class);
+        registry.add(Rennaissance_Francois.class);
+        registry.add(Rennaissance_Charles.class);
+        registry.add(Rennaissance_Casimir.class);
+        registry.add(Rennaissance_Henri.class);
+        registry.add(Rennaissance_Henri_8.class);
+        registry.add(Rennaissance_Constantin.class);
+        registry.add(Renaissance_Mehmet.class);
+        registry.add(Renaissance_Copernic.class);
+        registry.add(Rennaissance_Leonard.class);
+        registry.add(Rennaissance_Michel_Ange.class);
+        registry.add(Rennaissance_Rabelais.class);
+        registry.add(Rennaissance_Machiavel.class);
+        registry.add(Rennaissance_Ivan.class);
+        registry.add(Rennaissance_Elisabeth.class);
+        registry.add(Rennaissance_Vlad.class);
+        registry.add(Rennaissance_Nobunaga.class);
+        registry.add(Rennaissance_Chatherine.class);
+        registry.add(Rennaissance_Ferdinand.class);
+        registry.add(Rennaissance_Isabelle.class);
+        registry.add(Rennaissance_Skanderberg.class);
+        registry.add(Rennaissance_Shakespeare.class);
+        //sorts
+        registry.add(Rennaissance_Fin_Guerre_Cent_Ans.class);
+        registry.add(Rennaissance_Guerres_Italie.class);
+        registry.add(Rennaissance_Chute_Constantinople.class);
+        registry.add(Rennaissance_Presse_Imprimer.class);
+        registry.add(Rennaissance_Decouverte_Amerique.class);
+        registry.add(Rennaissance_Concile_Trente.class);
+        registry.add(Rennaissance_Succession_Bourgogne.class);
+        registry.add(Rennaissance_Reforme.class);
 
     }
 
