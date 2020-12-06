@@ -78,6 +78,39 @@ public class CardRegistery {
         registry.add(Rennaissance_Succession_Bourgogne.class);
         registry.add(Rennaissance_Reforme.class);
 
+        //Cartes du deck Moyen-age
+        //créatures
+        registry.add(Moyen_Age_Clovis.class);
+        registry.add(Moyen_Age_Charlemagne.class);
+        registry.add(Moyen_Age_Hugue.class);
+        registry.add(Moyen_Age_Philippe.class);
+        registry.add(Moyen_Age_Louis.class);
+        registry.add(Moyen_Age_CharlesV.class);
+        registry.add(Moyen_Age_CharlesVII.class);
+        registry.add(Moyen_Age_PhilippeIV.class);
+        registry.add(Moyen_Age_Jeanne.class);
+        registry.add(Moyen_Age_Jean.class);
+        registry.add(Moyen_Age_Pierre.class);
+        registry.add(Moyen_Age_Etienne.class);
+        registry.add(Moyen_Age_Ferré.class);
+        registry.add(Moyen_Age_Isabelle.class);
+        registry.add(Moyen_Age_Jean_Vienne.class);
+        registry.add(Moyen_Age_Sire_Jean.class);
+        registry.add(Moyen_Age_Philippe_Cacqueray.class);
+        registry.add(Moyen_Age_Guillaume.class);
+        registry.add(Moyen_Age_Christine.class);
+        registry.add(Moyen_Age_Chretien_De_Troyes.class);
+        registry.add(Moyen_Age_Pierre_Ermite.class);
+        registry.add(Moyen_Age_Roland.class);
+        //sorts
+        registry.add(Moyen_Age_Traite_Verdun.class);
+        registry.add(Moyen_Age_Peste.class);
+        registry.add(Moyen_Age_Croisade.class);
+        registry.add(Moyen_Age_Guerre_100.class);
+        registry.add(Moyen_Age_Malediction_Templier.class);
+        registry.add(Moyen_Age_Prise_Sainte_Terre.class);
+        registry.add(Moyen_Age_Heresie_Cathares.class);
+        registry.add(Moyen_Age_Pouvoir_Du_Franc.class);
     }
 
     public static int get(Class<? extends Card> class1) {
