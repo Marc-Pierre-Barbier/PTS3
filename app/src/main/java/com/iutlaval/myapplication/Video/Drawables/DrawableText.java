@@ -15,7 +15,7 @@ import java.util.List;
  * tout modification de ce code doit passer par marc car seul moi sait a quel point il est complex
  */
 public class DrawableText extends Drawable{
-    /**TODO : corriger les deformation due au changement de ratio (x_size,y_size)
+    /**
      * ce constructeur permet de rendre du texte
      * @param text le texte a rendre
      * @param x_pos position en x du texte
@@ -63,7 +63,8 @@ public class DrawableText extends Drawable{
     private List<String> cutText(int charPerLines,String text)
     {
         List<String> output = new ArrayList<>();
-        //TODO cut text in lines
+
+        //cut text in lines
         StringBuilder nextLine = new StringBuilder(charPerLines);
         for (String word : text.split(" ")) {
             if(word.length() < charPerLines)

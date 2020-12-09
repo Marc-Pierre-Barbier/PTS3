@@ -9,7 +9,6 @@ import com.iutlaval.myapplication.Video.Rectangle;
 public class DrawableRectangle extends Drawable{
     /**
      * ce constructeur n'est pas rapide essayer de l'utiliser le moin possible
-     * TODO : optimize it
      *
      * ce constructeur dessine un rectangle avec la couleur donné en argument
      * @param rectangle recange cooresspondant a la surface a dessiner

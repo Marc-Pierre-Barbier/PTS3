@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -20,6 +21,7 @@ import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Drawables.DrawableSelfRemoving;
+import com.iutlaval.myapplication.Video.Drawables.DrawableText;
 import com.iutlaval.myapplication.Video.Renderer;
 
 import java.io.IOException;
@@ -78,10 +80,8 @@ public class GameLogicThread extends Thread{
 
         ready=true;
 
-        //TODO : choix du deck avant de se co au serv
-
         final String host = "4.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 18240;
+        final int port = 14307;
 
         try {
             client = new Socket(host, port);
@@ -97,6 +97,8 @@ public class GameLogicThread extends Thread{
         //principe de fonctionnement : on attends une comande du server et on l'execute
         //si quelquechose se passe alors c'est le server qu'il l'a dit
 
+
+
         while(ready && !cancelled)
         {
             try {
@@ -105,7 +107,6 @@ public class GameLogicThread extends Thread{
                 {
                     case COMMAND.GET_DECK:
                         clientOut.writeObject(deckName);
-                        //TODO assing this deck
                         String deckstr = (String)clientIn.readObject();
                         deck = new NetworkDeck(deckstr,gameActivity.getBaseContext());
                         Log.e("got deck",deckstr);
@@ -146,6 +147,13 @@ public class GameLogicThread extends Thread{
                         break;
                     case COMMAND.PASS_TURN:
                         //TODO pass turn
+                        break;
+                    case COMMAND.POPUP:
+                        String recivedMessage = (String)clientIn.readObject();
+                        Toast t = new Toast(gameActivity);
+                        t.setText(recivedMessage);
+                        t.setDuration(Toast.LENGTH_LONG);
+                        t.show();
                         break;
                     default:
                         Log.e("UNKOWN COMMAND",serveurCmd);
@@ -241,5 +249,23 @@ public class GameLogicThread extends Thread{
 
         interrupt();
 
+    }
+}
+
+/**
+ * ce thread a pour role de repondre pong au requette udp contenant ping
+ *
+ * cela sert a verifier sur le clien et présent sans blockage
+ */
+class UDPPingThread extends Thread
+{
+    public UDPPingThread()
+    {
+
+    }
+
+    @Override
+    public void run() {
+        super.run();
     }
 }

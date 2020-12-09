@@ -67,9 +67,8 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * cette fonction est appeler a chaque fois que l'utilisateur tourne son ecran
-     * this function is unused since the screen is locked
+     * cette fonction ne sert a rien vu que l'on ne peut pas tourner l'ecran et on ne peut pas la supprimer donc elle est vide
      */
-    //TODO : a supprimer si elle set a rien (surment importante avec la veille)
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
     }
@@ -77,7 +76,6 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * on surface destruction stop the thread
      * la surface ce fait detruire aussi quand le jeu est en pause
-     * TODO ajouter une relance sur le GameActivity
      * @param surfaceHolder
      */
     @Override

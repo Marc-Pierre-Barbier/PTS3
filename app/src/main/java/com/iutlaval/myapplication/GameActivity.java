@@ -20,9 +20,6 @@ public class GameActivity extends Activity {
     public static int screenHeight=0;
     public static boolean bilinearFiltering = true;
 
-    public static boolean isMultiplayer() {
-        return false;//TODO implement it
-    }
     private Renderer renderer;
 
     @Override

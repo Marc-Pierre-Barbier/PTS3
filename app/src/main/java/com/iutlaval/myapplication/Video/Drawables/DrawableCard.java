@@ -15,7 +15,6 @@ import com.iutlaval.myapplication.Video.Rectangle;
 
 /**
  * TOUT LES NUMEROS QUI NE SONT PAS DANS DES FINAL SONT DES RATIO PERMETTANT DE METTRE TOUT A L ECHCELLE
- * TODO : tout mettre dans des finals
  */
 public class DrawableCard extends Drawable{
     //propriéte de base utilisé pour calculer toutes les tailles est positoins
@@ -150,8 +149,6 @@ public class DrawableCard extends Drawable{
      */
     public DrawableCard(Card c, float x, float y, String name, Context context,int ratio){
         super(x,y,name);
-        //super(c.getFrameBitmap(context),x,y,name,CARD_WITH*ratio,CARD_HEIGHT*ratio);//todo replace this with a con
-
         this.draggable =true;
         this.onBoard=false;
         this.ratio=ratio;

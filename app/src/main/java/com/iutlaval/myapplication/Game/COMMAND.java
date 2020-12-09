@@ -11,5 +11,6 @@ public final class COMMAND {
     public static final String DEFEND = "defend";
     public static final String CAST_SPELL = "castSpell";
     public static final String PASS_TURN = "passTurn";
+    public static final String POPUP = "pupup";
 
 }
