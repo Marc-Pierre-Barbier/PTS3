@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Chute_Constantinople extends Card {
+public class Renaissance_Guerres_Italie extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Chute_Constantinople(String UID, Context c) {
+    public Renaissance_Guerres_Italie(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Chute_Constantinople extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_chute_constantinople;
+        return R.drawable.t_c_guerres_italie;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Chute_Constantinople extends Card {
      */
     @Override
     public String getDescription() {
-        return "declenche tous les râles d'agonie";
+        return "toutes les creatures gagnent -2/-0";
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Chute_Constantinople extends Card {
      */
     @Override
     public String getName() {
-        return "Chute de Constantinople";
+        return "Guerres d'Italie";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Chute_Constantinople extends Card {
      */
     @Override
     public int getCost() {
-        return 6;
+        return 2;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Chute_Constantinople extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Chute_de_Constantinople";
+        return "https://fr.wikipedia.org/wiki/Guerres_d%27Italie";
     }
 
     /**

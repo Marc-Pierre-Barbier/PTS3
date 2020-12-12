@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Michel_Ange extends Card {
+public class Renaissance_Chute_Constantinople extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Michel_Ange(String UID, Context c) {
+    public Renaissance_Chute_Constantinople(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Michel_Ange extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_michel_ange;
+        return R.drawable.t_c_chute_constantinople;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Michel_Ange extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: Vous pouvez jouer une créature de votre main avec un coût de mana de 3 ou moins";
+        return "declenche tous les râles d'agonie";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Michel_Ange extends Card {
      */
     @Override
     public int getAttack() {
-        return 1;
+        return 0;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Michel_Ange extends Card {
      */
     @Override
     public int getHealth() {
-        return 1;
+        return 0;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Michel_Ange extends Card {
      */
     @Override
     public String getName() {
-        return "Michel-Ange, Maître Sculpteur";
+        return "Chute de Constantinople";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Michel_Ange extends Card {
      */
     @Override
     public int getCost() {
-        return 2;
+        return 6;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Michel_Ange extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Michel-Ange";
+        return "https://fr.wikipedia.org/wiki/Chute_de_Constantinople";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Michel_Ange extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Artiste";
+        return "Evénements";
     }
 }

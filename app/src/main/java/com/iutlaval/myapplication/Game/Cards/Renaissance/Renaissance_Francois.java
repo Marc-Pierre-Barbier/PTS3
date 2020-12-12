@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Francois extends Card {
+public class Renaissance_Francois extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Francois(String UID, Context c) {
+    public Renaissance_Francois(String UID, Context c) {
         super(UID, c);
     }
 

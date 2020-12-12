@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Leonard extends Card {
+public class Renaissance_Decouverte_Amerique extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Leonard(String UID, Context c) {
+    public Renaissance_Decouverte_Amerique(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Leonard extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_leonard;
+        return R.drawable.t_c_decouverte_amerique;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Leonard extends Card {
      */
     @Override
     public String getDescription() {
-        return "ETB: Déclanche un rale d'agonie aléatoire";
+        return "Regardez les 4 premières cartes de votre deck, choississez en une, mettez la dans votre main";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Leonard extends Card {
      */
     @Override
     public int getAttack() {
-        return 2;
+        return 0;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Leonard extends Card {
      */
     @Override
     public int getHealth() {
-        return 2;
+        return 0;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Leonard extends Card {
      */
     @Override
     public String getName() {
-        return "Léonard de Vinci, Visionnaire sans limites";
+        return "Découverte de l'Amérique";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Leonard extends Card {
      */
     @Override
     public int getCost() {
-        return 4;
+        return 2;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Leonard extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/L%C3%A9onard_de_Vinci";
+        return "https://fr.wikipedia.org/wiki/D%C3%A9couverte_et_exploration_de_l%27Am%C3%A9rique";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Leonard extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Scientifique, Artiste";
+        return "Evénements";
     }
 }

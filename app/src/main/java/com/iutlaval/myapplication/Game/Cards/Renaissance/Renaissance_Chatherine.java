@@ -5,15 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Skanderberg extends Card {
-
+public class Renaissance_Chatherine extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Skanderberg(String UID, Context c) {
+    public Renaissance_Chatherine(String UID, Context c) {
         super(UID, c);
     }
 
@@ -24,7 +23,7 @@ public class Rennaissance_Skanderberg extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_skanderberg;
+        return R.drawable.t_c_catherine;
     }
 
     /**
@@ -34,7 +33,7 @@ public class Rennaissance_Skanderberg extends Card {
      */
     @Override
     public String getDescription() {
-        return "Défenseur";
+        return null;
     }
 
     /**
@@ -44,7 +43,7 @@ public class Rennaissance_Skanderberg extends Card {
      */
     @Override
     public int getAttack() {
-        return 1;
+        return 3;
     }
 
     /**
@@ -54,7 +53,7 @@ public class Rennaissance_Skanderberg extends Card {
      */
     @Override
     public int getHealth() {
-        return 5;
+        return 2;
     }
 
     /**
@@ -64,7 +63,7 @@ public class Rennaissance_Skanderberg extends Card {
      */
     @Override
     public String getName() {
-        return "Skanderberg, Libérateur de l'Albanie";
+        return "Catherine de Medicis, Reine-Mère de France";
     }
 
     /**
@@ -74,7 +73,7 @@ public class Rennaissance_Skanderberg extends Card {
      */
     @Override
     public int getCost() {
-        return 3;
+        return 2;
     }
 
     /**
@@ -84,7 +83,7 @@ public class Rennaissance_Skanderberg extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Scanderbeg";
+        return "https://fr.wikipedia.org/wiki/Catherine_de_M%C3%A9dicis";
     }
 
     /**
@@ -94,6 +93,6 @@ public class Rennaissance_Skanderberg extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Politicien, Militaire";
+        return "Politicien";
     }
 }

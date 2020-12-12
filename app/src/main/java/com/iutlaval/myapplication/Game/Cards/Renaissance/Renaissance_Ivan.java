@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Constantin extends Card {
+public class Renaissance_Ivan extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Constantin(String UID, Context c) {
+    public Renaissance_Ivan(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Constantin extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_constantin;
+        return R.drawable.t_c_ivan;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Constantin extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: Sacrifier une autre de vos créature";
+        return "Quand il arrive sur le terrain, il échange ses points de vie et d'attaque de n'importe quelle créature jusqu'à la fin du tour";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Constantin extends Card {
      */
     @Override
     public int getAttack() {
-        return 7;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Constantin extends Card {
      */
     @Override
     public int getHealth() {
-        return 7;
+        return 1;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Constantin extends Card {
      */
     @Override
     public String getName() {
-        return "Constantin XI, Dernier Empereur Romain";
+        return "Ivan IV, le Terrible";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Constantin extends Card {
      */
     @Override
     public int getCost() {
-        return 5;
+        return 1;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Constantin extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Constantin_XI_Pal%C3%A9ologue";
+        return "https://fr.wikipedia.org/wiki/Ivan_le_Terrible";
     }
 
     /**

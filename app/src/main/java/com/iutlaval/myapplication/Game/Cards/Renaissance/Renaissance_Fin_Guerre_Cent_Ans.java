@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Casimir extends Card {
+public class Renaissance_Fin_Guerre_Cent_Ans extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Casimir(String UID, Context c) {
+    public Renaissance_Fin_Guerre_Cent_Ans(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Casimir extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_casimir;
+        return R.drawable.t_c_fin_guerre_cent_ans;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Casimir extends Card {
      */
     @Override
     public String getDescription() {
-        return "Ra: une autre créature que vous controller gagne +4/+4";
+        return "toutes les creatures regagnent leurs points d'attaque et points de vie d'origine";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Casimir extends Card {
      */
     @Override
     public int getAttack() {
-        return 4;
+        return 0;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Casimir extends Card {
      */
     @Override
     public int getHealth() {
-        return 4;
+        return 0;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Casimir extends Card {
      */
     @Override
     public String getName() {
-        return "Casimir IV, Soutien à la Ligue de Prusse";
+        return "Fin de la Guerre de Cent Ans";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Casimir extends Card {
      */
     @Override
     public int getCost() {
-        return 7;
+        return 3;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Casimir extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Casimir_IV_Jagellon";
+        return "https://fr.wikipedia.org/wiki/Guerre_de_Cent_Ans";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Casimir extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Militaire, Politicien";
+        return "Evénement";
     }
 }

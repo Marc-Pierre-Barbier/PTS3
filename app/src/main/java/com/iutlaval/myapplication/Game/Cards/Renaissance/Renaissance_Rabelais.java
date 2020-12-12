@@ -5,14 +5,15 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Elisabeth extends Card {
+public class Renaissance_Rabelais extends Card {
+
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Elisabeth(String UID, Context c) {
+    public Renaissance_Rabelais(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +24,7 @@ public class Rennaissance_Elisabeth extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_elisabeth;
+        return R.drawable.t_c_rabelais;
     }
 
     /**
@@ -53,7 +54,7 @@ public class Rennaissance_Elisabeth extends Card {
      */
     @Override
     public int getHealth() {
-        return 1;
+        return 3;
     }
 
     /**
@@ -63,7 +64,7 @@ public class Rennaissance_Elisabeth extends Card {
      */
     @Override
     public String getName() {
-        return "Elisabeth I, la Reine Vierge";
+        return "Rabelais, Fer de lance de l'Humanisme";
     }
 
     /**
@@ -73,7 +74,7 @@ public class Rennaissance_Elisabeth extends Card {
      */
     @Override
     public int getCost() {
-        return 2;
+        return 3;
     }
 
     /**
@@ -83,7 +84,7 @@ public class Rennaissance_Elisabeth extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/%C3%89lisabeth_Ire_(reine_d%27Angleterre)";
+        return "https://fr.wikipedia.org/wiki/Fran%C3%A7ois_Rabelais";
     }
 
     /**
@@ -93,6 +94,6 @@ public class Rennaissance_Elisabeth extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Poloticien";
+        return "Littéraire";
     }
 }

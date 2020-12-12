@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Nobunaga extends Card {
+public class Renaissance_Leonard extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Nobunaga(String UID, Context c) {
+    public Renaissance_Leonard(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Nobunaga extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_nobunaga;
+        return R.drawable.t_c_leonard;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Nobunaga extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: Vous prenez 4 points de degats";
+        return "ETB: Déclanche un rale d'agonie aléatoire";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Nobunaga extends Card {
      */
     @Override
     public int getAttack() {
-        return 5;
+        return 2;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Nobunaga extends Card {
      */
     @Override
     public int getHealth() {
-        return 5;
+        return 2;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Nobunaga extends Card {
      */
     @Override
     public String getName() {
-        return "Oda Nobunaga, Premier Unificateur";
+        return "Léonard de Vinci, Visionnaire sans limites";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Nobunaga extends Card {
      */
     @Override
     public int getCost() {
-        return 3;
+        return 4;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Nobunaga extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Oda_Nobunaga";
+        return "https://fr.wikipedia.org/wiki/L%C3%A9onard_de_Vinci";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Nobunaga extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Politicien, Militaire";
+        return "Scientifique, Artiste";
     }
 }

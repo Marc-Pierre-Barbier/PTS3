@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Henri extends Card {
+public class Renaissance_Nobunaga extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Henri(String UID, Context c) {
+    public Renaissance_Nobunaga(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Henri extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_henri;
+        return R.drawable.t_c_nobunaga;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Henri extends Card {
      */
     @Override
     public String getDescription() {
-        return null;
+        return "RA: Vous prenez 4 points de degats";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Henri extends Card {
      */
     @Override
     public int getAttack() {
-        return 1;
+        return 5;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Henri extends Card {
      */
     @Override
     public int getHealth() {
-        return 2;
+        return 5;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Henri extends Card {
      */
     @Override
     public String getName() {
-        return "Henri, Le Navigateur";
+        return "Oda Nobunaga, Premier Unificateur";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Henri extends Card {
      */
     @Override
     public int getCost() {
-        return 1;
+        return 3;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Henri extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Henri_le_Navigateur";
+        return "https://fr.wikipedia.org/wiki/Oda_Nobunaga";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Henri extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Scientifique";
+        return "Politicien, Militaire";
     }
 }

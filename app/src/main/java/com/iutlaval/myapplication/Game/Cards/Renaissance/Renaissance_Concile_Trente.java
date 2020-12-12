@@ -5,15 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Rabelais extends Card {
-
+public class Renaissance_Concile_Trente extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Rabelais(String UID, Context c) {
+    public Renaissance_Concile_Trente(String UID, Context c) {
         super(UID, c);
     }
 
@@ -24,7 +23,7 @@ public class Rennaissance_Rabelais extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_rabelais;
+        return R.drawable.t_c_concile_trente;
     }
 
     /**
@@ -34,7 +33,7 @@ public class Rennaissance_Rabelais extends Card {
      */
     @Override
     public String getDescription() {
-        return null;
+        return "Sacrifiez une créature et déclanchez son rale d'agonie 2 fois de suite";
     }
 
     /**
@@ -44,7 +43,7 @@ public class Rennaissance_Rabelais extends Card {
      */
     @Override
     public int getAttack() {
-        return 3;
+        return 0;
     }
 
     /**
@@ -54,7 +53,7 @@ public class Rennaissance_Rabelais extends Card {
      */
     @Override
     public int getHealth() {
-        return 3;
+        return 0;
     }
 
     /**
@@ -64,7 +63,7 @@ public class Rennaissance_Rabelais extends Card {
      */
     @Override
     public String getName() {
-        return "Rabelais, Fer de lance de l'Humanisme";
+        return "Concile de Trente";
     }
 
     /**
@@ -84,7 +83,7 @@ public class Rennaissance_Rabelais extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Fran%C3%A7ois_Rabelais";
+        return "https://fr.wikipedia.org/wiki/Concile_de_Trente";
     }
 
     /**
@@ -94,6 +93,6 @@ public class Rennaissance_Rabelais extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Littéraire";
+        return "Evénement";
     }
 }

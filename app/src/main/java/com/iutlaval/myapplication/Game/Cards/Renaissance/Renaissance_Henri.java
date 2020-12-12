@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Ferdinand extends Card {
+public class Renaissance_Henri extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Ferdinand(String UID, Context c) {
+    public Renaissance_Henri(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Ferdinand extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_ferdinand;
+        return R.drawable.t_c_henri;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Ferdinand extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: vous gagnez 2 PV";
+        return null;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Ferdinand extends Card {
      */
     @Override
     public int getHealth() {
-        return 1;
+        return 2;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Ferdinand extends Card {
      */
     @Override
     public String getName() {
-        return "Ferdinand II, le Catholique";
+        return "Henri, Le Navigateur";
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Ferdinand extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Ferdinand_le_Catholique";
+        return "https://fr.wikipedia.org/wiki/Henri_le_Navigateur";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Ferdinand extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Politicien, Militaire";
+        return "Scientifique";
     }
 }

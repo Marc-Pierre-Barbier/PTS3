@@ -5,14 +5,15 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Ivan extends Card {
+public class Renaissance_Reforme extends Card {
+
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Ivan(String UID, Context c) {
+    public Renaissance_Reforme(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +24,7 @@ public class Rennaissance_Ivan extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_ivan;
+        return R.drawable.t_c_reforme;
     }
 
     /**
@@ -33,7 +34,7 @@ public class Rennaissance_Ivan extends Card {
      */
     @Override
     public String getDescription() {
-        return "Quand il arrive sur le terrain, il échange ses points de vie et d'attaque de n'importe quelle créature jusqu'à la fin du tour";
+        return "Choississez une créature que vous controlez avec un râle d'agonie, créez un jeton qui est une copie de cette créature";
     }
 
     /**
@@ -43,7 +44,7 @@ public class Rennaissance_Ivan extends Card {
      */
     @Override
     public int getAttack() {
-        return 1;
+        return 0;
     }
 
     /**
@@ -53,7 +54,7 @@ public class Rennaissance_Ivan extends Card {
      */
     @Override
     public int getHealth() {
-        return 1;
+        return 0;
     }
 
     /**
@@ -63,7 +64,7 @@ public class Rennaissance_Ivan extends Card {
      */
     @Override
     public String getName() {
-        return "Ivan IV, le Terrible";
+        return "La Réforme";
     }
 
     /**
@@ -73,7 +74,7 @@ public class Rennaissance_Ivan extends Card {
      */
     @Override
     public int getCost() {
-        return 1;
+        return 4;
     }
 
     /**
@@ -83,7 +84,7 @@ public class Rennaissance_Ivan extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Ivan_le_Terrible";
+        return "https://fr.wikipedia.org/wiki/R%C3%A9forme_protestante";
     }
 
     /**
@@ -93,6 +94,6 @@ public class Rennaissance_Ivan extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Politicien, Militaire";
+        return "Evénements";
     }
 }
