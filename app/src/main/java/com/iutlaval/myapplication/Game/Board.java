@@ -20,7 +20,14 @@ public class Board {
         return playerCardsOnBoard;
     }
 
-    public Card[] getAdvCardsOnBoard() {
-        return advCardsOnBoard;
+    public void setCard(int index, Card c)
+    {
+        playerCardsOnBoard[index]=c;
     }
+
+    public void setEnemyCard(int index, Card c)
+    {
+        advCardsOnBoard[index]=c;
+    }
+
 }

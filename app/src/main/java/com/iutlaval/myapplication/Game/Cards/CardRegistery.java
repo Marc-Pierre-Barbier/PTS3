@@ -95,7 +95,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardRegistery {
-    public static List<Class> registry;
+    public static List<Class<? extends Card>> registry;
 
     public CardRegistery()
     {
@@ -209,7 +209,9 @@ public class CardRegistery {
         return a != -1 ? a : 0;
     }
 
-    public static Class get(int index) {
+
+    public static Class<? extends Card> get(int index) {
+        if(registry.size() <= index || index < 0) return null;
         return registry.get(index);
     }
 

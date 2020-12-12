@@ -7,6 +7,7 @@ public final class Command {
     public static final String DRAW = "draw";
     public static final String GET_DECK = "getDeck";
     public static final String PUT_CARD = "putCard";
+    public static final String PUT_ENEMY_CARD = "enemycard";
     public static final String SHUFFLE_DECK = "shuffleDeck";
     public static final String SELECT_CARD = "selectCard";
     public static final String ATTACK = "attack";

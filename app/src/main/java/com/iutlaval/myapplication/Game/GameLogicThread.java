@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Constructor;
 import java.net.Socket;
 
 public class GameLogicThread extends Thread{
@@ -167,6 +168,22 @@ public class GameLogicThread extends Thread{
                         clientOut.writeObject("pong");
                         break;
 
+                    case Command.PUT_ENEMY_CARD:
+                        int cardId = (int)clientIn.readObject();
+                        int zone = (int)clientIn.readObject();
+
+                        //on instancie la carte recu
+                        Class<? extends Card> c = CardRegistery.get(cardId);
+                        Constructor con = c.getConstructor(String.class, Context.class);
+                        Card cardPlayed = (Card) con.newInstance("enemy"+zone,gameActivity);
+
+                        //ajout de la carte au rendu
+                        cardPlayed.getDrawableCard().setCoordinates(((DrawableCard.getCardWith()+1)*zone+DrawableCard.getCardWith()),10F);
+                        renderer.addToDraw(cardPlayed.getDrawableCard());
+
+                        //ajout la card au terain
+                        board.setEnemyCard(zone,cardPlayed);
+                        break;
                     default:
                         Log.e("UNKOWN COMMAND",serveurCmd);
                 }
@@ -214,9 +231,11 @@ public class GameLogicThread extends Thread{
                 throw new UnrecognizedCard();
             }
             clientOut.writeObject(cardId);
+            clientOut.writeObject(zone);
 
             if(clientIn.readObject().equals(Command.OK))
             {
+                board.setCard(zone,card.getCard());
                 return true;
             }else{
                 return false;
