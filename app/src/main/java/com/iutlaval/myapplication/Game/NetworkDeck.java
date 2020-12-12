@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.CardRegistery;
-import com.iutlaval.myapplication.Game.Cards.Mythes_Perséphone;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Perséphone;
 
 import java.lang.reflect.Constructor;
 import java.util.Stack;

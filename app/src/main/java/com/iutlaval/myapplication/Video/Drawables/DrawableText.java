@@ -23,6 +23,8 @@ public class DrawableText extends Drawable{
      * @param name nom du Drawable
      * @param x_size taille du drawable entre 0 et 100
      * @param y_size taille du drawable entre 0 et 100
+     * @param y_canvasRatio taille du canevas en pixel sur le quel le texte va être dessiné /!\ doit être proportionnel a la police
+     * @param x_canvasRatio voire y_canvasRatio
      */
     public DrawableText(String text,float x_pos,float y_pos,String name, float x_size,float y_size,float textSize , int x_canvasRatio, int y_canvasRatio)
     {

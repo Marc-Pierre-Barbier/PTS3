@@ -350,4 +350,8 @@ public class DrawableCard extends Drawable{
     public void setDraggable(Boolean draggable) {
         this.draggable = draggable;
     }
+
+    public Card getCard() {
+        return card;
+    }
 }

@@ -7,6 +7,10 @@ import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Renderer;
 
+/**
+ * NOT A MES COLEGUES : n'optimiser pas cette classe elle est sub optimal c'est évident je le sais MAIS
+ * la compréhention du code deviendera trés difficile si on optimise
+ */
 public class TouchHandler {
 
     private float TouchDeltaX = 0;
@@ -22,6 +26,8 @@ public class TouchHandler {
     private Renderer renderer;
     private GameLogicThread gameLogic;
     private Context context;
+    private float unScalled_X;
+    private float unScalled_Y;
 
     public TouchHandler(Renderer renderer, GameLogicThread gameLogic, Context context)
     {
@@ -37,6 +43,8 @@ public class TouchHandler {
      */
     public void onTouchEvent(MotionEvent event)
     {
+        unScalled_X = event.getX() / GameActivity.screenWidth * 100;
+        unScalled_Y = event.getY() / GameActivity.screenHeight * 100;
         //on ignore le multi touch
         if(event.getPointerCount() <= 1)
         {
@@ -61,19 +69,18 @@ public class TouchHandler {
     private void dragAndDropHandler(MotionEvent event)
     {
         //on calcul les coordonées en % de l'écran
-        float unscaled_X = event.getX() / GameActivity.screenWidth * 100;
-        float unscaled_Y = event.getY() / GameActivity.screenHeight * 100;
+
 
         //quand on appui on capture une carte et on note sa positon initial
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            dragAndDropCard = renderer.getCardOn(unscaled_X, unscaled_Y);
+            dragAndDropCard = renderer.getCardOn(unScalled_X, unScalled_Y);
 
             if(dragAndDropCard != null && !dragAndDropCard.isDraggable()) dragAndDropCard = null;
 
             if (dragAndDropCard != null) {
                 //on calcul la position par raport au doigt de l'utilisateur
-                TouchDeltaY = unscaled_Y - dragAndDropCard.getY();
-                TouchDeltaX = unscaled_X - dragAndDropCard.getX();
+                TouchDeltaY = unScalled_Y - dragAndDropCard.getY();
+                TouchDeltaX = unScalled_X - dragAndDropCard.getX();
                 originalPositionX = dragAndDropCard.getX();
                 originalPositionY = dragAndDropCard.getY();
             }
@@ -84,7 +91,7 @@ public class TouchHandler {
 
             //dragAndDropCard = null;
         } else if (dragAndDropCard != null) {
-            dragAndDropCard.setCoordinates(unscaled_X - TouchDeltaX, unscaled_Y - TouchDeltaY);
+            dragAndDropCard.setCoordinates(unScalled_X - TouchDeltaX, unScalled_Y - TouchDeltaY);
             renderer.updateFrame();
         }
     }
@@ -95,10 +102,6 @@ public class TouchHandler {
      */
     private void bigCardHandler(MotionEvent event)
     {
-        //calcul y,x sur une echelle de 0 a 100
-        float unScalled_Y = event.getY() / GameActivity.screenHeight * 100;
-        float unScalled_X = event.getX() / GameActivity.screenWidth * 100;
-
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             //on recupére la carte a afficher en grand
             DrawableCard smallCArd = renderer.getCardOn(unScalled_X,unScalled_Y);
@@ -143,12 +146,11 @@ public class TouchHandler {
 
             }else if(event.getAction() == MotionEvent.ACTION_UP) {
                 int zone = playableZonesHandler.getHoveredZone(dragAndDropCard);
-                if(zone != -1)
+                if(zone != -1 && gameLogic.onCardPlayed(dragAndDropCard,zone))
                 {
                     dragAndDropCard.setOnBoard(true);
                     dragAndDropCard.setCoordinates((DrawableCard.getCardWith()+1)*zone,55F);
                     dragAndDropCard.setDraggable(false);
-                    gameLogic.onCardPlayed(dragAndDropCard,zone);
                 }else{
                     if(dragAndDropCard != null)renderer.moveToDraw(originalPositionX,originalPositionY, dragAndDropCard.getName());
                 }
@@ -160,8 +162,6 @@ public class TouchHandler {
 
     private void handSelectionHandler(MotionEvent event)
     {
-        float unScalled_Y = event.getY() / GameActivity.screenHeight * 100;
-        float unScalled_X = event.getX() / GameActivity.screenWidth * 100;
         DrawableCard smallCArd = renderer.getCardOn(unScalled_X,unScalled_Y);
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             if(cardSeletedInHand != null && !cardSeletedInHand.isOnBoard()){
@@ -176,6 +176,18 @@ public class TouchHandler {
                 cardSeletedInHand=smallCArd;
                 renderer.updateFrame();
             }
+        }
+    }
+
+    private void endTurnButtonHandle(MotionEvent event)
+    {
+        //si on appuie
+        if(event.getAction() == MotionEvent.ACTION_DOWN &&
+                //si on est sur le boutton
+                unScalled_X > GameLogicThread.BUTTON_X_POS && unScalled_X < GameLogicThread.BUTTON_X_POS + GameLogicThread.BUTTON_X_SIZE &&
+                unScalled_Y > GameLogicThread.BUTTON_Y_POS && unScalled_Y < GameLogicThread.BUTTON_Y_POS + GameLogicThread.BUTTON_Y_SIZE)
+        {
+            gameLogic.onEndTurnButtonPushed();
         }
     }
 }

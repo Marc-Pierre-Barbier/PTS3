@@ -1,5 +1,96 @@
 package com.iutlaval.myapplication.Game.Cards;
 
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Charlemagne;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_CharlesV;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_CharlesVII;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Chretien_De_Troyes;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Christine;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Clovis;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Croisade;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Etienne;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Ferré;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Guerre_100;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Guillaume;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Heresie_Cathares;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Hugue;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Isabelle;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Jean;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Jean_Vienne;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Jeanne;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Louis;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Malediction_Templier;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Peste;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Philippe;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_PhilippeIV;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Philippe_Cacqueray;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Pierre;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Pierre_Ermite;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Pouvoir_Du_Franc;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Prise_Sainte_Terre;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Roland;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Sire_Jean;
+import com.iutlaval.myapplication.Game.Cards.MoyenAge.Moyen_Age_Traite_Verdun;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_12_Travaux;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Achille;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Amazones;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Castor_Pollux;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Chant_Sirene;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Chaos;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Cheval_Troie;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Chiron;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Dédale;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Enigme_Sphinx;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Eole;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Erinyes;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Guerre_Sept_Chefs;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Hades;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Heracles;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Hermione;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Icar;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Kunée;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Minos;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Oedipie;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Perséphone;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Poseidon;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Psyché;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Rapt;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Sémélé;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Thanatos;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Titanomachie;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Toison;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Zeus;
+import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Zeus_VS_Typhon;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Renaissance_Copernic;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Renaissance_Mehmet;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Renaissance_Soliman;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Casimir;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Charles;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Chatherine;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Chute_Constantinople;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Concile_Trente;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Constantin;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Decouverte_Amerique;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Elisabeth;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Ferdinand;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Fin_Guerre_Cent_Ans;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Francois;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Guerres_Italie;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Henri;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Henri_8;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Isabelle;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Ivan;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Leonard;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Machiavel;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Michel_Ange;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Nobunaga;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Presse_Imprimer;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Rabelais;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Reforme;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Shakespeare;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Skanderberg;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Succession_Bourgogne;
+import com.iutlaval.myapplication.Game.Cards.Renaissance.Rennaissance_Vlad;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,4 +214,7 @@ public class CardRegistery {
     }
 
 
+    public static int get(Card card) {
+        return get(card.getClass());
+    }
 }

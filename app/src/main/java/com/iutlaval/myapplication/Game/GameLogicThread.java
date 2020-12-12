@@ -1,21 +1,15 @@
 package com.iutlaval.myapplication.Game;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-import androidx.fragment.app.DialogFragment;
-
-import com.iutlaval.myapplication.DeckPickDialogue;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.CardRegistery;
 import com.iutlaval.myapplication.GameActivity;
-import com.iutlaval.myapplication.MainActivity;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
@@ -23,6 +17,7 @@ import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Drawables.DrawableSelfRemoving;
 import com.iutlaval.myapplication.Video.Drawables.DrawableText;
 import com.iutlaval.myapplication.Video.Renderer;
+import com.iutlaval.myapplication.exception.UnrecognizedCard;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -32,6 +27,10 @@ import java.net.Socket;
 
 public class GameLogicThread extends Thread{
 
+    public static final float BUTTON_Y_POS = 50F;
+    public static final int BUTTON_X_POS = 0;
+    public static final float BUTTON_X_SIZE = 5F;
+    public static final float BUTTON_Y_SIZE = 2.5F;
     private Context cont;
     private Renderer renderer;
     private boolean ready;
@@ -47,6 +46,7 @@ public class GameLogicThread extends Thread{
     private boolean cancelled;
     private Socket client;
     private String deckName;
+    private int mana=0;
 
     public GameLogicThread(GameActivity gameActivity, String deckName, Renderer renderer)
     {
@@ -71,6 +71,8 @@ public class GameLogicThread extends Thread{
 
         //loading textures
         Bitmap bitmapYourTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_your_turn);
+        Bitmap bitmapEnemyTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_enemy_turn);
+        Bitmap bitmapButtonEnd = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_enemy_turn);
         Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
 
         //adding the background
@@ -105,7 +107,7 @@ public class GameLogicThread extends Thread{
                 String serveurCmd = (String)clientIn.readObject();
                 switch (serveurCmd)
                 {
-                    case COMMAND.GET_DECK:
+                    case Command.GET_DECK:
                         clientOut.writeObject(deckName);
                         String deckstr = (String)clientIn.readObject();
                         deck = new NetworkDeck(deckstr,gameActivity.getBaseContext());
@@ -113,48 +115,58 @@ public class GameLogicThread extends Thread{
 
                         Log.e("recived","getdeck");
                         break;
-                    case COMMAND.DRAW:
+                    case Command.DRAW:
                         int nbcard = (Integer)clientIn.readObject();
                         hand.pickCardFromDeck(deck,nbcard);
                         Log.e("picked",nbcard+"card");
                         drawHandPreview();
                         break;
 
-                    case COMMAND.YOURTURN:
+                    case Command.YOURTURN:
                         isYourTurn=true;
                         renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapYourTurn,0,0,"yourTurn",100F,50F),1));
+                        renderer.addToDraw(new DrawableBitmap(bitmapButtonEnd, BUTTON_X_POS, BUTTON_Y_POS,"buttonturn", BUTTON_X_SIZE, BUTTON_Y_SIZE));
                         break;
 
-                    case COMMAND.PUT_CARD:
-                        //TODO put card on the battlefield
+                    case Command.SETMANA:
+                        renderer.removeToDraw("mana");
+                        mana = (int)clientIn.readObject();
+                        renderer.addToDraw(new DrawableText("Mana : "+mana,90F,90F,"mana",10F,10F,100,800,200));
                         break;
 
-                    case COMMAND.SHUFFLE_DECK:
-                        //TODO shuffle deck
+                    case Command.ENEMYTURN:
+                        isYourTurn=false;
+                        renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapEnemyTurn,0,0,"enemyTurn",100F,50F),1));
                         break;
 
-                    case COMMAND.SELECT_CARD:
-                        //TODO select a card
-                        break;
-                    case COMMAND.ATTACK:
-                        //TODO attack
-                        break;
-                    case COMMAND.DEFEND:
-                        //TODO defend
-                        break;
-                    case COMMAND.CAST_SPELL:
-                        //TODO cast spell
-                        break;
-                    case COMMAND.PASS_TURN:
-                        //TODO pass turn
-                        break;
-                    case COMMAND.POPUP:
+                    case Command.POPUP:
                         String recivedMessage = (String)clientIn.readObject();
-                        Toast t = new Toast(gameActivity);
-                        t.setText(recivedMessage);
-                        t.setDuration(Toast.LENGTH_LONG);
-                        t.show();
+                        Toast popupToast = new Toast(gameActivity);
+                        popupToast.setText(recivedMessage);
+                        popupToast.setDuration(Toast.LENGTH_LONG);
+                        popupToast.show();
                         break;
+
+                    case Command.WIN:
+                        //on termine la parite
+                        cancelled = true;
+                        Toast winToast = new Toast(gameActivity);
+                        winToast.setText("bravo ! vous avez gagné");
+                        winToast.setDuration(Toast.LENGTH_LONG);
+                        winToast.show();
+                        break;
+                    case Command.LOSE:
+                        //on termine la partie
+                        cancelled=true;
+                        Toast loseToast = new Toast(gameActivity);
+                        loseToast.setText("vous avez perdu!");
+                        loseToast.setDuration(Toast.LENGTH_LONG);
+                        loseToast.show();
+                        break;
+                    case Command.PING:
+                        clientOut.writeObject("pong");
+                        break;
+
                     default:
                         Log.e("UNKOWN COMMAND",serveurCmd);
                 }
@@ -188,10 +200,30 @@ public class GameLogicThread extends Thread{
      * cette evenement est appelé par le touchHandler et permet d'envoyer au serveur le fait qu'un carte a été jouer
      * @param card la carte jouer
      * @param zone ou elle a été joué sur le terrain
+     * @return retourne si la carte a put être jouer
      */
-    protected void onCardPlayed(Drawable card,int zone)
+    protected boolean onCardPlayed(DrawableCard card,int zone)
     {
+        try {
+            //on veut jouer une carte
+            clientOut.writeObject(Command.PUT_CARD);
+            //on lui dit quelle caret on veut
+            int cardId = CardRegistery.get(card.getCard());
+            if(cardId == -1){
+                clientOut.writeObject("CLIENT REGISTRY ERROR");
+                throw new UnrecognizedCard();
+            }
+            clientOut.writeObject(cardId);
 
+            if(clientIn.readObject().equals(Command.OK))
+            {
+                return true;
+            }else{
+                return false;
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            return false;
+        }
     }
 
     /**
@@ -250,22 +282,20 @@ public class GameLogicThread extends Thread{
         interrupt();
 
     }
-}
 
-/**
- * ce thread a pour role de repondre pong au requette udp contenant ping
- *
- * cela sert a verifier sur le clien et présent sans blockage
- */
-class UDPPingThread extends Thread
-{
-    public UDPPingThread()
-    {
-
-    }
-
-    @Override
-    public void run() {
-        super.run();
+    public void onEndTurnButtonPushed() {
+        if(isYourTurn)
+        {
+            try {
+                clientOut.writeObject(Command.PASS_TURN);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            Toast t = new Toast(gameActivity);
+            t.setText("IT'S NOT YOUR TURN BE PATIENT");
+            t.setDuration(Toast.LENGTH_SHORT);
+            t.show();
+        }
     }
 }
