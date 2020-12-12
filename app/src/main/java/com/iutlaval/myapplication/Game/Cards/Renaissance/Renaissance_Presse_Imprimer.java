@@ -5,14 +5,15 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Charles extends Card {
+public class Renaissance_Presse_Imprimer extends Card {
+
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Charles(String UID, Context c) {
+    public Renaissance_Presse_Imprimer(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +24,7 @@ public class Rennaissance_Charles extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_charles;
+        return R.drawable.t_c_presse_imprimer;
     }
 
     /**
@@ -33,7 +34,7 @@ public class Rennaissance_Charles extends Card {
      */
     @Override
     public String getDescription() {
-        return null;
+        return "piochez 3 cartes";
     }
 
     /**
@@ -43,7 +44,7 @@ public class Rennaissance_Charles extends Card {
      */
     @Override
     public int getAttack() {
-        return 5;
+        return 0;
     }
 
     /**
@@ -53,7 +54,7 @@ public class Rennaissance_Charles extends Card {
      */
     @Override
     public int getHealth() {
-        return 5;
+        return 0;
     }
 
     /**
@@ -63,7 +64,7 @@ public class Rennaissance_Charles extends Card {
      */
     @Override
     public String getName() {
-        return "Charles Quint, Apogée des Habsbourg ";
+        return "Presse à imprimer";
     }
 
     /**
@@ -73,7 +74,7 @@ public class Rennaissance_Charles extends Card {
      */
     @Override
     public int getCost() {
-        return 4;
+        return 5;
     }
 
     /**
@@ -83,7 +84,7 @@ public class Rennaissance_Charles extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Charles_Quint";
+        return "https://fr.wikipedia.org/wiki/Presse_typographique";
     }
 
     /**
@@ -93,6 +94,6 @@ public class Rennaissance_Charles extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Militaire, Politicen";
+        return "Evénements";
     }
 }

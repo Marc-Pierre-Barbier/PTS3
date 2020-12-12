@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Decouverte_Amerique extends Card {
+public class Renaissance_Constantin extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Decouverte_Amerique(String UID, Context c) {
+    public Renaissance_Constantin(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_decouverte_amerique;
+        return R.drawable.t_c_constantin;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public String getDescription() {
-        return "Regardez les 4 premières cartes de votre deck, choississez en une, mettez la dans votre main";
+        return "RA: Sacrifier une autre de vos créature";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public int getAttack() {
-        return 0;
+        return 7;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public int getHealth() {
-        return 0;
+        return 7;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public String getName() {
-        return "Découverte de l'Amérique";
+        return "Constantin XI, Dernier Empereur Romain";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public int getCost() {
-        return 2;
+        return 5;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/D%C3%A9couverte_et_exploration_de_l%27Am%C3%A9rique";
+        return "https://fr.wikipedia.org/wiki/Constantin_XI_Pal%C3%A9ologue";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Evénements";
+        return "Politicien, Militaire";
     }
 }

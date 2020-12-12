@@ -5,14 +5,15 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Vlad extends Card {
+public class Renaissance_Skanderberg extends Card {
+
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Vlad(String UID, Context c) {
+    public Renaissance_Skanderberg(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +24,7 @@ public class Rennaissance_Vlad extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_vlad;
+        return R.drawable.t_c_skanderberg;
     }
 
     /**
@@ -33,7 +34,7 @@ public class Rennaissance_Vlad extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: detruisez 2 créatures adverses aleatoirement";
+        return "Défenseur";
     }
 
     /**
@@ -43,7 +44,7 @@ public class Rennaissance_Vlad extends Card {
      */
     @Override
     public int getAttack() {
-        return 5;
+        return 1;
     }
 
     /**
@@ -63,7 +64,7 @@ public class Rennaissance_Vlad extends Card {
      */
     @Override
     public String getName() {
-        return "Vlad III, l'Empaleur";
+        return "Skanderberg, Libérateur de l'Albanie";
     }
 
     /**
@@ -73,7 +74,7 @@ public class Rennaissance_Vlad extends Card {
      */
     @Override
     public int getCost() {
-        return 8;
+        return 3;
     }
 
     /**
@@ -83,7 +84,7 @@ public class Rennaissance_Vlad extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Vlad_III_l%27Empaleur";
+        return "https://fr.wikipedia.org/wiki/Scanderbeg";
     }
 
     /**

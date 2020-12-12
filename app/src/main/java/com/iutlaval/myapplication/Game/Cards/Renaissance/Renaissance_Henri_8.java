@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Isabelle extends Card {
+public class Renaissance_Henri_8 extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Isabelle(String UID, Context c) {
+    public Renaissance_Henri_8(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Isabelle extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_isabelle;
+        return R.drawable.t_c_henri_8;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Isabelle extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: inflige 1 dégat a une créature ciblée";
+        return "ETB: Piocher 2 carte";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Isabelle extends Card {
      */
     @Override
     public int getAttack() {
-        return 1;
+        return 3;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Isabelle extends Card {
      */
     @Override
     public int getHealth() {
-        return 1;
+        return 3;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Isabelle extends Card {
      */
     @Override
     public String getName() {
-        return "Isabelle I, la Catholique";
+        return "Henri VIII, Premier Anglican";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Isabelle extends Card {
      */
     @Override
     public int getCost() {
-        return 1;
+        return 6;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Isabelle extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Isabelle_la_Catholique";
+        return "https://fr.wikipedia.org/wiki/Henri_VIII";
     }
 
     /**

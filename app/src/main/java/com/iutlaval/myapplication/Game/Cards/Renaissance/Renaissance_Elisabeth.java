@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Henri_8 extends Card {
+public class Renaissance_Elisabeth extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Henri_8(String UID, Context c) {
+    public Renaissance_Elisabeth(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Henri_8 extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_henri_8;
+        return R.drawable.t_c_elisabeth;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Henri_8 extends Card {
      */
     @Override
     public String getDescription() {
-        return "ETB: Piocher 2 carte";
+        return null;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Henri_8 extends Card {
      */
     @Override
     public int getHealth() {
-        return 3;
+        return 1;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Henri_8 extends Card {
      */
     @Override
     public String getName() {
-        return "Henri VIII, Premier Anglican";
+        return "Elisabeth I, la Reine Vierge";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Henri_8 extends Card {
      */
     @Override
     public int getCost() {
-        return 6;
+        return 2;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Henri_8 extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Henri_VIII";
+        return "https://fr.wikipedia.org/wiki/%C3%89lisabeth_Ire_(reine_d%27Angleterre)";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Henri_8 extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Politicien";
+        return "Poloticien";
     }
 }

@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Machiavel extends Card {
+public class Renaissance_Shakespeare extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Machiavel(String UID, Context c) {
+    public Renaissance_Shakespeare(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Machiavel extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_machiavel;
+        return R.drawable.t_c_shakespeare;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Machiavel extends Card {
      */
     @Override
     public String getDescription() {
-        return "Contact mortel";
+        return "RA: piochez une carte";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Machiavel extends Card {
      */
     @Override
     public int getAttack() {
-        return 1;
+        return 2;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Machiavel extends Card {
      */
     @Override
     public int getHealth() {
-        return 1;
+        return 2;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Machiavel extends Card {
      */
     @Override
     public String getName() {
-        return "Machiavel, Philosophe de la Politique";
+        return "Shakespeare, Ame d'un Dramaturge";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Machiavel extends Card {
      */
     @Override
     public int getCost() {
-        return 1;
+        return 3;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Machiavel extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Nicolas_Machiavel";
+        return "https://fr.wikipedia.org/wiki/William_Shakespeare";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Machiavel extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Littéraire, Politicien";
+        return "Littéraire";
     }
 }

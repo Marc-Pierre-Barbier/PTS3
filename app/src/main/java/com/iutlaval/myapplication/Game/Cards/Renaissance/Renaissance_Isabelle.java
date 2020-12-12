@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Succession_Bourgogne extends Card {
+public class Renaissance_Isabelle extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Succession_Bourgogne(String UID, Context c) {
+    public Renaissance_Isabelle(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_succession_bourgogne;
+        return R.drawable.t_c_isabelle;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public String getDescription() {
-        return "Renvoie une carte de créature depuis le champ de bataille dans votre main, vous activez son râle d' agonie, puis vous pouvez jouer une carte de meme coût depuis votre main";
+        return "RA: inflige 1 dégat a une créature ciblée";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public int getAttack() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public int getHealth() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public String getName() {
-        return "Guerre de succession de Bourgogne";
+        return "Isabelle I, la Catholique";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public int getCost() {
-        return 5;
+        return 1;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Guerre_de_Succession_de_Bourgogne";
+        return "https://fr.wikipedia.org/wiki/Isabelle_la_Catholique";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Evénement";
+        return "Politicien";
     }
 }

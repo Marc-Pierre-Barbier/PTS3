@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Shakespeare extends Card {
+public class Renaissance_Vlad extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Shakespeare(String UID, Context c) {
+    public Renaissance_Vlad(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Shakespeare extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_shakespeare;
+        return R.drawable.t_c_vlad;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Shakespeare extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: piochez une carte";
+        return "RA: detruisez 2 créatures adverses aleatoirement";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Shakespeare extends Card {
      */
     @Override
     public int getAttack() {
-        return 2;
+        return 5;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Shakespeare extends Card {
      */
     @Override
     public int getHealth() {
-        return 2;
+        return 5;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Shakespeare extends Card {
      */
     @Override
     public String getName() {
-        return "Shakespeare, Ame d'un Dramaturge";
+        return "Vlad III, l'Empaleur";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Shakespeare extends Card {
      */
     @Override
     public int getCost() {
-        return 3;
+        return 8;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Shakespeare extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/William_Shakespeare";
+        return "https://fr.wikipedia.org/wiki/Vlad_III_l%27Empaleur";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Shakespeare extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Littéraire";
+        return "Politicien, Militaire";
     }
 }

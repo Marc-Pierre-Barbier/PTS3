@@ -5,15 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Reforme extends Card {
-
+public class Renaissance_Charles extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Reforme(String UID, Context c) {
+    public Renaissance_Charles(String UID, Context c) {
         super(UID, c);
     }
 
@@ -24,7 +23,7 @@ public class Rennaissance_Reforme extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_reforme;
+        return R.drawable.t_c_charles;
     }
 
     /**
@@ -34,7 +33,7 @@ public class Rennaissance_Reforme extends Card {
      */
     @Override
     public String getDescription() {
-        return "Choississez une créature que vous controlez avec un râle d'agonie, créez un jeton qui est une copie de cette créature";
+        return null;
     }
 
     /**
@@ -44,7 +43,7 @@ public class Rennaissance_Reforme extends Card {
      */
     @Override
     public int getAttack() {
-        return 0;
+        return 5;
     }
 
     /**
@@ -54,7 +53,7 @@ public class Rennaissance_Reforme extends Card {
      */
     @Override
     public int getHealth() {
-        return 0;
+        return 5;
     }
 
     /**
@@ -64,7 +63,7 @@ public class Rennaissance_Reforme extends Card {
      */
     @Override
     public String getName() {
-        return "La Réforme";
+        return "Charles Quint, Apogée des Habsbourg ";
     }
 
     /**
@@ -84,7 +83,7 @@ public class Rennaissance_Reforme extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/R%C3%A9forme_protestante";
+        return "https://fr.wikipedia.org/wiki/Charles_Quint";
     }
 
     /**
@@ -94,6 +93,6 @@ public class Rennaissance_Reforme extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Evénements";
+        return "Militaire, Politicen";
     }
 }

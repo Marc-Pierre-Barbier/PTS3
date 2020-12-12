@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Chatherine extends Card {
+public class Renaissance_Machiavel extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Chatherine(String UID, Context c) {
+    public Renaissance_Machiavel(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Chatherine extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_catherine;
+        return R.drawable.t_c_machiavel;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Chatherine extends Card {
      */
     @Override
     public String getDescription() {
-        return null;
+        return "Contact mortel";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Chatherine extends Card {
      */
     @Override
     public int getAttack() {
-        return 3;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Chatherine extends Card {
      */
     @Override
     public int getHealth() {
-        return 2;
+        return 1;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Chatherine extends Card {
      */
     @Override
     public String getName() {
-        return "Catherine de Medicis, Reine-Mère de France";
+        return "Machiavel, Philosophe de la Politique";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Chatherine extends Card {
      */
     @Override
     public int getCost() {
-        return 2;
+        return 1;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Chatherine extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Catherine_de_M%C3%A9dicis";
+        return "https://fr.wikipedia.org/wiki/Nicolas_Machiavel";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Chatherine extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Politicien";
+        return "Littéraire, Politicien";
     }
 }

@@ -5,14 +5,14 @@ import android.content.Context;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.R;
 
-public class Rennaissance_Guerres_Italie extends Card {
+public class Renaissance_Casimir extends Card {
     /**
      * cree une carte est lui definit un drawable
      *
      * @param UID
      * @param c
      */
-    public Rennaissance_Guerres_Italie(String UID, Context c) {
+    public Renaissance_Casimir(String UID, Context c) {
         super(UID, c);
     }
 
@@ -23,7 +23,7 @@ public class Rennaissance_Guerres_Italie extends Card {
      */
     @Override
     public int getCardPicture() {
-        return R.drawable.t_c_guerres_italie;
+        return R.drawable.t_c_casimir;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Rennaissance_Guerres_Italie extends Card {
      */
     @Override
     public String getDescription() {
-        return "toutes les creatures gagnent -2/-0";
+        return "Ra: une autre créature que vous controller gagne +4/+4";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Rennaissance_Guerres_Italie extends Card {
      */
     @Override
     public int getAttack() {
-        return 0;
+        return 4;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Rennaissance_Guerres_Italie extends Card {
      */
     @Override
     public int getHealth() {
-        return 0;
+        return 4;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Rennaissance_Guerres_Italie extends Card {
      */
     @Override
     public String getName() {
-        return "Guerres d'Italie";
+        return "Casimir IV, Soutien à la Ligue de Prusse";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Rennaissance_Guerres_Italie extends Card {
      */
     @Override
     public int getCost() {
-        return 2;
+        return 7;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Rennaissance_Guerres_Italie extends Card {
      */
     @Override
     public String getWikipediaLink() {
-        return "https://fr.wikipedia.org/wiki/Guerres_d%27Italie";
+        return "https://fr.wikipedia.org/wiki/Casimir_IV_Jagellon";
     }
 
     /**
@@ -93,6 +93,6 @@ public class Rennaissance_Guerres_Italie extends Card {
      */
     @Override
     public String getCategorie() {
-        return "Evénements";
+        return "Militaire, Politicien";
     }
 }
