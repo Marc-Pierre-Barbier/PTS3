@@ -204,8 +204,13 @@ public class CardRegistery {
         registry.add(Moyen_Age_Pouvoir_Du_Franc.class);
     }
 
-    public static int get(Class<? extends Card> class1) {
+    public static int indexOf(Class<? extends Card> class1) {
         int a = registry.indexOf(class1);
+
+        if(a == -1){
+            throw new RuntimeException("Class not found :"+class1.getName());
+        }
+        //if the class is not found default to 0
         return a != -1 ? a : 0;
     }
 
@@ -216,7 +221,7 @@ public class CardRegistery {
     }
 
 
-    public static int get(Card card) {
-        return get(card.getClass());
+    public static int indexOf(Card card) {
+        return indexOf(card.getClass());
     }
 }

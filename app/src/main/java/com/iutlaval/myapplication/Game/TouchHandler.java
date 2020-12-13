@@ -48,6 +48,7 @@ public class TouchHandler {
         //on ignore le multi touch
         if(event.getPointerCount() <= 1)
         {
+            endTurnButtonHandle(event);
             handSelectionHandler(event);
             //afficher grosse carte
             bigCardHandler(event);
@@ -146,7 +147,7 @@ public class TouchHandler {
 
             }else if(event.getAction() == MotionEvent.ACTION_UP) {
                 int zone = playableZonesHandler.getHoveredZone(dragAndDropCard);
-                if(zone != -1 && gameLogic.onCardPlayed(dragAndDropCard,zone))
+                if(zone != -1 && gameLogic.setOnCardPlayedRequest(dragAndDropCard,zone))
                 {
                     dragAndDropCard.setOnBoard(true);
                     dragAndDropCard.setCoordinates((DrawableCard.getCardWith()+1)*zone,55F);

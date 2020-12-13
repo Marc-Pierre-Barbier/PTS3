@@ -11,7 +11,6 @@ import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.CardRegistery;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.R;
-import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Drawables.DrawableSelfRemoving;
@@ -23,8 +22,10 @@ import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.lang.reflect.Constructor;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class GameLogicThread extends Thread{
 
@@ -48,6 +49,14 @@ public class GameLogicThread extends Thread{
     private Socket client;
     private String deckName;
     private int mana=0;
+
+
+    //ces variable permette la comunication avec le thread android du tactile et le reseau en passant par ce thread
+    boolean requestDone=true;
+    DrawableCard requestCard=null;
+    int requestZone=-1;
+    boolean requestResult;
+
 
     public GameLogicThread(GameActivity gameActivity, String deckName, Renderer renderer)
     {
@@ -83,8 +92,8 @@ public class GameLogicThread extends Thread{
 
         ready=true;
 
-        final String host = "4.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 14307;
+        final String host = "0.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
+        final int port = 11601;
 
         try {
             client = new Socket(host, port);
@@ -99,13 +108,26 @@ public class GameLogicThread extends Thread{
 
         //principe de fonctionnement : on attends une comande du server et on l'execute
         //si quelquechose se passe alors c'est le server qu'il l'a dit
-
-
-
         while(ready && !cancelled)
         {
+            if(!requestDone && requestZone != -1 && requestCard != null)
+            {
+                try {//on allonge le delais car sinon on skip l'autorisation serveur
+                    client.setSoTimeout(Integer.MAX_VALUE);
+                } catch (SocketException e) {}
+                requestResult = onCardPlayed(requestCard,requestZone);
+                requestZone=-1;
+                requestCard=null;
+                requestDone=true;
+            }
+
+
             try {
+                //on limite le temps du readobject pour eviter les blockaeg
+                client.setSoTimeout(1000);
                 String serveurCmd = (String)clientIn.readObject();
+                client.setSoTimeout(Integer.MAX_VALUE);
+                Log.e("command",serveurCmd);
                 switch (serveurCmd)
                 {
                     case Command.GET_DECK:
@@ -113,11 +135,17 @@ public class GameLogicThread extends Thread{
                         String deckstr = (String)clientIn.readObject();
                         deck = new NetworkDeck(deckstr,gameActivity.getBaseContext());
                         Log.e("got deck",deckstr);
-
-                        Log.e("recived","getdeck");
                         break;
                     case Command.DRAW:
-                        int nbcard = (Integer)clientIn.readObject();
+                        Object o = clientIn.readObject();
+                        int nbcard;
+                        if(o instanceof String)
+                        {
+                            nbcard = Integer.parseInt((String) o);
+                        }else{
+                            nbcard = (Integer)o;
+                        }
+
                         hand.pickCardFromDeck(deck,nbcard);
                         Log.e("picked",nbcard+"card");
                         drawHandPreview();
@@ -136,7 +164,6 @@ public class GameLogicThread extends Thread{
                         break;
 
                     case Command.ENEMYTURN:
-                        isYourTurn=false;
                         renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapEnemyTurn,0,0,"enemyTurn",100F,50F),1));
                         break;
 
@@ -146,6 +173,7 @@ public class GameLogicThread extends Thread{
                         popupToast.setText(recivedMessage);
                         popupToast.setDuration(Toast.LENGTH_LONG);
                         popupToast.show();
+                        Log.e("popup",recivedMessage);
                         break;
 
                     case Command.WIN:
@@ -155,6 +183,7 @@ public class GameLogicThread extends Thread{
                         winToast.setText("bravo ! vous avez gagné");
                         winToast.setDuration(Toast.LENGTH_LONG);
                         winToast.show();
+                        renderer.updateFrame();
                         break;
                     case Command.LOSE:
                         //on termine la partie
@@ -184,16 +213,24 @@ public class GameLogicThread extends Thread{
                         //ajout la card au terain
                         board.setEnemyCard(zone,cardPlayed);
                         break;
+
                     default:
                         Log.e("UNKOWN COMMAND",serveurCmd);
                 }
             }catch (InterruptedIOException e)
             {
+                e.printStackTrace();
                 Log.e("Stopping","dead thread");
+            }catch(IOException e)
+            {
             }
             catch (Exception e) {
                 Log.e("ERROR DURING COMS","SERVER DIED");
                 e.printStackTrace();
+                if(e instanceof OptionalDataException)
+                {
+                    System.out.println(((OptionalDataException)e).eof);
+                }
                 break;
             }
         }
@@ -215,34 +252,52 @@ public class GameLogicThread extends Thread{
 
     /**
      * cette evenement est appelé par le touchHandler et permet d'envoyer au serveur le fait qu'un carte a été jouer
+     * CE CODE CONTIEN DE l'ACCES RESEAU QUI N'APPARTIEN QU'A CE THREAD IS DOIT RESTER PRIVE
      * @param card la carte jouer
      * @param zone ou elle a été joué sur le terrain
      * @return retourne si la carte a put être jouer
      */
-    protected boolean onCardPlayed(DrawableCard card,int zone)
+    private boolean onCardPlayed(DrawableCard card,int zone)
     {
-        try {
-            //on veut jouer une carte
-            clientOut.writeObject(Command.PUT_CARD);
-            //on lui dit quelle caret on veut
-            int cardId = CardRegistery.get(card.getCard());
-            if(cardId == -1){
-                clientOut.writeObject("CLIENT REGISTRY ERROR");
-                throw new UnrecognizedCard();
-            }
-            clientOut.writeObject(cardId);
-            clientOut.writeObject(zone);
+        if(isYourTurn)
+        {
+            try {
+                //on veut jouer une carte
+                clientOut.writeObject(Command.PUT_CARD);
 
-            if(clientIn.readObject().equals(Command.OK))
+
+                //on lui dit quelle caret on veut
+                int cardId = CardRegistery.indexOf(card.getCard());
+                if (cardId == -1) {
+                    clientOut.writeObject("CLIENT REGISTRY ERROR");
+                    throw new UnrecognizedCard();
+                }
+                clientOut.writeObject(cardId);
+                clientOut.writeObject(zone);
+
+                if (clientIn.readObject().equals(Command.OK)) {
+                    board.setCard(zone, card.getCard());
+                    return true;
+                }
+            }catch (Exception e)
             {
-                board.setCard(zone,card.getCard());
-                return true;
-            }else{
-                return false;
+                e.printStackTrace();
             }
-        } catch (IOException | ClassNotFoundException e) {
-            return false;
         }
+        return true;
+    }
+
+    protected boolean setOnCardPlayedRequest(DrawableCard card,int zone)
+    {
+        //on ne peut pas avoir 2 requette simultané
+        while(!requestDone);
+        this.requestCard=card;
+        this.requestZone=zone;
+        requestDone=false;
+
+        //on attends la fin de la requette
+        while(!requestDone);
+        return requestResult;
     }
 
     /**
@@ -299,7 +354,6 @@ public class GameLogicThread extends Thread{
         cancelled=true;
 
         interrupt();
-
     }
 
     public void onEndTurnButtonPushed() {
@@ -316,5 +370,13 @@ public class GameLogicThread extends Thread{
             t.setDuration(Toast.LENGTH_SHORT);
             t.show();
         }
+    }
+
+    public ObjectOutputStream getClientOut() {
+        return clientOut;
+    }
+
+    public ObjectInputStream getClientIn() {
+        return clientIn;
     }
 }

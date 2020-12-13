@@ -154,6 +154,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
 
             Log.i("RENDERER","STARTING ENGINE");
             engine = new GameLogicThread(gameActivity,deckName,renderer);
+            engine.setName("gameEngine");
             engine.start();
             while (!engine.isReady());
             Log.i("RENDERER","ENGINE STARTED");
