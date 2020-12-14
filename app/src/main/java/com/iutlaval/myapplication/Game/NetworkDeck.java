@@ -17,6 +17,7 @@ public class NetworkDeck{
         int nbcarte=0;
         for(String s : deckstring.split(","))
         {
+            if(s.equals(""))break;
             Class c = CardRegistery.get(Integer.parseInt(s));
             try {
                 //on utilise le bon constructeur

@@ -26,6 +26,7 @@ import java.io.OptionalDataException;
 import java.lang.reflect.Constructor;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class GameLogicThread extends Thread{
 
@@ -89,11 +90,10 @@ public class GameLogicThread extends Thread{
         renderer.addToDraw(new DrawableBitmap(bitmap, 0,0, "background", 100, 100 ));
         //drawHandPreview();
         //Rectangle pos = new Rectangle(0F,0F,100F,100F);
-
         ready=true;
 
-        final String host = "0.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 11601;
+        final String host = "4.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
+        final int port = 19165;
 
         try {
             client = new Socket(host, port);
@@ -118,6 +118,7 @@ public class GameLogicThread extends Thread{
                 requestResult = onCardPlayed(requestCard,requestZone);
                 requestZone=-1;
                 requestCard=null;
+                Log.e("request","done");
                 requestDone=true;
             }
 
@@ -197,6 +198,9 @@ public class GameLogicThread extends Thread{
                         clientOut.writeObject("pong");
                         break;
 
+                    case Command.UPDATE:
+                        renderer.updateFrame();
+
                     case Command.PUT_ENEMY_CARD:
                         int cardId = (int)clientIn.readObject();
                         int zone = (int)clientIn.readObject();
@@ -217,10 +221,15 @@ public class GameLogicThread extends Thread{
                     default:
                         Log.e("UNKOWN COMMAND",serveurCmd);
                 }
-            }catch (InterruptedIOException e)
+            }catch (SocketTimeoutException e){}
+            catch (InterruptedIOException e)
             {
-                e.printStackTrace();
-                Log.e("Stopping","dead thread");
+                if(e.getStackTrace().length != 0)
+                {
+                    e.printStackTrace();
+                    Log.e("Stopping","dead thread");
+                }
+
             }catch(IOException e)
             {
             }
@@ -275,7 +284,9 @@ public class GameLogicThread extends Thread{
                 clientOut.writeObject(cardId);
                 clientOut.writeObject(zone);
 
+                Log.e("waiting","for ok");
                 if (clientIn.readObject().equals(Command.OK)) {
+                    Log.e("waiting","done");
                     board.setCard(zone, card.getCard());
                     return true;
                 }
@@ -284,19 +295,27 @@ public class GameLogicThread extends Thread{
                 e.printStackTrace();
             }
         }
-        return true;
+        return false;
     }
 
-    protected boolean setOnCardPlayedRequest(DrawableCard card,int zone)
+    protected synchronized boolean setOnCardPlayedRequest(DrawableCard card,int zone)
     {
         //on ne peut pas avoir 2 requette simultané
-        while(!requestDone);
+        if(!requestDone)return false;
+
         this.requestCard=card;
         this.requestZone=zone;
         requestDone=false;
 
         //on attends la fin de la requette
-        while(!requestDone);
+        while(!requestDone) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.e("card play","sending to render");
         return requestResult;
     }
 

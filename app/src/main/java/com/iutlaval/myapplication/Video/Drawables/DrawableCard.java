@@ -156,7 +156,8 @@ public class DrawableCard extends Drawable{
 
         frameDrawable = new DrawableBitmap(c.getFrameBitmap(context),0,0,name+"frame",CARD_WITH*ratio,CARD_HEIGHT*ratio);
         //to string retourne le hash code de l'objet qui est donc unique ce qui fait de lui un id parfait
-        cardDescription = new DrawableText(c.getDescription(),0,0,toString()+"description",DESCRIPTION_WIDTH*ratio,DESCRIPTION_HEIGHT*ratio,DESCRIPTION_FONT_SIZE,DESCRIPTION_TEXT_X_RES,DESCRIPTION_TEXT_Y_RES);
+        if(c.getDescription() != null)
+            cardDescription = new DrawableText(c.getDescription(),0,0,toString()+"description",DESCRIPTION_WIDTH*ratio,DESCRIPTION_HEIGHT*ratio,DESCRIPTION_FONT_SIZE,DESCRIPTION_TEXT_X_RES,DESCRIPTION_TEXT_Y_RES);
         cardTitle = new DrawableText(c.getName(),0,0,toString()+"name",TITLE_WIDTH*ratio,TITLE_HEIGHT*ratio,TITLE_FONT_SIZE,TEXT_TITLE_X_RES,TEXT_TITLE_Y_RES);
 
         Rectangle opacityRect = new Rectangle(x,y,OPACITY_RECT_WIDTH*ratio+x,OPACITY_RECT_HEIGHT*ratio+x);
@@ -278,7 +279,7 @@ public class DrawableCard extends Drawable{
 
             //dessine le texte
             cardTitle.drawOn(c,p);
-            cardDescription.drawOn(c,p);
+            if(cardDescription != null)cardDescription.drawOn(c,p);
             cardHpDrawable.drawOn(c,p);
             cardAtkDrawable.drawOn(c,p);
         }
@@ -306,7 +307,7 @@ public class DrawableCard extends Drawable{
             pictureDrawable.setCoordinates(x + OFFBOARD_PICTURE_X*ratio, y + OFFBOARD_PICTURE_Y*ratio);
 
             //les textes ce dessines depuis leur base et non depuis le coin haut gauche
-            cardDescription.setCoordinates(x+OFFBOARD_DESCRIPTION_X*ratio,y+OFFBOARD_DESCRIPTION_Y*ratio);
+            if(cardDescription != null)cardDescription.setCoordinates(x+OFFBOARD_DESCRIPTION_X*ratio,y+OFFBOARD_DESCRIPTION_Y*ratio);
             cardAtkDrawable.setCoordinates(x + OFFBOARD_ATK_X*ratio,y + OFFBOARD_ATK_HP_Y*ratio);
             cardHpDrawable.setCoordinates(x + OFFBOARD_HP_X*ratio,y +OFFBOARD_ATK_HP_Y*ratio);
             cardTitle.setCoordinates(x+OFFBOARD_TITLE_X*ratio,y - OFFBOARD_TITLE_Y*ratio);
