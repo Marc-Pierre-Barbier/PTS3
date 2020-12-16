@@ -35,20 +35,23 @@ public class DrawableText extends Drawable{
         p.setAntiAlias(true);
         p.setTextSize(textSize);
 
-        List<String> linesOfText = cutText(20,text);
-
-        //+10 permet d'e prendre en compte les p,q,j qui dessende plus bas que les autres
-
         Bitmap bitmap = Bitmap.createBitmap(x_canvasRatio, y_canvasRatio, Bitmap.Config.ARGB_8888);
         setBitmap(bitmap);
         Canvas c = new Canvas(bitmap);
-        int index = 1;
-        for(String line : linesOfText)
+
+        //si on a une description
+        if(text != null)
         {
-            //y_canvasRatio/linesOfText.size()
-            c.drawText(line ,0,index*textSize,p);
-            index++;
+            int index = 1;
+            List<String> linesOfText = cutText(20,text);
+            for(String line : linesOfText)
+            {
+                //y_canvasRatio/linesOfText.size()
+                c.drawText(line ,0,index*textSize,p);
+                index++;
+            }
         }
+
 
         int scalled_x_size = (int)(GameActivity.screenWidth*x_size/100);
         int scalled_y_size = (int)(GameActivity.screenHeight*y_size/100);

@@ -30,10 +30,11 @@ import java.net.SocketTimeoutException;
 
 public class GameLogicThread extends Thread{
 
-    public static final float BUTTON_Y_POS = 50F;
+    public static final float BUTTON_Y_POS = 45F;
     public static final int BUTTON_X_POS = 0;
-    public static final float BUTTON_X_SIZE = 5F;
-    public static final float BUTTON_Y_SIZE = 2.5F;
+    public static final float BUTTON_X_SIZE = 20F;
+    public static final float BUTTON_Y_SIZE = 10F;
+    public static final String BUTTONTURN_DRAWABLE_NAME = "buttonturn";
     private Context cont;
     private Renderer renderer;
     private boolean ready;
@@ -81,7 +82,7 @@ public class GameLogicThread extends Thread{
         //loading textures
         Bitmap bitmapYourTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_your_turn);
         Bitmap bitmapEnemyTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_enemy_turn);
-        Bitmap bitmapButtonEnd = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_enemy_turn);
+        Bitmap bitmapButtonEnd = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_btn_boutonfintour);
         Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
 
         //adding the background
@@ -125,7 +126,7 @@ public class GameLogicThread extends Thread{
                 coms.setLimitedTimeOut();
                 String serveurCmd = coms.recieve();
                 coms.setUnlimitedTimeOut();
-                Log.e("command",serveurCmd);
+                if(!serveurCmd.equals("timeout"))Log.e("command",serveurCmd);
                 switch (serveurCmd)
                 {
                     case Command.GET_DECK:
@@ -144,7 +145,7 @@ public class GameLogicThread extends Thread{
                     case Command.YOURTURN:
                         isYourTurn=true;
                         renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapYourTurn,0,0,"yourTurn",100F,50F),1));
-                        renderer.addToDraw(new DrawableBitmap(bitmapButtonEnd, BUTTON_X_POS, BUTTON_Y_POS,"buttonturn", BUTTON_X_SIZE, BUTTON_Y_SIZE));
+                        renderer.addToDraw(new DrawableBitmap(bitmapButtonEnd, BUTTON_X_POS, BUTTON_Y_POS, BUTTONTURN_DRAWABLE_NAME, BUTTON_X_SIZE, BUTTON_Y_SIZE));
                         break;
 
                     case Command.SETMANA:
@@ -154,6 +155,8 @@ public class GameLogicThread extends Thread{
                         break;
 
                     case Command.ENEMYTURN:
+                        //on update pas vu que l'instruction suivante va le faire
+                        renderer.removeToDrawWithoutUpdate(BUTTONTURN_DRAWABLE_NAME);
                         renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapEnemyTurn,0,0,"enemyTurn",100F,50F),1));
                         break;
 
@@ -206,6 +209,9 @@ public class GameLogicThread extends Thread{
 
                         //ajout la card au terain
                         board.setEnemyCard(zone,cardPlayed);
+                        break;
+                    case "timeout":
+                        //ceci est une erreur et non une commande elle se doit donc de ne rien faire
                         break;
 
                     default:
@@ -365,6 +371,7 @@ public class GameLogicThread extends Thread{
         if(isYourTurn)
         {
             try {
+                Log.e("TURN","PASSED");
                 coms.send(Command.PASS_TURN);
             } catch (IOException e) {
                 e.printStackTrace();

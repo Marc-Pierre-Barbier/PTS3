@@ -1,6 +1,7 @@
 package com.iutlaval.myapplication.Game;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.iutlaval.myapplication.GameActivity;
@@ -188,6 +189,7 @@ public class TouchHandler {
                 unScalled_X > GameLogicThread.BUTTON_X_POS && unScalled_X < GameLogicThread.BUTTON_X_POS + GameLogicThread.BUTTON_X_SIZE &&
                 unScalled_Y > GameLogicThread.BUTTON_Y_POS && unScalled_Y < GameLogicThread.BUTTON_Y_POS + GameLogicThread.BUTTON_Y_SIZE)
         {
+            Log.e("push","detected");
             gameLogic.onEndTurnButtonPushed();
         }
     }
