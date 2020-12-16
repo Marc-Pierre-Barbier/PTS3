@@ -39,17 +39,16 @@ public class GameLogicThread extends Thread{
     private boolean ready;
     private TouchHandler touch;
     private GameActivity gameActivity;
-    private ObjectInputStream clientIn=null;
-    private ObjectOutputStream clientOut=null;
+
 
     private NetworkDeck deck;
     private Hand hand;
     private Board board;
     private boolean isYourTurn;
     private boolean cancelled;
-    private Socket client;
     private String deckName;
     private int mana=0;
+    private Communication coms;
 
 
     //ces variable permette la comunication avec le thread android du tactile et le reseau en passant par ce thread
@@ -61,7 +60,6 @@ public class GameLogicThread extends Thread{
 
     public GameLogicThread(GameActivity gameActivity, String deckName, Renderer renderer)
     {
-        new CardRegistery();
         this.deckName=deckName;
         Log.e("RESOLUTION:",""+GameActivity.screenWidth+"x"+GameActivity.screenHeight);
         ready=false;
@@ -92,13 +90,12 @@ public class GameLogicThread extends Thread{
         //Rectangle pos = new Rectangle(0F,0F,100F,100F);
         ready=true;
 
-        final String host = "4.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 19165;
+        final String host = "0.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
+        final int port = 13562;
 
         try {
-            client = new Socket(host, port);
-            clientIn = new ObjectInputStream(client.getInputStream());
-            clientOut = new ObjectOutputStream(client.getOutputStream());
+            Socket client = new Socket(host, port);
+            coms= new Communication(client);
         } catch (IOException e) {
             Log.e("ERROR SERVER DEAD","srv");
             //TODO display error and don't crash the game;
@@ -113,7 +110,7 @@ public class GameLogicThread extends Thread{
             if(!requestDone && requestZone != -1 && requestCard != null)
             {
                 try {//on allonge le delais car sinon on skip l'autorisation serveur
-                    client.setSoTimeout(Integer.MAX_VALUE);
+                    coms.setUnlimitedTimeOut();
                 } catch (SocketException e) {}
                 requestResult = onCardPlayed(requestCard,requestZone);
                 requestZone=-1;
@@ -125,28 +122,20 @@ public class GameLogicThread extends Thread{
 
             try {
                 //on limite le temps du readobject pour eviter les blockaeg
-                client.setSoTimeout(1000);
-                String serveurCmd = (String)clientIn.readObject();
-                client.setSoTimeout(Integer.MAX_VALUE);
+                coms.setLimitedTimeOut();
+                String serveurCmd = coms.recieve();
+                coms.setUnlimitedTimeOut();
                 Log.e("command",serveurCmd);
                 switch (serveurCmd)
                 {
                     case Command.GET_DECK:
-                        clientOut.writeObject(deckName);
-                        String deckstr = (String)clientIn.readObject();
+                        coms.send(deckName);
+                        String deckstr = coms.recieve();
                         deck = new NetworkDeck(deckstr,gameActivity.getBaseContext());
                         Log.e("got deck",deckstr);
                         break;
                     case Command.DRAW:
-                        Object o = clientIn.readObject();
-                        int nbcard;
-                        if(o instanceof String)
-                        {
-                            nbcard = Integer.parseInt((String) o);
-                        }else{
-                            nbcard = (Integer)o;
-                        }
-
+                        int nbcard = coms.recieveInt();
                         hand.pickCardFromDeck(deck,nbcard);
                         Log.e("picked",nbcard+"card");
                         drawHandPreview();
@@ -160,7 +149,7 @@ public class GameLogicThread extends Thread{
 
                     case Command.SETMANA:
                         renderer.removeToDraw("mana");
-                        mana = (int)clientIn.readObject();
+                        mana = coms.recieveInt();
                         renderer.addToDraw(new DrawableText("Mana : "+mana,90F,90F,"mana",10F,10F,100,800,200));
                         break;
 
@@ -169,7 +158,7 @@ public class GameLogicThread extends Thread{
                         break;
 
                     case Command.POPUP:
-                        String recivedMessage = (String)clientIn.readObject();
+                        String recivedMessage = coms.recieve();
                         Toast popupToast = new Toast(gameActivity);
                         popupToast.setText(recivedMessage);
                         popupToast.setDuration(Toast.LENGTH_LONG);
@@ -195,15 +184,15 @@ public class GameLogicThread extends Thread{
                         loseToast.show();
                         break;
                     case Command.PING:
-                        clientOut.writeObject("pong");
+                        coms.send(Command.PONG);
                         break;
 
                     case Command.UPDATE:
                         renderer.updateFrame();
 
                     case Command.PUT_ENEMY_CARD:
-                        int cardId = (int)clientIn.readObject();
-                        int zone = (int)clientIn.readObject();
+                        int cardId = coms.recieveInt();
+                        int zone = coms.recieveInt();
 
                         //on instancie la carte recu
                         Class<? extends Card> c = CardRegistery.get(cardId);
@@ -272,21 +261,20 @@ public class GameLogicThread extends Thread{
         {
             try {
                 //on veut jouer une carte
-                clientOut.writeObject(Command.PUT_CARD);
+                coms.send(Command.PUT_CARD);
 
 
                 //on lui dit quelle caret on veut
                 int cardId = CardRegistery.indexOf(card.getCard());
                 if (cardId == -1) {
-                    clientOut.writeObject("CLIENT REGISTRY ERROR");
+                    coms.send("CLIENT REGISTRY ERROR");
                     throw new UnrecognizedCard();
                 }
-                clientOut.writeObject(cardId);
-                clientOut.writeObject(zone);
+                coms.send(cardId);
+                coms.send(zone);
 
                 Log.e("waiting","for ok");
-                if (clientIn.readObject().equals(Command.OK)) {
-                    Log.e("waiting","done");
+                if (coms.recieve().equals(Command.OK)) {
                     board.setCard(zone, card.getCard());
                     return true;
                 }
@@ -315,7 +303,6 @@ public class GameLogicThread extends Thread{
                 e.printStackTrace();
             }
         }
-        Log.e("card play","sending to render");
         return requestResult;
     }
 
@@ -366,9 +353,7 @@ public class GameLogicThread extends Thread{
     public void terminate() {
         ready=false;
         try {
-            if(clientOut != null)clientOut.close();
-            if(clientIn != null)clientIn.close();
-            if(client != null)client.close();
+            if(coms != null)coms.close();
         } catch (IOException e) {}
         cancelled=true;
 
@@ -379,7 +364,7 @@ public class GameLogicThread extends Thread{
         if(isYourTurn)
         {
             try {
-                clientOut.writeObject(Command.PASS_TURN);
+                coms.send(Command.PASS_TURN);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -389,13 +374,5 @@ public class GameLogicThread extends Thread{
             t.setDuration(Toast.LENGTH_SHORT);
             t.show();
         }
-    }
-
-    public ObjectOutputStream getClientOut() {
-        return clientOut;
-    }
-
-    public ObjectInputStream getClientIn() {
-        return clientIn;
     }
 }

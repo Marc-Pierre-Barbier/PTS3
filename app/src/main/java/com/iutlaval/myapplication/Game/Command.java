@@ -3,6 +3,7 @@ package com.iutlaval.myapplication.Game;
 public final class Command {
 
     public static final String UPDATE = "update";
+    public static final String PONG = "pong";
 
     private Command(){} // pas de contructor public on ne veut pas instancier cette classe
     public static final String YOURTURN="yourturn";

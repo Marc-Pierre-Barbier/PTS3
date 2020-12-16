@@ -97,7 +97,7 @@ import java.util.List;
 public class CardRegistery {
     public static List<Class<? extends Card>> registry;
 
-    public CardRegistery()
+    private static void initCardRegistery()
     {
         registry = new ArrayList<>();
 
@@ -205,6 +205,7 @@ public class CardRegistery {
     }
 
     public static int indexOf(Class<? extends Card> class1) {
+        if(registry == null)initCardRegistery();
         int a = registry.indexOf(class1);
 
         if(a == -1){
@@ -216,12 +217,14 @@ public class CardRegistery {
 
 
     public static Class<? extends Card> get(int index) {
+        if(registry == null)initCardRegistery();
         if(registry.size() <= index || index < 0) return null;
         return registry.get(index);
     }
 
 
     public static int indexOf(Card card) {
+        if(registry == null)initCardRegistery();
         return indexOf(card.getClass());
     }
 }
