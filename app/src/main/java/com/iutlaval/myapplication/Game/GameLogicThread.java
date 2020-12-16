@@ -198,6 +198,7 @@ public class GameLogicThread extends Thread{
                         Class<? extends Card> c = CardRegistery.get(cardId);
                         Constructor con = c.getConstructor(String.class, Context.class);
                         Card cardPlayed = (Card) con.newInstance("enemy"+zone,gameActivity);
+                        cardPlayed.getDrawableCard().setOnBoard(true);
 
                         //ajout de la carte au rendu
                         cardPlayed.getDrawableCard().setCoordinates(((DrawableCard.getCardWith()+1)*zone+DrawableCard.getCardWith()),10F);
