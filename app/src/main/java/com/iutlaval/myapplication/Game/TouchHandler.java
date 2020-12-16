@@ -190,7 +190,7 @@ public class TouchHandler {
                 unScalled_Y > GameLogicThread.BUTTON_Y_POS && unScalled_Y < GameLogicThread.BUTTON_Y_POS + GameLogicThread.BUTTON_Y_SIZE)
         {
             Log.e("push","detected");
-            gameLogic.onEndTurnButtonPushed();
+            gameLogic.requestEndTurn();
         }
     }
 }

@@ -20,8 +20,6 @@ import com.iutlaval.myapplication.exception.UnrecognizedCard;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.lang.reflect.Constructor;
 import java.net.Socket;
@@ -53,11 +51,13 @@ public class GameLogicThread extends Thread{
 
 
     //ces variable permette la comunication avec le thread android du tactile et le reseau en passant par ce thread
-    boolean requestDone=true;
-    DrawableCard requestCard=null;
-    int requestZone=-1;
-    boolean requestResult;
+    private boolean requestPlaceCardDone =true;
+    private DrawableCard requestPlaceCardCard =null;
+    private int requestPlaceCardZone =-1;
+    private boolean requestPlaceCardResult;
 
+    //si mise a true alors le thread va envoyer un message au serveur lui disant de passer a la phase suivante
+    private boolean requestEnd = false;
 
     public GameLogicThread(GameActivity gameActivity, String deckName, Renderer renderer)
     {
@@ -108,16 +108,27 @@ public class GameLogicThread extends Thread{
         //si quelquechose se passe alors c'est le server qu'il l'a dit
         while(ready && !cancelled)
         {
-            if(!requestDone && requestZone != -1 && requestCard != null)
+            if(!requestPlaceCardDone && requestPlaceCardZone != -1 && requestPlaceCardCard != null)
             {
                 try {//on allonge le delais car sinon on skip l'autorisation serveur
                     coms.setUnlimitedTimeOut();
                 } catch (SocketException e) {}
-                requestResult = onCardPlayed(requestCard,requestZone);
-                requestZone=-1;
-                requestCard=null;
+                requestPlaceCardResult = onCardPlayed(requestPlaceCardCard, requestPlaceCardZone);
+                requestPlaceCardZone =-1;
+                requestPlaceCardCard =null;
                 Log.e("request","done");
-                requestDone=true;
+                requestPlaceCardDone =true;
+            }
+
+            if(requestEnd)
+            {
+                try {
+                    Log.e("TURN","PASSED");
+                    coms.send(Command.PASS_TURN);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                requestEnd=false;
             }
 
 
@@ -155,6 +166,8 @@ public class GameLogicThread extends Thread{
                         break;
 
                     case Command.ENEMYTURN:
+                        isYourTurn=false;
+
                         //on update pas vu que l'instruction suivante va le faire
                         renderer.removeToDrawWithoutUpdate(BUTTONTURN_DRAWABLE_NAME);
                         renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapEnemyTurn,0,0,"enemyTurn",100F,50F),1));
@@ -296,21 +309,21 @@ public class GameLogicThread extends Thread{
     protected synchronized boolean setOnCardPlayedRequest(DrawableCard card,int zone)
     {
         //on ne peut pas avoir 2 requette simultané
-        if(!requestDone)return false;
+        if(!requestPlaceCardDone)return false;
 
-        this.requestCard=card;
-        this.requestZone=zone;
-        requestDone=false;
+        this.requestPlaceCardCard =card;
+        this.requestPlaceCardZone =zone;
+        requestPlaceCardDone =false;
 
         //on attends la fin de la requette
-        while(!requestDone) {
+        while(!requestPlaceCardDone) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        return requestResult;
+        return requestPlaceCardResult;
     }
 
     /**
@@ -367,15 +380,10 @@ public class GameLogicThread extends Thread{
         interrupt();
     }
 
-    public void onEndTurnButtonPushed() {
+    public void requestEndTurn() {
         if(isYourTurn)
         {
-            try {
-                Log.e("TURN","PASSED");
-                coms.send(Command.PASS_TURN);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            requestEnd=true;
         }else{
             Toast t = new Toast(gameActivity);
             t.setText("IT'S NOT YOUR TURN BE PATIENT");
