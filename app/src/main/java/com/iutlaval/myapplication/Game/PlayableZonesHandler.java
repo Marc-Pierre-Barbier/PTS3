@@ -14,19 +14,29 @@ import com.iutlaval.myapplication.Video.Renderer;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class PlayableZonesHandler {
     private List<Drawable> playableZones;
+    private boolean isDisplayed;
     private Board board;
 
     public PlayableZonesHandler(Board board)
     {
         playableZones=new ArrayList<>();
         this.board=board;
+        isDisplayed=false;
     }
 
-    //TODO verifier si elle ne sont pas deja afficher
+    /**
+     * affiche les zones de jeu libre
+     * @param renderer
+     */
     public void displayPlayableZones(Renderer renderer)
     {
+        //on affiche pas si elle se sont deja
+        if(isDisplayed)return;
+        isDisplayed=true;
+
         Card[] cardsOnBoard = board.getPlayerCardsOnBoard();
         for(int i=0 ; i < cardsOnBoard.length ;i++)
         {
@@ -35,8 +45,14 @@ public class PlayableZonesHandler {
                 displayPlayableZoneOn(i,renderer);
             }
         }
+
     }
 
+    /**
+     * affiche un rectangle gris représentant une zone jouable en la case i
+     * @param i car sur la quelle afficher la zone
+     * @param renderer
+     */
     private void displayPlayableZoneOn(int i,Renderer renderer) {
         Rectangle pos = new Rectangle((DrawableCard.getCardWith()+1)*i,50F,DrawableCard.getCardWith(),DrawableCard.getCardHeight());
 
@@ -50,14 +66,19 @@ public class PlayableZonesHandler {
 
     }
 
-
+    /**
+     * cache les zones de jeu
+     * @param renderer
+     */
     public void hidePlayableZones(Renderer renderer)
     {
+        if(!isDisplayed)return;
         for(Drawable d : playableZones)
         {
             renderer.removeToDraw(d);
         }
         playableZones.clear();
+        isDisplayed=false;
     }
 
     /**

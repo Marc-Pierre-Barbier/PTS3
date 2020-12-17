@@ -59,6 +59,10 @@ public class Communication {
         send(""+message);
     }
 
+    /**
+     * recoit un message sous forme de chaine
+     * @return retourne ERROR ou TIMEOUT si une erreur ce produit
+     */
     public String recieve(){
         try {
             return (String) clientIn.readObject();
@@ -71,6 +75,11 @@ public class Communication {
         }
     }
 
+    /**
+     * retourne un entier recut
+     *
+     * @return
+     */
     public int recieveInt()
     {
         String message = recieve();
@@ -87,6 +96,10 @@ public class Communication {
         }
     }
 
+    /**
+     * ferme la connection
+     * @throws IOException
+     */
     public void close() throws IOException {
         if(clientOut != null)clientOut.close();
         if(clientIn != null)clientIn.close();

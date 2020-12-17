@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-
-    private static final int NUMBER_OF_CARDS_IN_STARTING_HAND = 5;
-
     private List<Card> hand;
 
     public Hand()
@@ -25,7 +22,7 @@ public class Hand {
     {
         for(int i = 0 ; i < amount;i++)
         {
-            hand.add(deck.getCards().pop());
+            hand.add(deck.draw());
         }
     }
 

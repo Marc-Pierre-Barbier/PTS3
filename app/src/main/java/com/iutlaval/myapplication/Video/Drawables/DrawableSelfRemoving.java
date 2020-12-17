@@ -5,6 +5,9 @@ import android.graphics.Paint;
 
 import androidx.annotation.NonNull;
 
+/**
+ * crée un drawable qui s'auto suprime
+ */
 public class DrawableSelfRemoving extends Drawable{
 
     private Drawable drawable;

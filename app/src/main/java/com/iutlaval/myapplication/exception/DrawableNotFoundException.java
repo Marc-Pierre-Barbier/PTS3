@@ -1,4 +1,4 @@
-package com.iutlaval.myapplication.Video;
+package com.iutlaval.myapplication.exception;
 
 public class DrawableNotFoundException extends RuntimeException{
 }

@@ -7,10 +7,15 @@ import com.iutlaval.myapplication.Game.Cards.CardRegistery;
 import com.iutlaval.myapplication.Game.Cards.Mythes.Mythes_Perséphone;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
+/**
+ * c'est un deck qui déserialise les info recut du serveur ce qui donne une deck de carte a terme
+ */
 public class NetworkDeck{
-    Stack<Card> cards;
+    private Stack<Card> cards;
     public NetworkDeck(String deckstring, Context context)
     {
         cards = new Stack<>();
@@ -31,7 +36,18 @@ public class NetworkDeck{
         }
     }
 
-    public Stack<Card> getCards() {
-        return cards;
+    public Card draw()
+    {
+        return cards.pop();
+    }
+
+    public List<Card> draw(int amount)
+    {
+        List<Card> drawn = new ArrayList<>();
+        for(int i = 0 ; i < amount ; i++)
+        {
+            drawn.add(cards.pop());
+        }
+        return drawn;
     }
 }

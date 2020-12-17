@@ -16,6 +16,7 @@ import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Drawables.DrawableSelfRemoving;
+import com.iutlaval.myapplication.exception.DrawableNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;

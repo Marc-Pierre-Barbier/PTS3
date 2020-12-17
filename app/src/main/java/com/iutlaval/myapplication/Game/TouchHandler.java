@@ -40,6 +40,7 @@ public class TouchHandler {
 
     /**
      * cette evenement doit recevoir le onTouchEvent d'une activité
+     * cette fonction gére l'integralité du tactile de l'application elle est divisé en de nombreuses sous fonction
      * @param event
      */
     public void onTouchEvent(MotionEvent event)
@@ -162,6 +163,10 @@ public class TouchHandler {
 
     }
 
+    /**
+     * gére la selection de carte dans la main
+     * @param event
+     */
     private void handSelectionHandler(MotionEvent event)
     {
         DrawableCard smallCArd = renderer.getCardOn(unScalled_X,unScalled_Y);
@@ -181,6 +186,10 @@ public class TouchHandler {
         }
     }
 
+    /**
+     * gére le button de fin de tours
+     * @param event
+     */
     private void endTurnButtonHandle(MotionEvent event)
     {
         //si on appuie

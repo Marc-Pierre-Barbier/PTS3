@@ -94,6 +94,9 @@ import com.iutlaval.myapplication.Game.Cards.Renaissance.Renaissance_Vlad;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * registre de carte identique a celui du serveur permet la déserialisation des decks et cartes
+ */
 public class CardRegistery {
     public static List<Class<? extends Card>> registry;
 
@@ -204,6 +207,13 @@ public class CardRegistery {
         registry.add(Moyen_Age_Pouvoir_Du_Franc.class);
     }
 
+    /**
+     * retourne l'index de la carte donné
+     * et lance une runtime exception si la carte n'existe pas car cela veut dire que le serveur
+     * est incompatible avec le client
+     * @param class1 class de la carte recherché
+     * @return index de la carte
+     */
     public static int indexOf(Class<? extends Card> class1) {
         if(registry == null)initCardRegistery();
         int a = registry.indexOf(class1);
@@ -215,14 +225,22 @@ public class CardRegistery {
         return a != -1 ? a : 0;
     }
 
-
+    /**
+     * retourne la class de la carte a l'index donné
+     * @param index l'index de la carte
+     * @return class de la carte
+     */
     public static Class<? extends Card> get(int index) {
         if(registry == null)initCardRegistery();
         if(registry.size() <= index || index < 0) return null;
         return registry.get(index);
     }
 
-
+    /**
+     * retourne l'index de la carte
+     * @param card
+     * @return
+     */
     public static int indexOf(Card card) {
         if(registry == null)initCardRegistery();
         return indexOf(card.getClass());

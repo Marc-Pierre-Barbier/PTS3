@@ -70,7 +70,6 @@ public class Rectangle {
 
     /**
      * retourne la bitmap entre mais avec un rectangle dessiner dedans
-     * @param bitmap la bitmap sur la quelle dessiner
      * @param color la couleur du carre
      */
     private void brushInit(int color)

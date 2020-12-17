@@ -2,6 +2,9 @@ package com.iutlaval.myapplication.Video;
 
 import android.view.Display;
 
+/**
+ * cette class permet d'attendre le temps qui s'écoule entre 2image a l'écran plutot que sur dessiné et gaspillier la batterie
+ */
 public class FpsTime {
     private static long frametime;
 

@@ -223,6 +223,13 @@ public class GameLogicThread extends Thread{
                         //ajout la card au terain
                         board.setEnemyCard(zone,cardPlayed);
                         break;
+
+                    case Command.MEULE:
+                        //la carte pioché va être perdu vu que l'on ne la met pas dans une main
+                        //c'est le role de la command meule de faire perde des cartes au joeur
+                        int nbmeule = coms.recieveInt();
+                        deck.draw(nbmeule);
+
                     case "timeout":
                         //ceci est une erreur et non une commande elle se doit donc de ne rien faire
                         break;

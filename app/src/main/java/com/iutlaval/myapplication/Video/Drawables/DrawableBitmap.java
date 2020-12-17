@@ -11,6 +11,7 @@ import com.iutlaval.myapplication.InvalidDataException;
 
 public class DrawableBitmap extends Drawable{
     /**
+     * crée un drawable qui affiche une bitmap
      * @param  bitmap a dessiner
      * @param x_pos position en x du texte
      * @param y_pos position en y du texte
