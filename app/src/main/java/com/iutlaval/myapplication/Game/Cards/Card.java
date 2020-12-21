@@ -17,9 +17,10 @@ public abstract class Card {
      * @param UID
      * @param c
      */
-    public Card(String UID,Context c)
-    {
-        drawableCard = new DrawableCard(this,0,0,UID,c);
+    public Card(String UID,Context c) {
+        if(!(UID == null || c == null)) {
+            drawableCard = new DrawableCard(this, 0, 0, UID, c);
+        }
     }
 
     /**

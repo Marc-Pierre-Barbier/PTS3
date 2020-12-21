@@ -10,9 +10,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-public class DeckPickDialogue extends DialogFragment {
+public class DeckPickDialogueGame extends DialogFragment {
     Context context;
-    public DeckPickDialogue(@NonNull Context context) {
+    public DeckPickDialogueGame(@NonNull Context context) {
         this.context=context;
     }
 
@@ -26,14 +26,19 @@ public class DeckPickDialogue extends DialogFragment {
                         // of the selected item
                         String[] mTestArray = getResources().getStringArray(R.array.decks);
 
-                        Intent gameActivity = new Intent(context, GameActivity.class);
-                        gameActivity.putExtra("DECK", mTestArray[which]);
-                        gameActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(mTestArray, which);
 
-                        startActivity(gameActivity);
                     }
                 });
         return builder.create();
+    }
+
+    public void startActivity(String[] mTestArray, int which) {
+        Intent gameActivity = new Intent(context, GameActivity.class);
+        gameActivity.putExtra("DECK", mTestArray[which]);
+        gameActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        startActivity(gameActivity);
     }
 
 }
