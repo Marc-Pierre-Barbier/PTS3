@@ -43,7 +43,8 @@ public class GameLogicThread extends Thread{
     private NetworkDeck deck;
     private Hand hand;
     private Board board;
-    private boolean isYourTurn;
+    private boolean isYourMainPhase;
+    private boolean isYourBattlePhase;
     private boolean cancelled;
     private String deckName;
     private int mana=0;
@@ -51,9 +52,12 @@ public class GameLogicThread extends Thread{
 
 
     //ces variable permette la comunication avec le thread android du tactile et le reseau en passant par ce thread
+    //cette variable controle la demande de gestion de placement de carte
     private boolean requestPlaceCardDone =true;
-    private DrawableCard requestPlaceCardCard =null;
-    private int requestPlaceCardZone =-1;
+    //cette variable controle la demande de gestion de l'attaque
+    boolean requestAttackDone = true;
+    private DrawableCard requestDrawableCard =null;
+    private int requestCardZone =-1;
     private boolean requestPlaceCardResult;
 
     //si mise a true alors le thread va envoyer un message au serveur lui disant de passer a la phase suivante
@@ -71,8 +75,9 @@ public class GameLogicThread extends Thread{
         hand = new Hand();
         this.gameActivity=gameActivity;
         GameActivity.setGameEngine(this);
-        isYourTurn=false;
+        isYourMainPhase =false;
         cancelled=false;
+        isYourBattlePhase=false;
     }
 
     @Override
@@ -91,8 +96,8 @@ public class GameLogicThread extends Thread{
         //Rectangle pos = new Rectangle(0F,0F,100F,100F);
         ready=true;
 
-        final String host = "0.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 13562;
+        final String host = "2.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
+        final int port = 13450;
 
         try {
             Socket client = new Socket(host, port);
@@ -108,16 +113,30 @@ public class GameLogicThread extends Thread{
         //si quelquechose se passe alors c'est le server qu'il l'a dit
         while(ready && !cancelled)
         {
-            if(!requestPlaceCardDone && requestPlaceCardZone != -1 && requestPlaceCardCard != null)
+            if(!requestPlaceCardDone && requestCardZone != -1 && requestDrawableCard != null)
             {
                 try {//on allonge le delais car sinon on skip l'autorisation serveur
                     coms.setUnlimitedTimeOut();
                 } catch (SocketException e) {}
-                requestPlaceCardResult = onCardPlayed(requestPlaceCardCard, requestPlaceCardZone);
-                requestPlaceCardZone =-1;
-                requestPlaceCardCard =null;
+                requestPlaceCardResult = onCardPlayed(requestDrawableCard, requestCardZone);
+                requestCardZone =-1;
+                requestDrawableCard =null;
                 Log.e("request","done");
                 requestPlaceCardDone =true;
+            }
+
+            if(!requestAttackDone && requestCardZone != -1 && requestDrawableCard != null)
+            {
+                int zoneAttaquant = board.getCardZone(requestDrawableCard);
+
+                try {
+                    coms.send(Command.ATTACK);
+                    coms.send(zoneAttaquant);
+                    coms.send(requestCardZone);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                requestAttackDone=true;
             }
 
             if(requestEnd)
@@ -129,7 +148,10 @@ public class GameLogicThread extends Thread{
                     e.printStackTrace();
                 }
                 requestEnd=false;
+                isYourBattlePhase=false;
             }
+
+
 
 
             try {
@@ -154,7 +176,8 @@ public class GameLogicThread extends Thread{
                         break;
 
                     case Command.YOURTURN:
-                        isYourTurn=true;
+                        isYourMainPhase =true;
+                        isYourBattlePhase=false;
                         renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapYourTurn,0,0,"yourTurn",100F,50F),1));
                         renderer.addToDraw(new DrawableBitmap(bitmapButtonEnd, BUTTON_X_POS, BUTTON_Y_POS, BUTTONTURN_DRAWABLE_NAME, BUTTON_X_SIZE, BUTTON_Y_SIZE));
                         break;
@@ -166,7 +189,7 @@ public class GameLogicThread extends Thread{
                         break;
 
                     case Command.ENEMYTURN:
-                        isYourTurn=false;
+                        isYourMainPhase =false;
 
                         //on update pas vu que l'instruction suivante va le faire
                         renderer.removeToDrawWithoutUpdate(BUTTONTURN_DRAWABLE_NAME);
@@ -217,10 +240,11 @@ public class GameLogicThread extends Thread{
                         cardPlayed.getDrawableCard().setOnBoard(true);
 
                         //ajout de la carte au rendu
-                        cardPlayed.getDrawableCard().setCoordinates(((DrawableCard.getCardWith()+1)*zone+DrawableCard.getCardWith()),10F);
+                        cardPlayed.getDrawableCard().setCoordinates(((DrawableCard.getCardWith()+1)*zone+20),10F);
                         renderer.addToDraw(cardPlayed.getDrawableCard());
 
                         //ajout la card au terain
+                        cardPlayed.getDrawableCard().setDraggable(false);
                         board.setEnemyCard(zone,cardPlayed);
                         break;
 
@@ -229,6 +253,25 @@ public class GameLogicThread extends Thread{
                         //c'est le role de la command meule de faire perde des cartes au joeur
                         int nbmeule = coms.recieveInt();
                         deck.draw(nbmeule);
+
+                    case Command.BATTLE:
+                        isYourBattlePhase=true;
+                        isYourMainPhase=false;
+                        break;
+
+                    case Command.DESTROY_CARD:
+                        //detruit la carte sur le terrain du joueur
+                        int zoneOfTheDestroyedCard = coms.recieveInt();
+                        Card cardToDestroy = board.removeCardOnPlayerBoard(zoneOfTheDestroyedCard);
+                        renderer.removeToDraw(cardToDestroy);
+                        break;
+
+                    case Command.DESTROY_ADV_CARD:
+                        //detruit la carte sur le terrain du joueur adverse
+                        int zoneOfTheDestroyedEnemyCard = coms.recieveInt();
+                        Card enemyCardToDestroy = board.removeCardOnEnemyPlayerBoard(zoneOfTheDestroyedEnemyCard);
+                        renderer.removeToDraw(enemyCardToDestroy);
+                        break;
 
                     case "timeout":
                         //ceci est une erreur et non une commande elle se doit donc de ne rien faire
@@ -284,7 +327,7 @@ public class GameLogicThread extends Thread{
      */
     private boolean onCardPlayed(DrawableCard card,int zone)
     {
-        if(isYourTurn)
+        if(isYourMainPhase)
         {
             try {
                 //on veut jouer une carte
@@ -318,8 +361,8 @@ public class GameLogicThread extends Thread{
         //on ne peut pas avoir 2 requette simultané
         if(!requestPlaceCardDone)return false;
 
-        this.requestPlaceCardCard =card;
-        this.requestPlaceCardZone =zone;
+        this.requestDrawableCard =card;
+        this.requestCardZone =zone;
         requestPlaceCardDone =false;
 
         //on attends la fin de la requette
@@ -331,6 +374,38 @@ public class GameLogicThread extends Thread{
             }
         }
         return requestPlaceCardResult;
+    }
+
+    public synchronized boolean setOnCardAttackRequest(DrawableCard card, int zoneCible) {
+        if(board.getAdvCardsOnBoard()[zoneCible] == null
+        || card.getCard().getAttack() == 0)
+        {
+            return false;
+        }
+
+
+        //on ne peut pas avoir 2 requette simultané
+        while(!requestAttackDone) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        this.requestCardZone =zoneCible;
+        this.requestDrawableCard=card;
+        requestAttackDone =false;
+
+        //on attends la fin de la requette
+        while(!requestAttackDone) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -364,8 +439,8 @@ public class GameLogicThread extends Thread{
         if(isReady())touch.onTouchEvent(event);
     }
 
-    public boolean isYourTurn() {
-        return isYourTurn;
+    public boolean isYourMainPhase() {
+        return isYourMainPhase;
     }
 
 
@@ -388,7 +463,7 @@ public class GameLogicThread extends Thread{
     }
 
     public void requestEndTurn() {
-        if(isYourTurn)
+        if(isYourMainPhase || isYourBattlePhase)
         {
             requestEnd=true;
         }else{
@@ -398,4 +473,10 @@ public class GameLogicThread extends Thread{
             t.show();
         }
     }
+
+    public boolean isYourBattlePhase() {
+        return isYourBattlePhase;
+    }
+
+
 }

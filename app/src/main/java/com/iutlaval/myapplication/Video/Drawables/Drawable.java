@@ -104,8 +104,10 @@ public abstract class Drawable {
         return false;
     }
 
+
     protected void setBitmap(Bitmap bitmap)
     {
         this.bitmap=bitmap;
     }
+
 }

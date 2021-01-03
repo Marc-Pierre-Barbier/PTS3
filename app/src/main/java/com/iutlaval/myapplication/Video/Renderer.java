@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.GameLogicThread;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.Video.Drawables.Drawable;
@@ -124,6 +125,8 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     public void updateFrame() {
         needToUpdate =true;
     }
+
+
 
     /**
      * main drawing thread render each frame
@@ -269,6 +272,15 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
         removeToDrawWithoutUpdate(name);
         updateFrame();
     }
+
+    /**
+     * supprime le toDraw du drawable associé a la carte
+     * @param cardToDestroy
+     */
+    public void removeToDraw(Card cardToDestroy) {
+        removeToDraw(cardToDestroy.getDrawableCard());
+    }
+
     /**
      * remove the element from the draw list
      * @param toRemove the element toRemove

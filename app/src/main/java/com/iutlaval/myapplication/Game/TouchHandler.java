@@ -54,13 +54,20 @@ public class TouchHandler {
             handSelectionHandler(event);
             //afficher grosse carte
             bigCardHandler(event);
-            if(gameLogic.isYourTurn())
+            if(gameLogic.isYourMainPhase() && ! gameLogic.isYourBattlePhase())
             {
-                //selectionne la carte
-                dragAndDropHandler(event);
+                //selectionne la carte dans la main
+                dragAndDropHandler(event,false);
                 //affiche les zones de jeu
                 playCard(event);
 
+            }
+            if(gameLogic.isYourBattlePhase() && ! gameLogic.isYourMainPhase())
+            {
+                //selectionne la carte sur le terrain
+                dragAndDropHandler(event,true);
+
+                attackHandler(event);
             }
         }
     }
@@ -69,7 +76,7 @@ public class TouchHandler {
      * gére le drag and drop de carte
      * @param event
      */
-    private void dragAndDropHandler(MotionEvent event)
+    private void dragAndDropHandler(MotionEvent event,boolean isBattleTurn)
     {
         //on calcul les coordonées en % de l'écran
 
@@ -79,6 +86,11 @@ public class TouchHandler {
             dragAndDropCard = renderer.getCardOn(unScalled_X, unScalled_Y);
 
             if(dragAndDropCard != null && !dragAndDropCard.isDraggable()) dragAndDropCard = null;
+
+            //si la carte est dans la main durant la phase de combat on ne la prend pas
+            //if(dragAndDropCard != null && isBattleTurn && !dragAndDropCard.isOnBoard())dragAndDropCard = null;
+            //si la carte est sur le terrain durant la phase principale on ne la prends pas
+            if(dragAndDropCard != null && !isBattleTurn && dragAndDropCard.isOnBoard())dragAndDropCard = null;
 
             if (dragAndDropCard != null) {
                 //on calcul la position par raport au doigt de l'utilisateur
@@ -119,6 +131,7 @@ public class TouchHandler {
                 DrawableCard bigCard = new DrawableCard(smallCArd,context,2);
                 renderer.addToDraw(bigCard);
                 bigCard.setCoordinates(72F,10F);
+                bigCard.setDraggable(false);
                 //on sélectionne si elle est dans notre main(déplacer la care vers le haut de quelque pixel)
 
             //si on lache la carte
@@ -153,7 +166,6 @@ public class TouchHandler {
                 {
                     dragAndDropCard.setOnBoard(true);
                     dragAndDropCard.setCoordinates((DrawableCard.getCardWith()+1)*zone,55F);
-                    dragAndDropCard.setDraggable(false);
                 }else{
                     if(dragAndDropCard != null)renderer.moveToDraw(originalPositionX,originalPositionY, dragAndDropCard.getName());
                 }
@@ -177,7 +189,7 @@ public class TouchHandler {
                 renderer.updateFrame();
             }
 
-            if(unScalled_Y > 90F && smallCArd !=null && smallCArd.isDraggable() && !smallCArd.isOnBoard() && (cardSeletedInHand == null || !cardSeletedInHand.equals(smallCArd)))
+            if(unScalled_Y > 90F && smallCArd !=null  && !smallCArd.isOnBoard() && (cardSeletedInHand == null || !cardSeletedInHand.equals(smallCArd)))
             {
                 smallCArd.setCoordinates(smallCArd.getX(),smallCArd.getY() - SELECTING_OFFSET);
                 cardSeletedInHand=smallCArd;
@@ -200,6 +212,21 @@ public class TouchHandler {
         {
             Log.e("push","detected");
             gameLogic.requestEndTurn();
+        }
+    }
+
+    private void attackHandler(MotionEvent event)
+    {
+        if(dragAndDropCard != null){
+            if(event.getAction() == MotionEvent.ACTION_UP) {
+                int zone = playableZonesHandler.getEnemyHoveredZone(dragAndDropCard);
+                if(zone != -1)
+                {
+                    gameLogic.setOnCardAttackRequest(dragAndDropCard,zone);
+                }
+                renderer.moveToDraw(originalPositionX,originalPositionY, dragAndDropCard.getName());
+                playableZonesHandler.hidePlayableZones(renderer);
+            }
         }
     }
 }

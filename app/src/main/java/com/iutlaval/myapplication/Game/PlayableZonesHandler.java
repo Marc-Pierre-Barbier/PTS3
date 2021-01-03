@@ -95,11 +95,35 @@ public class PlayableZonesHandler {
             if(cardX > card.getX() && card.getY() < 75F/*90F orrigine */ && card.getY() > 50F)
             {
                 //on a trouvé l'emplacement de la carte
+                //si il y a une carte a l'emplacement on retourne le numero
                 if(board.getPlayerCardsOnBoard()[i] == null)return i;
                 else break;
             }
         }
-
         return -1;
     }
+
+    /**
+     * retourne le numero de la zone survolé par le drawable si la zone est vite
+     * sinon retourne -1
+     * @param card
+     * @return
+     */
+    public int getEnemyHoveredZone(Drawable card) {
+        for(int i=0 ; i< board.MAX_CARD_ON_BOARD;i++)
+        {
+            int cardX =(DrawableCard.getCardWith()+1)*i + 20;
+            //es que on survole sur l'axe x
+            if(cardX > card.getX() && card.getY() < 50F)
+            {
+                //on a trouvé l'emplacement de la carte
+                //si il y a une carte a l'emplacement on retourne le numero
+                if(board.getPlayerCardsOnBoard()[i] == null)return i;
+                else break;
+            }
+        }
+        return -1;
+    }
+
+    //cardPlayed.getDrawableCard().setCoordinates(((DrawableCard.getCardWith()+1)*zone+DrawableCard.getCardWith()),10F);
 }
