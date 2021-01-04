@@ -11,8 +11,8 @@ import android.widget.Toast;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.CardRegistery;
 import com.iutlaval.myapplication.GameActivity;
+import com.iutlaval.myapplication.PopupRunable;
 import com.iutlaval.myapplication.R;
-import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Drawables.DrawableSelfRemoving;
@@ -91,16 +91,18 @@ public class GameLogicThread extends Thread{
         Bitmap bitmapEnemyTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_enemy_turn);
         Bitmap bitmapBattlePhase = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_battlephase);
         Bitmap bitmapButtonEnd = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_btn_boutonfintour);
-        Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
+        Bitmap bitmapBackground = BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
+        Bitmap bitmapVictory =  BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_pb_victory);
+        Bitmap bitmapDefeat =  BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_pb_defeat);
 
         //adding the background
-        renderer.addToDraw(new DrawableBitmap(bitmap, 0,0, "background", 100, 100 ));
+        renderer.addToDraw(new DrawableBitmap(bitmapBackground, 0,0, "background", 100, 100 ));
         //drawHandPreview();
         //Rectangle pos = new Rectangle(0F,0F,100F,100F);
         ready=true;
 
         final String host = "4.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 16784;
+        final int port = 16146;
 
         try {
             Socket client = new Socket(host, port);
@@ -181,7 +183,7 @@ public class GameLogicThread extends Thread{
                     case Command.YOURTURN:
                         isYourMainPhase =true;
                         isYourBattlePhase=false;
-                        renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapYourTurn,0,0,"yourTurn",100F,50F),1));
+                        renderer.addToDrawWithoutUpdate(new DrawableSelfRemoving(new DrawableBitmap(bitmapYourTurn,0,0,"yourTurn",100F,50F),1));
                         renderer.addToDraw(new DrawableBitmap(bitmapButtonEnd, BUTTON_X_POS, BUTTON_Y_POS, BUTTONTURN_DRAWABLE_NAME, BUTTON_X_SIZE, BUTTON_Y_SIZE));
                         break;
 
@@ -194,36 +196,30 @@ public class GameLogicThread extends Thread{
                     case Command.ENEMYTURN:
                         isYourMainPhase =false;
 
-                        //on update pas vu que l'instruction suivante va le faire
-                        renderer.removeToDrawWithoutUpdate(BUTTONTURN_DRAWABLE_NAME);
+                        renderer.removeToDraw(BUTTONTURN_DRAWABLE_NAME);
+                        renderer.removeToDraw("battlePhase");
                         renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapEnemyTurn,0,0,"enemyTurn",100F,50F),1));
                         break;
 
                     case Command.POPUP:
                         String recivedMessage = coms.recieve();
-                        Toast popupToast = new Toast(gameActivity);
-                        popupToast.setText(recivedMessage);
-                        popupToast.setDuration(Toast.LENGTH_LONG);
-                        popupToast.show();
+                        gameActivity.runOnUiThread(new PopupRunable(recivedMessage,gameActivity));
                         Log.e("popup",recivedMessage);
                         break;
 
                     case Command.WIN:
                         //on termine la parite
-                        cancelled = true;
-                        Toast winToast = new Toast(gameActivity);
-                        winToast.setText("bravo ! vous avez gagné");
-                        winToast.setDuration(Toast.LENGTH_LONG);
-                        winToast.show();
+                        gameActivity.runOnUiThread(new PopupRunable("bravo ! vous avez gagné",gameActivity));
+                        renderer.addToDraw(new DrawableBitmap(bitmapVictory,0,0,"victory",100F,50F));
                         renderer.updateFrame();
+                        cancelled = true;
                         break;
                     case Command.LOSE:
                         //on termine la partie
+                        gameActivity.runOnUiThread(new PopupRunable("vous avez perdu!",gameActivity));
+                        renderer.addToDraw(new DrawableBitmap(bitmapDefeat,0,0,"defeat",100F,50F));
+                        renderer.updateFrame();
                         cancelled=true;
-                        Toast loseToast = new Toast(gameActivity);
-                        loseToast.setText("vous avez perdu!");
-                        loseToast.setDuration(Toast.LENGTH_LONG);
-                        loseToast.show();
                         break;
                     case Command.PING:
                         coms.send(Command.PONG);
