@@ -205,7 +205,7 @@ public class DrawableCard extends Drawable{
 
         cardOnBoardDrawable = new DrawableBitmap(cardOnBoardBitmap,x,y,toString()+"BOARD",CARD_ON_BOARD_DRAWABLE_WIDTH*ratio,CARD_ON_BOARD_DRAWABLE_HEIGHT*ratio);
 
-        c.setDrawableCard(this);
+        if(ratio == 1)c.setDrawableCard(this);
 
         updateHpAndAtk(c.getAttack(),c.getHealth());
         setCoordinates(getX(), getY());

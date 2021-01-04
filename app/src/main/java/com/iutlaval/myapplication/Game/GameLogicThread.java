@@ -12,6 +12,7 @@ import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.CardRegistery;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.R;
+import com.iutlaval.myapplication.Video.Drawables.Drawable;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Drawables.DrawableSelfRemoving;
@@ -267,7 +268,6 @@ public class GameLogicThread extends Thread{
                         //detruit la carte sur le terrain du joueur
                         int zoneOfTheDestroyedCard = coms.recieveInt();
                         Card cardToDestroy = board.removeCardOnPlayerBoard(zoneOfTheDestroyedCard);
-                        Log.e("destroying",""+cardToDestroy);
                         renderer.removeToDraw(cardToDestroy);
                         break;
 

@@ -127,7 +127,6 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
-
     /**
      * main drawing thread render each frame
      */
