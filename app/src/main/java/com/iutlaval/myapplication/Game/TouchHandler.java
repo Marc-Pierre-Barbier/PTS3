@@ -1,10 +1,13 @@
 package com.iutlaval.myapplication.Game;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.MotionEvent;
 
 import com.iutlaval.myapplication.GameActivity;
+import com.iutlaval.myapplication.R;
+import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 import com.iutlaval.myapplication.Video.Renderer;
 
@@ -217,7 +220,11 @@ public class TouchHandler {
     private void attackHandler(MotionEvent event)
     {
         if(dragAndDropCard != null){
+            if(event.getAction() == MotionEvent.ACTION_DOWN)
+                renderer.addToDraw(new DrawableBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.t_s_fleche),2F,20F,"arrow",14F,25F));
+
             if(event.getAction() == MotionEvent.ACTION_UP) {
+                renderer.removeToDraw("arrow");
                 int zone = playableZonesHandler.getEnemyHoveredZone(dragAndDropCard);
                 if(zone != -1)
                 {
