@@ -199,7 +199,7 @@ public class GameLogicThread extends Thread{
                     case Command.SETMANA:
                         renderer.removeToDrawWithoutUpdate("mana");
                         mana = coms.recieveInt();
-                        renderer.addToDraw(new DrawableText("Mana : "+mana,85F,60F,"mana",100,12, Color.WHITE));
+                        renderer.addToDraw(new DrawableText("Mana : "+mana,85F,60F,"mana",13.3F,6.65F,20, 100,30,Color.WHITE));
                         break;
 
                     case Command.ENEMYTURN:
@@ -285,13 +285,13 @@ public class GameLogicThread extends Thread{
 
                     case Command.SET_ENEMY_HP:
                         renderer.removeToDrawWithoutUpdate("advHp");
-                        renderer.addToDraw(new DrawableText(" Hp  : "+coms.recieve(),1F,10F,"advHp",100,12,Color.WHITE));
+                        renderer.addToDraw(new DrawableText(" Hp  : " + coms.recieve(),1F,10F,"advHp",13.3F,6.65F,20, 100,30,Color.WHITE));
 
                         break;
 
                     case Command.SET_HP:
                         renderer.removeToDrawWithoutUpdate("playerHp");
-                        renderer.addToDraw(new DrawableText(" Hp  : " + coms.recieve(),85F,80F,"playerHp",100,12,Color.WHITE));
+                        renderer.addToDraw(new DrawableText(" Hp  : " + coms.recieve(),85F,80F,"playerHp",13.3F,6.65F,20, 100,30,Color.WHITE));
                         break;
 
                     case "timeout":

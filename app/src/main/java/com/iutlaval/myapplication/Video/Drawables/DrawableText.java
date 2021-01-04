@@ -17,57 +17,6 @@ import java.util.List;
  */
 public class DrawableText extends Drawable{
 
-
-    public DrawableText(String text,float x_pos,float y_pos,String name,float textSize , float x_size,int color)
-    {
-        this(text,x_pos,y_pos,name,textSize,x_size,color,20);
-    }
-
-    /**
-     * ce constructeur permet de créer un text un une ligne avec moin d'argument
-     * @param text
-     * @param x_pos
-     * @param y_pos
-     * @param name
-     * @param textSize
-     */
-    public DrawableText(String text,float x_pos,float y_pos,String name,float textSize , float x_size,int color,int nbcharPerlines)
-    {
-        super(x_pos,y_pos,name);
-
-
-        TextPaint p = new TextPaint();
-        p.setAntiAlias(true);
-        p.setTextSize(textSize);
-        p.setColor(color);
-
-        int canvas_width = (int) p.measureText(text);
-        int canvas_height = (int) textSize;
-
-
-        Bitmap bitmap = Bitmap.createBitmap(canvas_width, canvas_height, Bitmap.Config.ARGB_8888);
-        setBitmap(bitmap);
-        Canvas c = new Canvas(bitmap);
-
-        //si on a une description
-        int index = 1;
-        List<String> linesOfText = cutText(nbcharPerlines,text);
-        for(String line : linesOfText)
-        {
-            //y_canvasRatio/linesOfText.size()
-            c.drawText(line ,0,index*textSize,p);
-            index++;
-        }
-
-        int scalled_x_size = (int) (GameActivity.screenWidth*x_size/100);
-
-        int y_size = (int) (x_size/(canvas_width * 1.0) * 200 * linesOfText.size());
-
-        int scalled_y_size = GameActivity.screenHeight*y_size/100;
-
-        setBitmap(Bitmap.createScaledBitmap(bitmap,scalled_x_size,scalled_y_size,GameActivity.bilinearFiltering));
-    }
-
     /**
      * ce constructeur permet de rendre du texte
      * @param text le texte a rendre
