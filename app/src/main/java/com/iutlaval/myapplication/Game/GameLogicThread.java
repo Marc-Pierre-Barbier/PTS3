@@ -88,6 +88,7 @@ public class GameLogicThread extends Thread{
         //loading textures
         Bitmap bitmapYourTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_your_turn);
         Bitmap bitmapEnemyTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_enemy_turn);
+        Bitmap bitmapBattlePhase = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_battlephase);
         Bitmap bitmapButtonEnd = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_btn_boutonfintour);
         Bitmap bitmap= BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
 
@@ -254,8 +255,10 @@ public class GameLogicThread extends Thread{
                         //c'est le role de la command meule de faire perde des cartes au joeur
                         int nbmeule = coms.recieveInt();
                         deck.draw(nbmeule);
+                        break;
 
                     case Command.BATTLE:
+                        renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapBattlePhase,0,0,"battlePhase",100F,50F),1));
                         isYourBattlePhase=true;
                         isYourMainPhase=false;
                         break;
