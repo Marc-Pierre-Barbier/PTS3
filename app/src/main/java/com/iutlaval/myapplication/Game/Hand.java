@@ -26,6 +26,11 @@ public class Hand {
         }
     }
 
+    public void removeCard(Card toRemove)
+    {
+        hand.remove(toRemove);
+    }
+
     public List<Card> getHand() {
         return hand;
     }

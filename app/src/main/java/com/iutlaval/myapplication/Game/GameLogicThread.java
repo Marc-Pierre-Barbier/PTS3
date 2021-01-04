@@ -324,7 +324,7 @@ public class GameLogicThread extends Thread{
     }
 
     /**
-     * cette evenement est appelé par le touchHandler et permet d'envoyer au serveur le fait qu'un carte a été jouer
+     * cette evenement est appelé indirectement par la fonction request onCardPlayed et permet d'envoyer au serveur le fait qu'un carte a été jouer
      * CE CODE CONTIEN DE l'ACCES RESEAU QUI N'APPARTIEN QU'A CE THREAD IS DOIT RESTER PRIVE
      * @param card la carte jouer
      * @param zone ou elle a été joué sur le terrain
@@ -339,7 +339,7 @@ public class GameLogicThread extends Thread{
                 coms.send(Command.PUT_CARD);
 
 
-                //on lui dit quelle caret on veut
+                //on lui dit quelle carte on veut
                 int cardId = CardRegistery.indexOf(card.getCard());
                 if (cardId == -1) {
                     coms.send("CLIENT REGISTRY ERROR");
@@ -348,9 +348,9 @@ public class GameLogicThread extends Thread{
                 coms.send(cardId);
                 coms.send(zone);
 
-                Log.e("waiting","for ok");
                 if (coms.recieve().equals(Command.OK)) {
                     board.setCard(zone, card.getCard());
+                    hand.removeCard(card.getCard());
                     return true;
                 }
             }catch (Exception e)
