@@ -1,6 +1,7 @@
 package com.iutlaval.myapplication.Game;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.CardRegistery;
 import com.iutlaval.myapplication.GameActivity;
+import com.iutlaval.myapplication.MainActivity;
 import com.iutlaval.myapplication.PopupRunable;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
@@ -109,8 +111,15 @@ public class GameLogicThread extends Thread{
             coms= new Communication(client);
         } catch (IOException e) {
             Log.e("ERROR SERVER DEAD","srv");
-            //TODO display error and don't crash the game;
-            System.exit(1);
+            gameActivity.runOnUiThread(new PopupRunable("erreur de comunication avec le serveur",gameActivity));
+            renderer.terminate();
+
+            //gameativity.finish() n'etait pas utilisable il fermais l'application
+            Intent intent = new Intent(gameActivity,MainActivity.class);
+            //on reset le top et recrée l'activité principale
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            gameActivity.startActivity(intent);
+            return;
         }
         renderer.updateFrame();
 

@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         final Button playButton = (Button) findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "click sur button", Toast.LENGTH_LONG).show();
                 pickDeckGame();
             }
         });
@@ -29,25 +28,20 @@ public class MainActivity extends AppCompatActivity {
         final Button cardButton = (Button) findViewById(R.id.cardButton);
         cardButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(), "click sur button", Toast.LENGTH_LONG).show();
                 pickDeckList();
             }
         });
 
     }
 
-    private String pickDeckGame() {
+    private void pickDeckGame() {
         DialogFragment d = new DeckPickDialogueGame(this);
         d.show(getSupportFragmentManager(),"s");
-
-        return "demodeck";
     }
 
-    private String pickDeckList() {
+    private void pickDeckList() {
         DialogFragment d = new DeckPickDialogueList(this);
         d.show(getSupportFragmentManager(),"s");
-
-        return "demodeck";
     }
 
 
