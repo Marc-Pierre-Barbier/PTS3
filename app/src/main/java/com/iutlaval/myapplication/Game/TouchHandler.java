@@ -210,7 +210,6 @@ public class TouchHandler {
                 unScalled_X > GameLogicThread.BUTTON_X_POS && unScalled_X < GameLogicThread.BUTTON_X_POS + GameLogicThread.BUTTON_X_SIZE &&
                 unScalled_Y > GameLogicThread.BUTTON_Y_POS && unScalled_Y < GameLogicThread.BUTTON_Y_POS + GameLogicThread.BUTTON_Y_SIZE)
         {
-            Log.e("push","detected");
             gameLogic.requestEndTurn();
         }
     }
@@ -220,7 +219,6 @@ public class TouchHandler {
         if(dragAndDropCard != null){
             if(event.getAction() == MotionEvent.ACTION_UP) {
                 int zone = playableZonesHandler.getEnemyHoveredZone(dragAndDropCard);
-                Log.e("hovered : ",""+zone);
                 if(zone != -1)
                 {
                     gameLogic.setOnCardAttackRequest(dragAndDropCard,zone);

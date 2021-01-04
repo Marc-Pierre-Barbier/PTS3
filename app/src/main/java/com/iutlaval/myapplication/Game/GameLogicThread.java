@@ -278,6 +278,17 @@ public class GameLogicThread extends Thread{
                         renderer.removeToDraw(enemyCardToDestroy);
                         break;
 
+                    case Command.SET_ENEMY_HP:
+                        renderer.removeToDrawWithoutUpdate("advHp");
+                        renderer.addToDraw(new DrawableText(" Hp  : "+coms.recieve(),1F,10F,"advHp",100,12,Color.WHITE));
+
+                        break;
+
+                    case Command.SET_HP:
+                        renderer.removeToDrawWithoutUpdate("playerHp");
+                        renderer.addToDraw(new DrawableText(" Hp  : " + coms.recieve(),85F,80F,"playerHp",100,12,Color.WHITE));
+                        break;
+
                     case "timeout":
                         //ceci est une erreur et non une commande elle se doit donc de ne rien faire
                         break;
@@ -382,10 +393,9 @@ public class GameLogicThread extends Thread{
     }
 
     public synchronized boolean setOnCardAttackRequest(DrawableCard card, int zoneCible) {
-        if(board.getAdvCardsOnBoard()[zoneCible] == null
+        if(zoneCible == -1 || zoneCible != 100 && board.getAdvCardsOnBoard()[zoneCible] == null
         || card.getCard().getAttack() == 0)
         {
-            Log.e("DENIED",""+ board.getAdvCardsOnBoard()[zoneCible] + "    r   "+card.getCard().getAttack());
             return false;
         }
 

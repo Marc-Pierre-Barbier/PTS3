@@ -110,6 +110,13 @@ public class PlayableZonesHandler {
      * @return
      */
     public int getEnemyHoveredZone(Drawable card) {
+        if(card.getX() < 10F && card.getY() < 10F)
+        {
+            //cent veut dire que l'on attaque le joueur
+            return 100;
+        }
+
+
         for(int i=0 ; i< board.MAX_CARD_ON_BOARD;i++)
         {
             int cardX =(DrawableCard.getCardWith()+1)*i + 20 + DrawableCard.getCardWith()/2;
@@ -122,7 +129,6 @@ public class PlayableZonesHandler {
                     return i;
                 }
                 else {
-                    Log.e("NO CARD ON ",""+i);
                     break;
                 }
             }

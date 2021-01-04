@@ -25,7 +25,8 @@ public final class Command {
     public static final String DESTROY_CARD = "destroyself"; //demande au clien de retirer une carte du terrain
     public static final String DESTROY_ADV_CARD = "destroyadv"; //demande au client de retirer une carte adverse du terrain
     public static final String BATTLE = "battlephase";
-
+    public static final String SET_ENEMY_HP = "setenemhp";
+    public static final String SET_HP = "sethp";
 
     //inutilisé
     public static final String SELECT_CARD = "selectCard";
