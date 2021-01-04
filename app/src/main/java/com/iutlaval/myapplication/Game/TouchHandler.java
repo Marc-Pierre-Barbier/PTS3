@@ -144,6 +144,16 @@ public class TouchHandler {
                 renderer.removeToDraw(smallCardUsedForBig.getName() + "BIG");
                 smallCardUsedForBig = null;
             }
+        }else if(event.getAction() == MotionEvent.ACTION_MOVE)
+        {
+            //on déselactionne la grosse carte si on passe dessu
+            if(unScalled_X > 76F)
+            {
+                if (smallCardUsedForBig != null) {
+                    renderer.removeToDraw(smallCardUsedForBig.getName() + "BIG");
+                    smallCardUsedForBig = null;
+                }
+            }
         }
     }
 
