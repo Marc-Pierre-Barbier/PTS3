@@ -112,14 +112,19 @@ public class PlayableZonesHandler {
     public int getEnemyHoveredZone(Drawable card) {
         for(int i=0 ; i< board.MAX_CARD_ON_BOARD;i++)
         {
-            int cardX =(DrawableCard.getCardWith()+1)*i + 20;
+            int cardX =(DrawableCard.getCardWith()+1)*i + 20 + DrawableCard.getCardWith()/2;
             //es que on survole sur l'axe x
             if(cardX > card.getX() && card.getY() < 50F)
             {
                 //on a trouvé l'emplacement de la carte
                 //si il y a une carte a l'emplacement on retourne le numero
-                if(board.getPlayerCardsOnBoard()[i] == null)return i;
-                else break;
+                if(board.getAdvCardsOnBoard()[i] != null){
+                    return i;
+                }
+                else {
+                    Log.e("NO CARD ON ",""+i);
+                    break;
+                }
             }
         }
         return -1;

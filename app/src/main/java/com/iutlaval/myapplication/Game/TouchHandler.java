@@ -88,7 +88,7 @@ public class TouchHandler {
             if(dragAndDropCard != null && !dragAndDropCard.isDraggable()) dragAndDropCard = null;
 
             //si la carte est dans la main durant la phase de combat on ne la prend pas
-            //if(dragAndDropCard != null && isBattleTurn && !dragAndDropCard.isOnBoard())dragAndDropCard = null;
+            if(dragAndDropCard != null && isBattleTurn && !dragAndDropCard.isOnBoard())dragAndDropCard = null;
             //si la carte est sur le terrain durant la phase principale on ne la prends pas
             if(dragAndDropCard != null && !isBattleTurn && dragAndDropCard.isOnBoard())dragAndDropCard = null;
 
@@ -220,6 +220,7 @@ public class TouchHandler {
         if(dragAndDropCard != null){
             if(event.getAction() == MotionEvent.ACTION_UP) {
                 int zone = playableZonesHandler.getEnemyHoveredZone(dragAndDropCard);
+                Log.e("hovered : ",""+zone);
                 if(zone != -1)
                 {
                     gameLogic.setOnCardAttackRequest(dragAndDropCard,zone);

@@ -385,6 +385,7 @@ public class GameLogicThread extends Thread{
         if(board.getAdvCardsOnBoard()[zoneCible] == null
         || card.getCard().getAttack() == 0)
         {
+            Log.e("DENIED",""+ board.getAdvCardsOnBoard()[zoneCible] + "    r   "+card.getCard().getAttack());
             return false;
         }
 
