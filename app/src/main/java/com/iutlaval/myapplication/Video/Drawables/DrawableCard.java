@@ -97,6 +97,7 @@ public class DrawableCard extends Drawable{
     private Drawable cardTitle;
     private Drawable cardHpDrawable;
     private Drawable cardAtkDrawable;
+    private Drawable cardCostDrawable;
 
     //DEPENDANCE CIRCULAIRE NE PAS CHANGER DE GC NON Tracing
     //https://www.baeldung.com/java-gc-cyclic-references
@@ -157,8 +158,19 @@ public class DrawableCard extends Drawable{
         frameDrawable = new DrawableBitmap(c.getFrameBitmap(context),0,0,name+"frame",CARD_WITH*ratio,CARD_HEIGHT*ratio);
         //to string retourne le hash code de l'objet qui est donc unique ce qui fait de lui un id parfait
         if(c.getDescription() != null)
-            cardDescription = new DrawableText(c.getDescription(),0,0,toString()+"description",DESCRIPTION_WIDTH*ratio,DESCRIPTION_HEIGHT*ratio,DESCRIPTION_FONT_SIZE,DESCRIPTION_TEXT_X_RES,DESCRIPTION_TEXT_Y_RES);
-        cardTitle = new DrawableText(c.getName(),0,0,toString()+"name",TITLE_WIDTH*ratio,TITLE_HEIGHT*ratio,TITLE_FONT_SIZE,TEXT_TITLE_X_RES,TEXT_TITLE_Y_RES);
+            cardDescription = new DrawableText(c.getDescription(),0,0,toString()+"description",DESCRIPTION_WIDTH*ratio,DESCRIPTION_HEIGHT*ratio,DESCRIPTION_FONT_SIZE,DESCRIPTION_TEXT_X_RES,DESCRIPTION_TEXT_Y_RES,Color.BLACK);
+
+        if(c.getName().length() < 16)
+        {
+            //cardTitle = new DrawableText(c.getName(),0,0,toString()+"name",TITLE_WIDTH*ratio,TITLE_HEIGHT*ratio,TITLE_FONT_SIZE,TEXT_TITLE_X_RES,TEXT_TITLE_Y_RES,Color.BLACK,16);
+            cardTitle = new DrawableText(c.getName(),0,0,toString()+"name",TITLE_FONT_SIZE,TITLE_WIDTH,Color.BLACK,16);
+        }else{
+            cardTitle = new DrawableText(c.getName(),0,0,toString()+"name",TITLE_WIDTH*ratio,TITLE_HEIGHT*ratio,TITLE_FONT_SIZE*0.75F,TEXT_TITLE_X_RES,TEXT_TITLE_Y_RES,Color.BLACK,30);
+            //cardTitle = new DrawableText(c.getName(),0,0,toString()+"name",TITLE_FONT_SIZE,TITLE_WIDTH,Color.BLACK,40);
+        }
+
+        cardCostDrawable = new DrawableText(c.getCost()  + "", 0, 0, toString() + "cost", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES,Color.BLACK);
+
 
         Rectangle opacityRect = new Rectangle(x,y,OPACITY_RECT_WIDTH*ratio+x,OPACITY_RECT_HEIGHT*ratio+x);
         Bitmap pictureBitmap = BitmapFactory.decodeResource(context.getResources(),c.getCardPicture());
@@ -226,14 +238,14 @@ public class DrawableCard extends Drawable{
     {
         if(onBoard) {
             if (atk != null)
-                cardAtkDrawable = new DrawableText(atk+"", 0, 0, toString() + "atk", ONBOARD_ATK_HP_WIDTH*ratio, ONBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
+                cardAtkDrawable = new DrawableText(atk+"", 0, 0, toString() + "atk", ONBOARD_ATK_HP_WIDTH*ratio, ONBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES,Color.BLACK);
             if (hp != null)
-                cardHpDrawable = new DrawableText(hp+"", 0, 0, toString() + "hp", ONBOARD_ATK_HP_WIDTH*ratio, ONBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES);
+                cardHpDrawable = new DrawableText(hp+"", 0, 0, toString() + "hp", ONBOARD_ATK_HP_WIDTH*ratio, ONBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE,TEXT_ATK_HP_X_RES,TEXT_ATK_HP_Y_RES,Color.BLACK);
         }else{
             if (atk != null)
-                cardAtkDrawable = new DrawableText(atk + "", 0, 0, toString() + "atk", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES);
+                cardAtkDrawable = new DrawableText(atk + "", 0, 0, toString() + "atk", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES,Color.BLACK);
             if (hp != null)
-                cardHpDrawable = new DrawableText(hp + "", 0, 0, toString() + "hp", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES);
+                cardHpDrawable = new DrawableText(hp + "", 0, 0, toString() + "hp", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES,Color.BLACK);
         }
         setCoordinates(getX(), getY());
     }
@@ -282,6 +294,7 @@ public class DrawableCard extends Drawable{
             if(cardDescription != null)cardDescription.drawOn(c,p);
             cardHpDrawable.drawOn(c,p);
             cardAtkDrawable.drawOn(c,p);
+            cardCostDrawable.drawOn(c,p);
         }
 
     }
@@ -311,6 +324,8 @@ public class DrawableCard extends Drawable{
             cardAtkDrawable.setCoordinates(x + OFFBOARD_ATK_X*ratio,y + OFFBOARD_ATK_HP_Y*ratio);
             cardHpDrawable.setCoordinates(x + OFFBOARD_HP_X*ratio,y +OFFBOARD_ATK_HP_Y*ratio);
             cardTitle.setCoordinates(x+OFFBOARD_TITLE_X*ratio,y - OFFBOARD_TITLE_Y*ratio);
+            cardCostDrawable.setCoordinates(x+CARD_WITH/2*ratio,y + OFFBOARD_ATK_HP_Y *ratio);
+
         }
     }
 

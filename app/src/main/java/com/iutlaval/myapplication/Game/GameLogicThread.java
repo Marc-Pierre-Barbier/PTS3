@@ -3,6 +3,7 @@ package com.iutlaval.myapplication.Game;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -96,8 +97,8 @@ public class GameLogicThread extends Thread{
         //Rectangle pos = new Rectangle(0F,0F,100F,100F);
         ready=true;
 
-        final String host = "2.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 13450;
+        final String host = "4.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
+        final int port = 16784;
 
         try {
             Socket client = new Socket(host, port);
@@ -183,9 +184,9 @@ public class GameLogicThread extends Thread{
                         break;
 
                     case Command.SETMANA:
-                        renderer.removeToDraw("mana");
+                        renderer.removeToDrawWithoutUpdate("mana");
                         mana = coms.recieveInt();
-                        renderer.addToDraw(new DrawableText("Mana : "+mana,90F,90F,"mana",10F,10F,100,800,200));
+                        renderer.addToDraw(new DrawableText("Mana : "+mana,85F,60F,"mana",100,12, Color.WHITE));
                         break;
 
                     case Command.ENEMYTURN:
@@ -263,6 +264,7 @@ public class GameLogicThread extends Thread{
                         //detruit la carte sur le terrain du joueur
                         int zoneOfTheDestroyedCard = coms.recieveInt();
                         Card cardToDestroy = board.removeCardOnPlayerBoard(zoneOfTheDestroyedCard);
+                        Log.e("destroying",""+cardToDestroy);
                         renderer.removeToDraw(cardToDestroy);
                         break;
 
