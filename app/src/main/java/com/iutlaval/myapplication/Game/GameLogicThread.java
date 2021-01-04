@@ -103,8 +103,8 @@ public class GameLogicThread extends Thread{
         //Rectangle pos = new Rectangle(0F,0F,100F,100F);
         ready=true;
 
-        final String host = "4.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 16146;
+        final String host = "2.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
+        final int port = 17057;
 
         try {
             Socket client = new Socket(host, port);
