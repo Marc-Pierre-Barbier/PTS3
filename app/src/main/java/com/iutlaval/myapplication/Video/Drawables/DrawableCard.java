@@ -201,7 +201,7 @@ public class DrawableCard extends Drawable{
 
         if(ratio == 1)c.setDrawableCard(this);
 
-        updateHpAndAtk(c.getAttack(),c.getHealth());
+        updateHpAndAtk(c.getAttack(),c.getHealth() );
         setCoordinates(getX(), getY());
     }
 
@@ -227,7 +227,6 @@ public class DrawableCard extends Drawable{
      * @param atk l'attaque de la carte
      * @param hp les point de vie de la carte
      */
-    //TODO supprimer la possibilité null si non utilisé
     public void updateHpAndAtk(Integer atk,Integer hp)
     {
         if(onBoard) {

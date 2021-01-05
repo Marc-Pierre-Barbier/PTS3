@@ -1,6 +1,5 @@
 package com.iutlaval.myapplication;
 
-import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -103,7 +101,7 @@ public class CardListActivity extends AppCompatActivity {
                 linearLayout.addView(cardName);
 
                 cardStats = new TextView(this);
-                cardStats.setText("Attaque : "+card.getAttack()+"       Vie : "+card.getHealth()+"\n");
+                cardStats.setText("Attaque : "+card.getDefaultAttack()+"       Vie : "+card.getDefaultHealth()+"\n");
                 linearLayout.addView(cardStats);
 
 

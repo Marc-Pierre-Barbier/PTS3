@@ -42,7 +42,7 @@ public class Mythes_Chant_Sirene extends Card {
      * @return
      */
     @Override
-    public int getAttack() {
+    public int getDefaultAttack() {
         return 0;
     }
 
@@ -52,7 +52,7 @@ public class Mythes_Chant_Sirene extends Card {
      * @return
      */
     @Override
-    public int getHealth() {
+    public int getDefaultHealth() {
         return 0;
     }
 

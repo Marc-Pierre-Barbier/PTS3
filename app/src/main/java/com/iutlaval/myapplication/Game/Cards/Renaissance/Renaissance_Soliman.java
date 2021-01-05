@@ -28,12 +28,12 @@ public class Renaissance_Soliman extends Card {
     }
 
     @Override
-    public int getAttack() {
+    public int getDefaultAttack() {
         return 6;
     }
 
     @Override
-    public int getHealth() {
+    public int getDefaultHealth() {
         return 4;
     }
 

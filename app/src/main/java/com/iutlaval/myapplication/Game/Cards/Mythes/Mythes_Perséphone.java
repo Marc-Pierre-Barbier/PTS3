@@ -27,12 +27,12 @@ public class Mythes_Perséphone extends Card {
     }
 
     @Override
-    public int getAttack() {
+    public int getDefaultAttack() {
         return 4;
     }
 
     @Override
-    public int getHealth() {
+    public int getDefaultHealth() {
         return 4;
     }
 

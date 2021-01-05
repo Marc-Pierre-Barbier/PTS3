@@ -42,7 +42,7 @@ public class Moyen_Age_Isabelle extends Card {
      * @return
      */
     @Override
-    public int getAttack() {
+    public int getDefaultAttack() {
         return 1;
     }
 
@@ -52,7 +52,7 @@ public class Moyen_Age_Isabelle extends Card {
      * @return
      */
     @Override
-    public int getHealth() {
+    public int getDefaultHealth() {
         return 3;
     }
 

@@ -42,7 +42,7 @@ public class Renaissance_Chatherine extends Card {
      * @return
      */
     @Override
-    public int getAttack() {
+    public int getDefaultAttack() {
         return 3;
     }
 
@@ -52,7 +52,7 @@ public class Renaissance_Chatherine extends Card {
      * @return
      */
     @Override
-    public int getHealth() {
+    public int getDefaultHealth() {
         return 2;
     }
 

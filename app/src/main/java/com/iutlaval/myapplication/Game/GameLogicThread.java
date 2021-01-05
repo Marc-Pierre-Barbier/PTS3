@@ -106,6 +106,10 @@ public class GameLogicThread extends Thread{
         final String host = "2.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
         final int port = 17057;
 
+        //gameativity.finish() n'etait pas utilisable il fermais l'application
+        Intent intent = new Intent(gameActivity,MainActivity.class);
+        //on reset le top et recrée l'activité principale
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         try {
             Socket client = new Socket(host, port);
             coms= new Communication(client);
@@ -114,10 +118,7 @@ public class GameLogicThread extends Thread{
             gameActivity.runOnUiThread(new PopupRunable("erreur de comunication avec le serveur",gameActivity));
             renderer.terminate();
 
-            //gameativity.finish() n'etait pas utilisable il fermais l'application
-            Intent intent = new Intent(gameActivity,MainActivity.class);
-            //on reset le top et recrée l'activité principale
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             gameActivity.startActivity(intent);
             return;
         }
@@ -222,6 +223,8 @@ public class GameLogicThread extends Thread{
                         renderer.addToDraw(new DrawableBitmap(bitmapVictory,0,0,"victory",100F,50F));
                         renderer.updateFrame();
                         cancelled = true;
+                        currentThread().sleep(2000);
+                        gameActivity.startActivity(intent);
                         break;
                     case Command.LOSE:
                         //on termine la partie
@@ -229,6 +232,9 @@ public class GameLogicThread extends Thread{
                         renderer.addToDraw(new DrawableBitmap(bitmapDefeat,0,0,"defeat",100F,50F));
                         renderer.updateFrame();
                         cancelled=true;
+                        currentThread().sleep(2000);
+                        //gameativity.finish() n'etait pas utilisable il fermais l'application
+                        gameActivity.startActivity(intent);
                         break;
                     case Command.PING:
                         coms.send(Command.PONG);
@@ -292,6 +298,18 @@ public class GameLogicThread extends Thread{
                     case Command.SET_HP:
                         renderer.removeToDrawWithoutUpdate("playerHp");
                         renderer.addToDraw(new DrawableText(" Hp  : " + coms.recieve(),85F,80F,"playerHp",13.3F,6.65F,20, 100,30,Color.WHITE));
+                        break;
+
+                    case Command.SET_CARD_HP :
+                        int zonecartecible = coms.recieveInt();
+                        board.getPlayerCardsOnBoard()[zonecartecible].setHealth(coms.recieveInt());
+                        renderer.updateFrame();
+                        break;
+
+                    case Command.SET_ADV_CARD_HP:
+                        int zonecarteadvcible = coms.recieveInt();
+                        board.getAdvCardsOnBoard()[zonecarteadvcible].setHealth(coms.recieveInt());
+                        renderer.updateFrame();
                         break;
 
                     case "timeout":
@@ -399,7 +417,7 @@ public class GameLogicThread extends Thread{
 
     public synchronized boolean setOnCardAttackRequest(DrawableCard card, int zoneCible) {
         if(zoneCible == -1 || zoneCible != 100 && board.getAdvCardsOnBoard()[zoneCible] == null
-        || card.getCard().getAttack() == 0)
+        || card.getCard().getDefaultAttack() == 0)
         {
             return false;
         }
@@ -427,21 +445,6 @@ public class GameLogicThread extends Thread{
         }
 
         return true;
-    }
-
-    /**
-     * cette fonction est appeller a chaque fin de frame
-     * CETTE FONCTION A UN IMPACT DIRECT SUR LES FPS ELLE SE DOIT D'être OPTIMAL
-     * TOUT CALCUL REDONDANT CE DOIT D'AVOIR ETE PRE FAIT
-     *
-     * TOUT APELLE DE CETTE FONCTION SE DOIT D'ÊTRE PROTEGER PAR isReady()
-     *
-     * /!\ renderer.updateFrame(); va forcer le system a redessiner l'afficher qui ensuite reappelera onFrameDoneRendering() ce qui peut causer si le updateFrame() n'est pas proteger
-     * une utilisation de la batterie massive
-     */
-    //TODO : supprimer cette fonction si on a rien a en faire
-    public void onFrameDoneRendering()
-    {
     }
 
     /**

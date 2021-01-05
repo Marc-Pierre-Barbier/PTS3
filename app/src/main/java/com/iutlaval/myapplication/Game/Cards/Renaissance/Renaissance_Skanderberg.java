@@ -43,7 +43,7 @@ public class Renaissance_Skanderberg extends Card {
      * @return
      */
     @Override
-    public int getAttack() {
+    public int getDefaultAttack() {
         return 1;
     }
 
@@ -53,7 +53,7 @@ public class Renaissance_Skanderberg extends Card {
      * @return
      */
     @Override
-    public int getHealth() {
+    public int getDefaultHealth() {
         return 5;
     }
 

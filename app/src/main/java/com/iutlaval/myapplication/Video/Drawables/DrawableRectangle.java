@@ -25,25 +25,4 @@ public class DrawableRectangle extends Drawable{
 
         setBitmap(bitmap);
     }
-
-
-    /**
-     * ce constructeur n'est pas tres rapide donc a eviter il utilse pas mal de ram mais sava encore le gc de java s'en ocupe vite
-     * ce constructeur dessine un rectangle avec la couleur donné en argument
-     * @param bitmap bitmap sur le quel dessiner
-     * @param rectangle recange cooresspondant a la surface a dessiner
-     * @param name nom du drawable agit comme un identifiant mais doit être unique
-     * @param color couleur du rectangle
-     * @throws InvalidDataException
-     */
-    //TODO verifier l'utiliter de ce constructeur
-    @Deprecated
-    public DrawableRectangle(Bitmap bitmap,Rectangle rectangle, String name, int color) throws InvalidDataException {
-        super(rectangle.getPositionX(),rectangle.getPositionY(),name);
-        if(rectangle.isDrawable() || bitmap == null)throw new InvalidDataException(name,rectangle);
-
-        rectangle.scaleRectangleToScreen();
-        rectangle.bitmapRectangleBuilder(bitmap,color);
-        setBitmap(bitmap);
-    }
 }

@@ -185,7 +185,6 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
                 //empecher d'aller plus vite que le taux de rafraichissement de l'ecran
                 //sauve de la baterie
                 FpsTime.waitFrameTime(time);
-                if(engine != null && engine.isReady())engine.onFrameDoneRendering();
                 while(!needToUpdate)
                 {
                     try {

@@ -12,6 +12,9 @@ public abstract class Card {
     private static Bitmap frameBitmap = null;
     private DrawableCard drawableCard = null;
 
+
+    private int attack;
+    private int health;
     /**
      * cree une carte est lui definit un drawable
      * @param UID
@@ -21,6 +24,26 @@ public abstract class Card {
         if(!(UID == null || c == null)) {
             drawableCard = new DrawableCard(this, 0, 0, UID, c);
         }
+        this.attack=getDefaultAttack();
+        this.health=getDefaultHealth();
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+        drawableCard.updateHpAndAtk(attack,null);
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+        drawableCard.updateHpAndAtk(null,health);
     }
 
     /**
@@ -87,13 +110,13 @@ public abstract class Card {
      * retourne un entier coresspondant a l'attaque de la carte
      * @return
      */
-    public abstract int getAttack();
+    public abstract int getDefaultAttack();
 
     /**
      * retourne la santé de la carte
      * @return
      */
-    public abstract int getHealth();
+    public abstract int getDefaultHealth();
 
     /**
      * NE PAS TOUCHER CETTE FONCTION SI VOUS N'ÊTES PAS SUR DE CE QUE VOUS FAITES

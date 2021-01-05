@@ -27,6 +27,8 @@ public final class Command {
     public static final String BATTLE = "battlephase";
     public static final String SET_ENEMY_HP = "setenemhp";
     public static final String SET_HP = "sethp";
+    public static final String SET_CARD_HP = "setcardhp";
+    public static final String SET_ADV_CARD_HP = "setadvcardhp";
 
     //inutilisé
     public static final String SELECT_CARD = "selectCard";

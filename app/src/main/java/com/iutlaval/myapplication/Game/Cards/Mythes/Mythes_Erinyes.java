@@ -42,7 +42,7 @@ public class Mythes_Erinyes extends Card {
      * @return
      */
     @Override
-    public int getAttack() {
+    public int getDefaultAttack() {
         return 7;
     }
 
@@ -52,7 +52,7 @@ public class Mythes_Erinyes extends Card {
      * @return
      */
     @Override
-    public int getHealth() {
+    public int getDefaultHealth() {
         return 7;
     }
 
