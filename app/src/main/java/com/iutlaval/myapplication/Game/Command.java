@@ -29,10 +29,8 @@ public final class Command {
     public static final String SET_HP = "sethp";
     public static final String SET_CARD_HP = "setcardhp";
     public static final String SET_ADV_CARD_HP = "setadvcardhp";
+    public static final String SET_CARD_ATK = "setcardatk";
+    public static final String SET_ADV_CARD_ATK = "setadvcardatk";
 
-    //inutilisé
-    public static final String SELECT_CARD = "selectCard";
-    public static final String DEFEND = "defend";
-    public static final String CAST_SPELL = "castSpell";
 
 }

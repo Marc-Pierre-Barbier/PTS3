@@ -33,7 +33,7 @@ public class Renaissance_Henri extends Card {
      */
     @Override
     public String getDescription() {
-        return null;
+        return "";
     }
 
     /**

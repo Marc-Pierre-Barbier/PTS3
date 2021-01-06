@@ -170,6 +170,7 @@ public class GameLogicThread extends Thread{
 
 
             try {
+                int zonecartecible;
                 //on limite le temps du readobject pour eviter les blockaeg
                 coms.setLimitedTimeOut();
                 String serveurCmd = coms.recieve();
@@ -301,14 +302,26 @@ public class GameLogicThread extends Thread{
                         break;
 
                     case Command.SET_CARD_HP :
-                        int zonecartecible = coms.recieveInt();
+                        zonecartecible = coms.recieveInt();
                         board.getPlayerCardsOnBoard()[zonecartecible].setHealth(coms.recieveInt());
                         renderer.updateFrame();
                         break;
 
                     case Command.SET_ADV_CARD_HP:
-                        int zonecarteadvcible = coms.recieveInt();
-                        board.getAdvCardsOnBoard()[zonecarteadvcible].setHealth(coms.recieveInt());
+                        zonecartecible = coms.recieveInt();
+                        board.getAdvCardsOnBoard()[zonecartecible].setHealth(coms.recieveInt());
+                        renderer.updateFrame();
+                        break;
+
+                    case Command.SET_CARD_ATK:
+                        zonecartecible = coms.recieveInt();
+                        board.getPlayerCardsOnBoard()[zonecartecible].setAttack(coms.recieveInt());
+                        renderer.updateFrame();
+                        break;
+
+                    case Command.SET_ADV_CARD_ATK:
+                        zonecartecible = coms.recieveInt();
+                        board.getAdvCardsOnBoard()[zonecartecible].setAttack(coms.recieveInt());
                         renderer.updateFrame();
                         break;
 

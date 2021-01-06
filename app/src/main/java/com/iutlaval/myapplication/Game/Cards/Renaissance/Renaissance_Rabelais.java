@@ -34,7 +34,7 @@ public class Renaissance_Rabelais extends Card {
      */
     @Override
     public String getDescription() {
-        return null;
+        return "";
     }
 
     /**

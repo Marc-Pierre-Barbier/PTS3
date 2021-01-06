@@ -284,7 +284,7 @@ public class DrawableCard extends Drawable{
 
             //dessine le texte
             cardTitle.drawOn(c,p);
-            if(cardDescription != null)cardDescription.drawOn(c,p);
+            if(cardDescription != null && !cardDescription.equals(""))cardDescription.drawOn(c,p);
             cardHpDrawable.drawOn(c,p);
             cardAtkDrawable.drawOn(c,p);
             cardCostDrawable.drawOn(c,p);
