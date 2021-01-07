@@ -1,9 +1,12 @@
 package com.iutlaval.myapplication;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -11,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 public class MainActivity extends AppCompatActivity {
 
     private Context context;
+    private boolean disabledMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final ImageButton handicapeButton = (ImageButton) findViewById(R.id.handicapeButton);
+        handicapeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                handicapeButtonHandle(handicapeButton);
+            }
+        });
+
+        disabledMode=true;
+        handicapeButtonHandle(handicapeButton);
     }
 
     private void pickDeckGame() {
@@ -42,6 +55,22 @@ public class MainActivity extends AppCompatActivity {
     private void pickDeckList() {
         DialogFragment d = new DeckPickDialogueList(this);
         d.show(getSupportFragmentManager(),"s");
+    }
+
+    private void handicapeButtonHandle(ImageButton handicapeButton)
+    {
+        if(!disabledMode)
+        {
+            handicapeButton.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.t_h_handicape));
+        }else{
+            handicapeButton.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.t_h_handicape_greyed));
+        }
+        disabledMode = ! disabledMode;
+
+        SharedPreferences sharedPref = this.getSharedPreferences("handicape",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.handicape), disabledMode);
+        editor.apply();
     }
 
 

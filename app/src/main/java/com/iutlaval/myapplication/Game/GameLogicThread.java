@@ -2,6 +2,7 @@ package com.iutlaval.myapplication.Game;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -93,9 +94,20 @@ public class GameLogicThread extends Thread{
         Bitmap bitmapEnemyTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_enemy_turn);
         Bitmap bitmapBattlePhase = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_battlephase);
         Bitmap bitmapButtonEnd = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_btn_boutonfintour);
-        Bitmap bitmapBackground = BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
         Bitmap bitmapVictory =  BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_pb_victory);
         Bitmap bitmapDefeat =  BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_pb_defeat);
+
+        SharedPreferences sharedPref = gameActivity.getSharedPreferences("handicape",Context.MODE_PRIVATE);
+        boolean modeHandicape = sharedPref.getBoolean(gameActivity.getString(R.string.handicape), false);
+
+        Bitmap bitmapBackground;
+        if(!modeHandicape)
+        {
+            bitmapBackground = BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
+        }else{
+            bitmapBackground = BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background_handicapted);
+
+        }
 
         //adding the background
         renderer.addToDraw(new DrawableBitmap(bitmapBackground, 0,0, "background", 100, 100 ));
