@@ -34,7 +34,7 @@ public class Renaissance_Reforme extends Card {
      */
     @Override
     public String getDescription() {
-        return "Choississez une créature que vous controlez avec un râle d'agonie, créez un jeton qui est une copie de cette créature";
+        return "invisible, vol de vie";
     }
 
     /**
@@ -44,7 +44,7 @@ public class Renaissance_Reforme extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 2;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Renaissance_Reforme extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 3;
     }
 
     /**

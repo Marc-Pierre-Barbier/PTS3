@@ -34,7 +34,7 @@ public class Moyen_Age_Croisade extends Card {
      */
     @Override
     public String getDescription() {
-        return "Choississez une créature que vous controller et une créature que vous ne controllez pas, elle se battent entre elle";
+        return "Vol de vie";
     }
 
     /**
@@ -44,7 +44,7 @@ public class Moyen_Age_Croisade extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Moyen_Age_Croisade extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 3;
     }
 
     /**
@@ -74,7 +74,7 @@ public class Moyen_Age_Croisade extends Card {
      */
     @Override
     public int getCost() {
-        return 3;
+        return 5;
     }
 
     /**

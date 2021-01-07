@@ -33,7 +33,7 @@ public class Mythes_Cheval_Troie extends Card {
      */
     @Override
     public String getDescription() {
-        return "pioche 2 cartes";
+        return "";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Cheval_Troie extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mythes_Cheval_Troie extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 4;
     }
 
     /**

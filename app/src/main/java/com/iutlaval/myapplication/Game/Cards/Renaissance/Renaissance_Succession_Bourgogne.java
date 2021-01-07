@@ -33,7 +33,7 @@ public class Renaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public String getDescription() {
-        return "Renvoie une carte de créature depuis le champ de bataille dans votre main, vous activez son râle d' agonie, puis vous pouvez jouer une carte de meme coût depuis votre main";
+        return "mutilation bénéfique";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Renaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Renaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 6;
     }
 
     /**

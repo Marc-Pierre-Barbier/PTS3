@@ -33,7 +33,7 @@ public class Mythes_12_Travaux extends Card {
      */
     @Override
     public String getDescription() {
-        return "2/+2 à une creature";
+        return "esquive";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_12_Travaux extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 3;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mythes_12_Travaux extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 1;
     }
 
     /**

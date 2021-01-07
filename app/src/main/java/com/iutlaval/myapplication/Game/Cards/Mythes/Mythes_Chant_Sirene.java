@@ -33,7 +33,7 @@ public class Mythes_Chant_Sirene extends Card {
      */
     @Override
     public String getDescription() {
-        return "echange les points de vie et dattaque dune creature";
+        return "vol de vie";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Chant_Sirene extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 2;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mythes_Chant_Sirene extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 1;
     }
 
     /**

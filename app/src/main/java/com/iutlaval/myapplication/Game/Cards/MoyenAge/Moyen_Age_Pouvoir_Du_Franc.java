@@ -33,7 +33,7 @@ public class Moyen_Age_Pouvoir_Du_Franc extends Card {
      */
     @Override
     public String getDescription() {
-        return "vous piochez deux carte";
+        return "courte portée";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Moyen_Age_Pouvoir_Du_Franc extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 5;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Moyen_Age_Pouvoir_Du_Franc extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 5;
     }
 
     /**

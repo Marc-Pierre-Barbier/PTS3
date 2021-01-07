@@ -33,7 +33,7 @@ public class Mythes_Enigme_Sphinx extends Card {
      */
     @Override
     public String getDescription() {
-        return "pioche 3 cartes";
+        return "invisible";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Enigme_Sphinx extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 2;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mythes_Enigme_Sphinx extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 5;
     }
 
     /**

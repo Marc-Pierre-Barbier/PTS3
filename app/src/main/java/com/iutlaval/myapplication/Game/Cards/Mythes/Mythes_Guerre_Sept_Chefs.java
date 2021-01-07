@@ -33,7 +33,7 @@ public class Mythes_Guerre_Sept_Chefs extends Card {
      */
     @Override
     public String getDescription() {
-        return "choissisez 2 créatures elle gagne +2/-1 jusqua la fin du tour";
+        return "vigilance";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Guerre_Sept_Chefs extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 6;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mythes_Guerre_Sept_Chefs extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 5;
     }
 
     /**

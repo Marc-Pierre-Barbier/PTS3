@@ -33,7 +33,7 @@ public class Moyen_Age_Traite_Verdun extends Card {
      */
     @Override
     public String getDescription() {
-        return "La créature adverse ciblée ne peut pas attaquer pendant 2 tours.";
+        return "mutilation bénéfique";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Moyen_Age_Traite_Verdun extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Moyen_Age_Traite_Verdun extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 4;
     }
 
     /**
