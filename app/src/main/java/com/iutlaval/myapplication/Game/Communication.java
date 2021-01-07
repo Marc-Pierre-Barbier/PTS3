@@ -47,6 +47,7 @@ public class Communication {
      * @param message
      */
     public void send(String message) throws IOException {
+        Log.i("sending",message);
         clientOut.writeObject(message);
     }
 
@@ -65,7 +66,9 @@ public class Communication {
      */
     public String recieve(){
         try {
-            return (String) clientIn.readObject();
+            String message = (String) clientIn.readObject();
+            Log.i("recived",message);
+            return message;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             //on crash

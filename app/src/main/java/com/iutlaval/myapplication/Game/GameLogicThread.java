@@ -117,8 +117,6 @@ public class GameLogicThread extends Thread{
             Log.e("ERROR SERVER DEAD","srv");
             gameActivity.runOnUiThread(new PopupRunable("erreur de comunication avec le serveur",gameActivity));
             renderer.terminate();
-
-
             gameActivity.startActivity(intent);
             return;
         }
@@ -303,12 +301,24 @@ public class GameLogicThread extends Thread{
 
                     case Command.SET_CARD_HP :
                         zonecartecible = coms.recieveInt();
-                        board.getPlayerCardsOnBoard()[zonecartecible].setHealth(coms.recieveInt());
+                        int health = coms.recieveInt();
+                        if(board.getPlayerCardsOnBoard()[zonecartecible] == null)
+                        {
+                            Log.e("erro card",""+zonecartecible);
+                            coms.recieveInt();
+                        }else{
+                            board.getPlayerCardsOnBoard()[zonecartecible].setHealth(health);
+                        }
+
                         renderer.updateFrame();
                         break;
 
                     case Command.SET_ADV_CARD_HP:
                         zonecartecible = coms.recieveInt();
+                        if(board.getAdvCardsOnBoard()[zonecartecible] == null)
+                        {
+                            Log.e("erro card",""+zonecartecible);
+                        }
                         board.getAdvCardsOnBoard()[zonecartecible].setHealth(coms.recieveInt());
                         renderer.updateFrame();
                         break;
@@ -357,7 +367,7 @@ public class GameLogicThread extends Thread{
     }
 
     /**
-     * cette methode est UNIQUEMENT a bute de test elle ne sert a rien d'autre ne pas s'en servir
+     * cette methode permet d'afficher la main
      */
     private void drawHandPreview() {
         int i = 0;
@@ -410,8 +420,15 @@ public class GameLogicThread extends Thread{
 
     protected synchronized boolean setOnCardPlayedRequest(DrawableCard card,int zone)
     {
+        Log.e("request","recived");
+
         //on ne peut pas avoir 2 requette simultané
-        if(!requestPlaceCardDone)return false;
+        while(!requestPlaceCardDone)
+        {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) { }
+        }
 
         this.requestDrawableCard =card;
         this.requestCardZone =zone;
@@ -430,7 +447,7 @@ public class GameLogicThread extends Thread{
 
     public synchronized boolean setOnCardAttackRequest(DrawableCard card, int zoneCible) {
         if(zoneCible == -1 || zoneCible != 100 && board.getAdvCardsOnBoard()[zoneCible] == null
-        || card.getCard().getDefaultAttack() == 0)
+        || card.getCard().getAttack() == 0)
         {
             return false;
         }

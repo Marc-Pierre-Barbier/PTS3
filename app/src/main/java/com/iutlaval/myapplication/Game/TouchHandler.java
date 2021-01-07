@@ -48,6 +48,7 @@ public class TouchHandler {
      */
     public void onTouchEvent(MotionEvent event)
     {
+
         unScalled_X = event.getX() / GameActivity.screenWidth * 100;
         unScalled_Y = event.getY() / GameActivity.screenHeight * 100;
         //on ignore le multi touch
@@ -57,6 +58,7 @@ public class TouchHandler {
             handSelectionHandler(event);
             //afficher grosse carte
             bigCardHandler(event);
+
             if(gameLogic.isYourMainPhase() && ! gameLogic.isYourBattlePhase())
             {
                 //selectionne la carte dans la main
@@ -175,6 +177,7 @@ public class TouchHandler {
 
             }else if(event.getAction() == MotionEvent.ACTION_UP) {
                 int zone = playableZonesHandler.getHoveredZone(dragAndDropCard);
+                Log.e("hovered","zone :"+zone);
                 if(zone != -1 && gameLogic.setOnCardPlayedRequest(dragAndDropCard,zone))
                 {
                     dragAndDropCard.setOnBoard(true);

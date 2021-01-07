@@ -1,5 +1,7 @@
 package com.iutlaval.myapplication.Game;
 
+import android.util.Log;
+
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
 
@@ -68,4 +70,5 @@ public class Board {
     public Card[] getAdvCardsOnBoard() {
         return advCardsOnBoard;
     }
+
 }
