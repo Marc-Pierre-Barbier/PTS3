@@ -33,7 +33,7 @@ public class Moyen_Age_Malediction_Templier extends Card {
      */
     @Override
     public String getDescription() {
-        return "la creature ciblée gagne -2/-2 jusqu'a la fin du tour";
+        return "mutilation bénéfique";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Moyen_Age_Malediction_Templier extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 2;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Moyen_Age_Malediction_Templier extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 5;
     }
 
     /**

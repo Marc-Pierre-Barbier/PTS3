@@ -33,7 +33,7 @@ public class Moyen_Age_Prise_Sainte_Terre extends Card {
      */
     @Override
     public String getDescription() {
-        return "jusqu'a la fin du tour l'attaque de vos créatures devient leurs endurance";
+        return "solitude";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Moyen_Age_Prise_Sainte_Terre extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 5;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Moyen_Age_Prise_Sainte_Terre extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 6;
     }
 
     /**

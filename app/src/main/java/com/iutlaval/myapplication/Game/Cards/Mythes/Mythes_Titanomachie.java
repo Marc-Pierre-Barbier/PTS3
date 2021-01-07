@@ -33,7 +33,7 @@ public class Mythes_Titanomachie extends Card {
      */
     @Override
     public String getDescription() {
-        return "-2 pv à toutes les créatures";
+        return "toxique";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Titanomachie extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 5;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mythes_Titanomachie extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 3;
     }
 
     /**

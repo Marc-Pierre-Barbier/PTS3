@@ -33,7 +33,7 @@ public class Moyen_Age_Peste extends Card {
      */
     @Override
     public String getDescription() {
-        return "Metter un marqueur Peste Sur chaque créature (au debut de chaque tour,mettez un marqueur -0/-1 sur chaque créature avec un marqueur Peste";
+        return "mutilation bénéfique";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Moyen_Age_Peste extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 3;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Moyen_Age_Peste extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 5;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Moyen_Age_Peste extends Card {
      */
     @Override
     public int getCost() {
-        return 4;
+        return 5;
     }
 
     /**

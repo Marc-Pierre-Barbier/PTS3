@@ -33,7 +33,7 @@ public class Renaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public String getDescription() {
-        return "Regardez les 4 premières cartes de votre deck, choississez en une, mettez la dans votre main";
+        return "toxique";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Renaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Renaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Renaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public int getCost() {
-        return 2;
+        return 6;
     }
 
     /**

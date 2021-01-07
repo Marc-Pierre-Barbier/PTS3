@@ -33,7 +33,7 @@ public class Mythes_Icar extends Card {
      */
     @Override
     public String getDescription() {
-        return "la creature gagne le vol";
+        return "dopage";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Icar extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mythes_Icar extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Mythes_Icar extends Card {
      */
     @Override
     public int getCost() {
-        return 3;
+        return 2;
     }
 
     /**

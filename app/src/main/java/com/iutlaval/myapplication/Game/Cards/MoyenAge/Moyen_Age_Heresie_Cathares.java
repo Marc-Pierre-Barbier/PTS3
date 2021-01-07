@@ -33,7 +33,7 @@ public class Moyen_Age_Heresie_Cathares extends Card {
      */
     @Override
     public String getDescription() {
-        return "les creatures que vous controlez gagne +6/+6 jusqu'a la fin du tour";
+        return "courte portée";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Moyen_Age_Heresie_Cathares extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 6;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Moyen_Age_Heresie_Cathares extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 6;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Moyen_Age_Heresie_Cathares extends Card {
      */
     @Override
     public int getCost() {
-        return 8;
+        return 7;
     }
 
     /**

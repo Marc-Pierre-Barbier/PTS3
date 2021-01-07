@@ -33,7 +33,7 @@ public class Renaissance_Concile_Trente extends Card {
      */
     @Override
     public String getDescription() {
-        return "Sacrifiez une créature et déclanchez son rale d'agonie 2 fois de suite";
+        return "vigilance";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Renaissance_Concile_Trente extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 2;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Renaissance_Concile_Trente extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 4;
     }
 
     /**

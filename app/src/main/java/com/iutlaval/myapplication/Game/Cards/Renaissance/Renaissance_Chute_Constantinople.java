@@ -33,7 +33,7 @@ public class Renaissance_Chute_Constantinople extends Card {
      */
     @Override
     public String getDescription() {
-        return "declenche tous les râles d'agonie";
+        return "obsession";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Renaissance_Chute_Constantinople extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 4;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Renaissance_Chute_Constantinople extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 6;
     }
 
     /**

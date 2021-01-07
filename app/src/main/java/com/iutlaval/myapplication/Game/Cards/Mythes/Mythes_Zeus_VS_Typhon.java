@@ -33,7 +33,7 @@ public class Mythes_Zeus_VS_Typhon extends Card {
      */
     @Override
     public String getDescription() {
-        return "detruit toutes les creatures adverse ayant une  attaque de 3 ou moins";
+        return "vol de vie";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Zeus_VS_Typhon extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 6;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mythes_Zeus_VS_Typhon extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 8;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Mythes_Zeus_VS_Typhon extends Card {
      */
     @Override
     public int getCost() {
-        return 6;
+        return 8;
     }
 
     /**

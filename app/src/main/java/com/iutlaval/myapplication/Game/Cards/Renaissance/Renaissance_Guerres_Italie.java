@@ -33,7 +33,7 @@ public class Renaissance_Guerres_Italie extends Card {
      */
     @Override
     public String getDescription() {
-        return "toutes les creatures gagnent -2/-0";
+        return "régénération";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Renaissance_Guerres_Italie extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 2;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Renaissance_Guerres_Italie extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 3;
     }
 
     /**

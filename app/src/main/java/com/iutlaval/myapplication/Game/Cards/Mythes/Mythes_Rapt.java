@@ -33,7 +33,7 @@ public class Mythes_Rapt extends Card {
      */
     @Override
     public String getDescription() {
-        return "-5 pv à une creature";
+        return "célérité";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Rapt extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 3;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Mythes_Rapt extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 5;
     }
 
     /**

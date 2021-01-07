@@ -34,7 +34,7 @@ public class Renaissance_Presse_Imprimer extends Card {
      */
     @Override
     public String getDescription() {
-        return "piochez 3 cartes";
+        return "vigilance";
     }
 
     /**
@@ -44,7 +44,7 @@ public class Renaissance_Presse_Imprimer extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 4;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Renaissance_Presse_Imprimer extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 0;
+        return 6;
     }
 
     /**
