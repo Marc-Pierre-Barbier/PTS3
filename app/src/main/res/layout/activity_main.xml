@@ -63,4 +63,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playButton"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="87dp"
+        android:layout_height="84dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/deficients_moteurs"
+        tools:layout_editor_absoluteX="299dp"
+        tools:layout_editor_absoluteY="631dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
