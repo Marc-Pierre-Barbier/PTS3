@@ -15,9 +15,7 @@ public class PopupRunable implements Runnable{
 
     @Override
     public void run() {
-        Toast popupToast = new Toast(context);
-        popupToast.setText(recivedMessage);
-        popupToast.setDuration(Toast.LENGTH_LONG);
+        Toast popupToast = Toast.makeText(context,recivedMessage,Toast.LENGTH_LONG);
         popupToast.show();
     }
 }

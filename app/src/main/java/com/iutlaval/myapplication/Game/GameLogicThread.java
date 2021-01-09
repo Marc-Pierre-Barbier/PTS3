@@ -90,6 +90,7 @@ public class GameLogicThread extends Thread{
         //pickDeck();
 
         //loading textures
+        Log.i("ressources","loading bitmaps");
         Bitmap bitmapYourTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_your_turn);
         Bitmap bitmapEnemyTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_enemy_turn);
         Bitmap bitmapBattlePhase = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_battlephase);
@@ -97,6 +98,7 @@ public class GameLogicThread extends Thread{
         Bitmap bitmapVictory =  BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_pb_victory);
         Bitmap bitmapDefeat =  BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_pb_defeat);
 
+        Log.i("loading","prefs");
         SharedPreferences sharedPref = gameActivity.getSharedPreferences("handicape",Context.MODE_PRIVATE);
         boolean modeHandicape = sharedPref.getBoolean(gameActivity.getString(R.string.handicape), false);
 
@@ -109,6 +111,8 @@ public class GameLogicThread extends Thread{
 
         }
 
+        Log.i("ressources","base ressources loaded");
+
         //adding the background
         renderer.addToDraw(new DrawableBitmap(bitmapBackground, 0,0, "background", 100, 100 ));
         //drawHandPreview();
@@ -119,9 +123,7 @@ public class GameLogicThread extends Thread{
         final int port = 17057;
 
         //gameativity.finish() n'etait pas utilisable il fermais l'application
-        Intent intent = new Intent(gameActivity,MainActivity.class);
-        //on reset le top et recrée l'activité principale
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
         try {
             Socket client = new Socket(host, port);
             coms= new Communication(client);
@@ -129,7 +131,7 @@ public class GameLogicThread extends Thread{
             Log.e("ERROR SERVER DEAD","srv");
             gameActivity.runOnUiThread(new PopupRunable("erreur de comunication avec le serveur",gameActivity));
             renderer.terminate();
-            gameActivity.startActivity(intent);
+            returnToTheMainActivity();
             return;
         }
         renderer.updateFrame();
@@ -235,7 +237,7 @@ public class GameLogicThread extends Thread{
                         renderer.updateFrame();
                         cancelled = true;
                         currentThread().sleep(2000);
-                        gameActivity.startActivity(intent);
+                        returnToTheMainActivity();
                         break;
                     case Command.LOSE:
                         //on termine la partie
@@ -245,7 +247,7 @@ public class GameLogicThread extends Thread{
                         cancelled=true;
                         currentThread().sleep(2000);
                         //gameativity.finish() n'etait pas utilisable il fermais l'application
-                        gameActivity.startActivity(intent);
+                        returnToTheMainActivity();
                         break;
                     case Command.PING:
                         coms.send(Command.PONG);
@@ -376,6 +378,18 @@ public class GameLogicThread extends Thread{
                 break;
             }
         }
+    }
+
+    private void returnToTheMainActivity() {
+        gameActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(gameActivity,MainActivity.class);
+                //on reset le top et recrée l'activité principale
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                gameActivity.startActivity(intent);
+            }
+        });
     }
 
     /**

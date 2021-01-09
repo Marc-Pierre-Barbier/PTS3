@@ -21,11 +21,11 @@ public abstract class Card {
      * @param c
      */
     public Card(String UID,Context c) {
+        this.attack=getDefaultAttack();
+        this.health=getDefaultHealth();
         if(!(UID == null || c == null)) {
             drawableCard = new DrawableCard(this, 0, 0, UID, c);
         }
-        this.attack=getDefaultAttack();
-        this.health=getDefaultHealth();
     }
 
     public int getAttack() {
