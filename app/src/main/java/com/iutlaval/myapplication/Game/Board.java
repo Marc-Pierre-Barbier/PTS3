@@ -44,6 +44,11 @@ public class Board {
         return -1;
     }
 
+    /**
+     * surprime une carte sur le terrain du joueur et la retourne
+     * @param zone
+     * @return
+     */
     public Card removeCardOnPlayerBoard(int zone)
     {
         Card c = playerCardsOnBoard[zone];
@@ -51,6 +56,11 @@ public class Board {
         return c;
     }
 
+    /**
+     * surprime une carte sur le terrain enemy et la retourne
+     * @param zone
+     * @return
+     */
     public Card removeCardOnEnemyPlayerBoard(int zone) {
         Card c = advCardsOnBoard[zone];
         advCardsOnBoard[zone] = null;

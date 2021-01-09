@@ -1,5 +1,8 @@
 package com.iutlaval.myapplication.Game;
 
+/**
+ * cette classe sert de registre de command basiquement elle joue le role d'un enum mais en plus simple a faire avec le fait que l'on a besoin de string
+ */
 public final class Command {
 
 

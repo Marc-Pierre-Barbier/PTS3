@@ -319,7 +319,7 @@ public class Renderer extends SurfaceView implements SurfaceHolder.Callback {
         {
             //on n'a pas d'objet non card a deplacer
             //si on venais a en avoir besoin crée une interface draggable s'avererais utile
-            if(d instanceof DrawableCard && d.isDraggable())
+            if(d instanceof DrawableCard && ((DrawableCard)d).getRatio() == 1)
             {
                 DrawableCard card = ((DrawableCard)d);
                 if(x >= card.getX() && x <= card.getX()+card.getCardWith())

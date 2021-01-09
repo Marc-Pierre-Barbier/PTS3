@@ -38,11 +38,13 @@ public abstract class Card {
 
     public void setAttack(int attack) {
         this.attack = attack;
+        //on met a jours l'affichage
         drawableCard.updateHpAndAtk(attack,null);
     }
 
     public void setHealth(int health) {
         this.health = health;
+        //on met a jours l'affichage
         drawableCard.updateHpAndAtk(null,health);
     }
 
@@ -127,9 +129,6 @@ public abstract class Card {
         this.drawableCard = drawableCard;
     }
 
-    /**
-     * @return
-     */
     public final DrawableCard getDrawableCard() {
         return drawableCard;
     }

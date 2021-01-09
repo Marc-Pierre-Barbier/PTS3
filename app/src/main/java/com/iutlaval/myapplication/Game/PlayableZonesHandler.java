@@ -14,7 +14,9 @@ import com.iutlaval.myapplication.Video.Renderer;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * gére l'affichage des rectangle gris qui indique les zones jouables
+ */
 public class PlayableZonesHandler {
     private List<Drawable> playableZones;
     private boolean isDisplayed;
@@ -135,6 +137,4 @@ public class PlayableZonesHandler {
         }
         return -1;
     }
-
-    //cardPlayed.getDrawableCard().setCoordinates(((DrawableCard.getCardWith()+1)*zone+DrawableCard.getCardWith()),10F);
 }

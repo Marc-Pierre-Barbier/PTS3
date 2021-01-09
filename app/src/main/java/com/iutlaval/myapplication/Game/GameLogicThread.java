@@ -115,8 +115,7 @@ public class GameLogicThread extends Thread{
 
         //adding the background
         renderer.addToDraw(new DrawableBitmap(bitmapBackground, 0,0, "background", 100, 100 ));
-        //drawHandPreview();
-        //Rectangle pos = new Rectangle(0F,0F,100F,100F);
+
         ready=true;
 
         final String host = "2.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
@@ -124,16 +123,29 @@ public class GameLogicThread extends Thread{
 
         //gameativity.finish() n'etait pas utilisable il fermais l'application
 
-        try {
-            Socket client = new Socket(host, port);
-            coms= new Communication(client);
-        } catch (IOException e) {
+        //on fait trois essay de connection
+        for(int i = 0 ; i < 3 ; i++)
+        {
+            try {
+                Socket client = new Socket(host, port);
+                coms= new Communication(client);
+                //connection reussie
+                break;
+            } catch (IOException e) {}
+        }
+        //si la connection a échouer on print un log + un toast
+        if(coms == null)
+        {
             Log.e("ERROR SERVER DEAD","srv");
             gameActivity.runOnUiThread(new PopupRunable("erreur de comunication avec le serveur",gameActivity));
+            //on arette le moteur de rendu
             renderer.terminate();
+            //et on retourne la 'activité precedente
             returnToTheMainActivity();
             return;
         }
+
+
         renderer.updateFrame();
 
         //principe de fonctionnement : on attends une comande du server et on l'execute

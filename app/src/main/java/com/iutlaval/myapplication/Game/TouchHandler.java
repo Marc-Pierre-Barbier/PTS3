@@ -230,6 +230,10 @@ public class TouchHandler {
         }
     }
 
+    /**
+     * gére le glisser déposer de carte pour attacker une enemy
+     * @param event
+     */
     private void attackHandler(MotionEvent event)
     {
         if(dragAndDropCard != null){

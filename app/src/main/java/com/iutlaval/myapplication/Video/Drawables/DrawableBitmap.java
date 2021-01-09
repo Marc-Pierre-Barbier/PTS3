@@ -5,7 +5,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.iutlaval.myapplication.ERROR_CODE;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.InvalidDataException;
 
@@ -29,7 +28,7 @@ public class DrawableBitmap extends Drawable{
         if(x_scaled_size <=0 || y_scaled_size <=0)
         {
             Log.e("DRAWABLE_TEXTURE :","ERREUR DE MISE A L'ECHELLE");
-            System.exit(ERROR_CODE.ERROR_TEXTURE_DIMENSIONS_INVALID.ordinal());
+            throw new RuntimeException("ECHELLE INVALID EXCEPTION "+this.getClass().getSimpleName());
         }
 
         setBitmap(Bitmap.createScaledBitmap(bitmap, (int)x_scaled_size, (int)y_scaled_size, GameActivity.bilinearFiltering));

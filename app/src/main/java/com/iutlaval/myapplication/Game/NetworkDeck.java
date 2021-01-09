@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * c'est un deck qui déserialise les info recut du serveur ce qui donne une deck de carte a terme
+ * c'est un deck qui déserialise les info recut du serveur ce qui donne un deck de carte a terme
  */
 public class NetworkDeck{
     private Stack<Card> cards;
@@ -36,11 +36,20 @@ public class NetworkDeck{
         }
     }
 
+    /**
+     * retire la premiere carte et la retourne
+     * @return
+     */
     public Card draw()
     {
         return cards.pop();
     }
 
+    /**
+     * retire un nombre donné de carte et les retourne
+     * @param amount
+     * @return
+     */
     public List<Card> draw(int amount)
     {
         List<Card> drawn = new ArrayList<>();

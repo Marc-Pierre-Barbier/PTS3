@@ -10,6 +10,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * cette classe a pour role de gérer l'envie et la reception de message client serveur
+ */
 public class Communication {
     private static final short MAX_ACCEPTABLE_PING = 500;
     public static final String TIMEOUT = "timeout";

@@ -96,10 +96,15 @@ import java.util.List;
 
 /**
  * registre de carte identique a celui du serveur permet la déserialisation des decks et cartes
+ * par example si le serveur envoie un messange du genre : destruire 0
+ * on comprendera detruire Mythes_Perséphone
  */
 public class CardRegistery {
     public static List<Class<? extends Card>> registry;
 
+    /**
+     * initialise le registre des carte
+     */
     private static void initCardRegistery()
     {
         registry = new ArrayList<>();

@@ -62,7 +62,7 @@ public class GameActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         //kill les threads
-        //System.exit(0);
+        System.exit(0);
     }
 
     @Override

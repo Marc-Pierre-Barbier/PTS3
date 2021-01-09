@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
-import com.iutlaval.myapplication.ERROR_CODE;
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.InvalidDataException;
 import com.iutlaval.myapplication.Video.Rectangle;
@@ -175,7 +174,7 @@ public class DrawableCard extends Drawable{
         } catch (InvalidDataException e) {
             e.printStackTrace();
             Log.e("CARTE :","forme de la carte invalide !");
-            System.exit(ERROR_CODE.ERROR_INVALID_CARD_DIMENSIONS.ordinal());
+            System.exit(100);
         }
 
 
@@ -360,6 +359,9 @@ public class DrawableCard extends Drawable{
         return onBoard;
     }
 
+    public int getRatio() {
+        return ratio;
+    }
 
     public Card getCard() {
         return card;
