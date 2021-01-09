@@ -121,7 +121,6 @@ public class GameLogicThread extends Thread{
         final String host = "2.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
         final int port = 17057;
 
-        //gameativity.finish() n'etait pas utilisable il fermais l'application
 
         //on fait trois essay de connection
         for(int i = 0 ; i < 3 ; i++)
@@ -393,6 +392,7 @@ public class GameLogicThread extends Thread{
     }
 
     private void returnToTheMainActivity() {
+        //gameativity.finish() n'etait pas utilisable il fermais l'application
         gameActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {

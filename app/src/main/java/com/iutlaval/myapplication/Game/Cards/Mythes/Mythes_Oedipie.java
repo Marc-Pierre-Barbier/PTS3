@@ -33,7 +33,7 @@ public class Mythes_Oedipie extends Card {
      */
     @Override
     public String getDescription() {
-        return "si votre adversaire n'a pas de creatures sur le champ de bataille quand cette creature arrivent sur le champ de bataille il perd 3pv";
+        return "mutilation benefique";
     }
 
     /**

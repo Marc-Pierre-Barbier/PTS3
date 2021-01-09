@@ -33,7 +33,7 @@ public class Renaissance_Vlad extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: detruisez 2 créatures adverses aleatoirement";
+        return "";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Renaissance_Vlad extends Card {
      */
     @Override
     public int getCost() {
-        return 8;
+        return 5;
     }
 
     /**

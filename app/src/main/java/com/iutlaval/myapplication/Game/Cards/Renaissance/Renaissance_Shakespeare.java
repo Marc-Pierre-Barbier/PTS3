@@ -33,7 +33,7 @@ public class Renaissance_Shakespeare extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: piochez une carte";
+        return null;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Renaissance_Shakespeare extends Card {
      */
     @Override
     public String getName() {
-        return "Shakespeare, Ame d'un Dramaturge";
+        return "Shakespeare";
     }
 
     /**

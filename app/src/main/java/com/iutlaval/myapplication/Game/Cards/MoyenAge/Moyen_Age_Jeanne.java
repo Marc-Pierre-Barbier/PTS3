@@ -33,7 +33,7 @@ public class Moyen_Age_Jeanne extends Card {
      */
     @Override
     public String getDescription() {
-        return "lien de vie, initiative";
+        return "lien de vie";
     }
 
     /**
@@ -63,7 +63,7 @@ public class Moyen_Age_Jeanne extends Card {
      */
     @Override
     public String getName() {
-        return "Jeanne d'arc la Pucelle d'Orléans";
+        return "Jeanne d'arc";
     }
 
     /**

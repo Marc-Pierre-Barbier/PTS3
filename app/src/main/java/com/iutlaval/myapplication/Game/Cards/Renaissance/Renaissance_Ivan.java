@@ -33,7 +33,7 @@ public class Renaissance_Ivan extends Card {
      */
     @Override
     public String getDescription() {
-        return "Quand il arrive sur le terrain, il échange ses points de vie et d'attaque de n'importe quelle créature jusqu'à la fin du tour";
+        return "";
     }
 
     /**

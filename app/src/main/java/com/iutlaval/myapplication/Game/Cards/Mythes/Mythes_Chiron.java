@@ -33,7 +33,7 @@ public class Mythes_Chiron extends Card {
      */
     @Override
     public String getDescription() {
-        return "Quand il arrive sur le champ de bataille vous piocher une carte";
+        return "";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Mythes_Chiron extends Card {
      */
     @Override
     public int getCost() {
-        return 3;
+        return 2;
     }
 
     /**

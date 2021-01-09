@@ -33,7 +33,7 @@ public class Moyen_Age_Louis extends Card {
      */
     @Override
     public String getDescription() {
-        return "Vos créatures ont +3/+0 et la célérité jusqua la fin du tour";
+        return "Vos créatures gagne +1/+0 ";
     }
 
     /**

@@ -33,7 +33,7 @@ public class Mythes_Heracles extends Card {
      */
     @Override
     public String getDescription() {
-        return "si il est seul sur notre cote du champ de bataille alors il gagne +2/+2";
+        return "si il est seul sur notre cote du champ de bataille alors il gagne +1/+1";
     }
 
     /**

@@ -33,7 +33,7 @@ public class Mythes_Dédale extends Card {
      */
     @Override
     public String getDescription() {
-        return "donne +1/+1 à une de tes creatures au hasard";
+        return "donne +1/+1 à toutes tes creatures";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Mythes_Dédale extends Card {
      */
     @Override
     public int getCost() {
-        return 1;
+        return 3;
     }
 
     /**

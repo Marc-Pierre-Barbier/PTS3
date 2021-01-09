@@ -63,7 +63,7 @@ public class Moyen_Age_CharlesVII extends Card {
      */
     @Override
     public String getName() {
-        return "Charles VII le Victorieux";
+        return "Charles VII";
     }
 
     /**

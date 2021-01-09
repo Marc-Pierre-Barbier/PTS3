@@ -34,7 +34,7 @@ public class Renaissance_Skanderberg extends Card {
      */
     @Override
     public String getDescription() {
-        return "Défenseur";
+        return "";
     }
 
     /**
@@ -64,7 +64,7 @@ public class Renaissance_Skanderberg extends Card {
      */
     @Override
     public String getName() {
-        return "Skanderberg, Libérateur de l'Albanie";
+        return "Skanderberg";
     }
 
     /**

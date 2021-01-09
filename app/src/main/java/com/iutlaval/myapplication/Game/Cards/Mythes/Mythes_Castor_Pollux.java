@@ -33,7 +33,7 @@ public class Mythes_Castor_Pollux extends Card {
      */
     @Override
     public String getDescription() {
-        return "la creature ciblé a 50% de chance de gagner +2/+0 ou 50% de chance de ce prendre 2 points de degats";
+        return "";
     }
 
     /**
@@ -63,7 +63,7 @@ public class Mythes_Castor_Pollux extends Card {
      */
     @Override
     public String getName() {
-        return "Castor et pollux, fils jumeaux de Léda";
+        return "Castor et pollux";
     }
 
     /**

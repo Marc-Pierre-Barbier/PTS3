@@ -33,7 +33,7 @@ public class Mythes_Minos extends Card {
      */
     @Override
     public String getDescription() {
-        return "la creature ciblé a 50% de chance de gagner +3/+0 ou 50% de gagner +0/+3";
+        return "toutes vos créatures gagne +1/+1";
     }
 
     /**

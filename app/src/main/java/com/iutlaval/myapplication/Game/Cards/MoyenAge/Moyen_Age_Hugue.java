@@ -33,7 +33,7 @@ public class Moyen_Age_Hugue extends Card {
      */
     @Override
     public String getDescription() {
-        return "Vos créatures ont la vigilance until EOT";
+        return "";
     }
 
     /**

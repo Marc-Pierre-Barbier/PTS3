@@ -33,7 +33,7 @@ public class Moyen_Age_Isabelle extends Card {
      */
     @Override
     public String getDescription() {
-        return "Vos créatures utilise leur point d'endurance à la place de leur attaque jusqu'a la fin du tour";
+        return "";
     }
 
     /**

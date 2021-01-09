@@ -63,7 +63,7 @@ public class Moyen_Age_Chretien_De_Troyes extends Card {
      */
     @Override
     public String getName() {
-        return "Chrétien de Troyes, fondateur de l'écriture arthurienne";
+        return "Chrétien de Troyes";
     }
 
     /**

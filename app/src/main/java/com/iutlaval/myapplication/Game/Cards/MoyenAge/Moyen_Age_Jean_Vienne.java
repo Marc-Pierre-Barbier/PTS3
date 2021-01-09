@@ -63,7 +63,7 @@ public class Moyen_Age_Jean_Vienne extends Card {
      */
     @Override
     public String getName() {
-        return "Jean de Vienne, Le « Du Guesclin » de la Mer";
+        return "Jean de Vienne";
     }
 
     /**

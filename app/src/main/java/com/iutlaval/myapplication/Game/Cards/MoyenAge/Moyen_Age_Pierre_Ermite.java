@@ -43,7 +43,7 @@ public class Moyen_Age_Pierre_Ermite extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Moyen_Age_Pierre_Ermite extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 3;
+        return 2;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Moyen_Age_Pierre_Ermite extends Card {
      */
     @Override
     public String getName() {
-        return "Pierre l'Ermitte, religieux des croisades";
+        return "Pierre l'Ermitte";
     }
 
     /**

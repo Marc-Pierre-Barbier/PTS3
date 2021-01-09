@@ -33,7 +33,7 @@ public class Mythes_Hermione extends Card {
      */
     @Override
     public String getDescription() {
-        return "cette créature ne peut pas attaquer";
+        return "";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Hermione extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 1;
     }
 
     /**

@@ -33,7 +33,7 @@ public class Mythes_Achille extends Card {
      */
     @Override
     public String getDescription() {
-        return "quand il arrive sur le champ de bataille toutes tes creatures gagnent +2/+0";
+        return "quand il arrive sur le champ de bataille toutes tes creatures gagnent +1/+0";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Achille extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 4;
+        return 5;
     }
 
     /**

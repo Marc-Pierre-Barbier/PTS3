@@ -23,7 +23,7 @@ public class Mythes_Perséphone extends Card {
 
     @Override
     public String getDescription() {
-        return "Redonne 5 points de vie au joueur";
+        return "";
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Mythes_Perséphone extends Card {
 
     @Override
     public int getDefaultHealth() {
-        return 4;
+        return 6;
     }
 
     @Override

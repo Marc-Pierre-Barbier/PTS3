@@ -33,7 +33,7 @@ public class Moyen_Age_PhilippeIV extends Card {
      */
     @Override
     public String getDescription() {
-        return "Inciblable";
+        return "Invisible";
     }
 
     /**

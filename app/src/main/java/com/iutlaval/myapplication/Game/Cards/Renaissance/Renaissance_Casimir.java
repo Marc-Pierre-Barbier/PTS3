@@ -33,7 +33,7 @@ public class Renaissance_Casimir extends Card {
      */
     @Override
     public String getDescription() {
-        return "Ra: une autre créature que vous controller gagne +4/+4";
+        return null;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Renaissance_Casimir extends Card {
      */
     @Override
     public int getCost() {
-        return 7;
+        return 5;
     }
 
     /**

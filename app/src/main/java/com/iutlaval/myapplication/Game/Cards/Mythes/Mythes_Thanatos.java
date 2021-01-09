@@ -33,7 +33,7 @@ public class Mythes_Thanatos extends Card {
      */
     @Override
     public String getDescription() {
-        return "detruit une creature ennemis au hasard";
+        return "";
     }
 
     /**
@@ -43,7 +43,7 @@ public class Mythes_Thanatos extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 2;
+        return 4;
     }
 
     /**

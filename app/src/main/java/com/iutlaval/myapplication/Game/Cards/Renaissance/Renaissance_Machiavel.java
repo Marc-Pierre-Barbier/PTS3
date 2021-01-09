@@ -63,7 +63,7 @@ public class Renaissance_Machiavel extends Card {
      */
     @Override
     public String getName() {
-        return "Machiavel, Philosophe de la Politique";
+        return "Machiavel";
     }
 
     /**

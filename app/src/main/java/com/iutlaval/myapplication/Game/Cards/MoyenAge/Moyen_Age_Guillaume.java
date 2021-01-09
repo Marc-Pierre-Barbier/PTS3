@@ -63,7 +63,7 @@ public class Moyen_Age_Guillaume extends Card {
      */
     @Override
     public String getName() {
-        return "Guillaume de Nogaret, conseiller du Roi de fer";
+        return "Guillaume de Nogaret";
     }
 
     /**

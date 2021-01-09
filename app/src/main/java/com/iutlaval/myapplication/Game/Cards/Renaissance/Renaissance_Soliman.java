@@ -24,7 +24,7 @@ public class Renaissance_Soliman extends Card {
 
     @Override
     public String getDescription() {
-        return "RA: Piocher 4 carte, infliger 4 dégats au joueur adverse";
+        return null;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Renaissance_Soliman extends Card {
 
     @Override
     public int getCost() {
-        return 9;
+        return 7;
     }
 
     @Override

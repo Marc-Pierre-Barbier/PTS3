@@ -33,7 +33,7 @@ public class Mythes_Amazones extends Card {
      */
     @Override
     public String getDescription() {
-        return "initiative";
+        return "vigilance";
     }
 
     /**

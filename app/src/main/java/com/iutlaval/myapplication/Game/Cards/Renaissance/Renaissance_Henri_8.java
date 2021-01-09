@@ -33,7 +33,7 @@ public class Renaissance_Henri_8 extends Card {
      */
     @Override
     public String getDescription() {
-        return "ETB: Piocher 2 carte";
+        return "";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Renaissance_Henri_8 extends Card {
      */
     @Override
     public int getCost() {
-        return 6;
+        return 5;
     }
 
     /**

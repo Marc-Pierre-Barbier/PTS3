@@ -33,7 +33,7 @@ public class Mythes_Zeus extends Card {
      */
     @Override
     public String getDescription() {
-        return "inflige 5 points de degats à la creature ciblée";
+        return "";
     }
 
     /**

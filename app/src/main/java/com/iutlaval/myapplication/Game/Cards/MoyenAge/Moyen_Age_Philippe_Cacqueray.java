@@ -63,7 +63,7 @@ public class Moyen_Age_Philippe_Cacqueray extends Card {
      */
     @Override
     public String getName() {
-        return "Philippe Cacqueray, inventeur du plat en verre";
+        return "Philippe Cacqueray";
     }
 
     /**

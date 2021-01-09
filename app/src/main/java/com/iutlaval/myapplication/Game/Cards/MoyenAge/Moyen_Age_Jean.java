@@ -33,7 +33,7 @@ public class Moyen_Age_Jean extends Card {
      */
     @Override
     public String getDescription() {
-        return "vos créatures ont +1/+1 jusqu'a la fin du tour";
+        return "vos créatures gagne +1/+1 jusqu'a la fin du tour";
     }
 
     /**

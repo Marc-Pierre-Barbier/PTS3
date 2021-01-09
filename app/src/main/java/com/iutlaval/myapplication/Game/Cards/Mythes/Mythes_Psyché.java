@@ -33,7 +33,7 @@ public class Mythes_Psyché extends Card {
      */
     @Override
     public String getDescription() {
-        return "la créature ciblée ne peut pas attaquer pendant 2 tours";
+        return "coutre porté";
     }
 
     /**

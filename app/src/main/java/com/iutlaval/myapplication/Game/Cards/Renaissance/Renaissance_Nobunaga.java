@@ -33,7 +33,7 @@ public class Renaissance_Nobunaga extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: Vous prenez 4 points de degats";
+        return "";
     }
 
     /**

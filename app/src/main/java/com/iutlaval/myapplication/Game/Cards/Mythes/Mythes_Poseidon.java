@@ -33,7 +33,7 @@ public class Mythes_Poseidon extends Card {
      */
     @Override
     public String getDescription() {
-        return "pioche 2 cartes";
+        return "";
     }
 
     /**

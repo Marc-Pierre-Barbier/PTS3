@@ -33,7 +33,7 @@ public class Renaissance_Copernic extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: inflige 2 degats à l'adversaire";
+        return "";
     }
 
     /**

@@ -33,7 +33,7 @@ public class Renaissance_Francois extends Card {
      */
     @Override
     public String getDescription() {
-        return "ETB: une créature aléatoire que vous controllez gagne -3/-3";
+        return "";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Renaissance_Francois extends Card {
      */
     @Override
     public int getCost() {
-        return 5;
+        return 7;
     }
 
     /**

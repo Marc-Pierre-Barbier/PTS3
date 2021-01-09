@@ -33,7 +33,7 @@ public class Renaissance_Decouverte_Amerique extends Card {
      */
     @Override
     public String getDescription() {
-        return "toxique";
+        return "célérite ,toxique";
     }
 
     /**

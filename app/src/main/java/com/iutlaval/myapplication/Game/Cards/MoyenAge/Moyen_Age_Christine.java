@@ -43,7 +43,7 @@ public class Moyen_Age_Christine extends Card {
      */
     @Override
     public int getDefaultAttack() {
-        return 0;
+        return 1;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Moyen_Age_Christine extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 2;
+        return 1;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Moyen_Age_Christine extends Card {
      */
     @Override
     public String getName() {
-        return "Christine de Pizan, première femme de lettre";
+        return "Christine de Pizan";
     }
 
     /**

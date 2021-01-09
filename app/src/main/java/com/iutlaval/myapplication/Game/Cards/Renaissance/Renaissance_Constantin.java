@@ -33,7 +33,7 @@ public class Renaissance_Constantin extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: Sacrifier une autre de vos créature";
+        return "";
     }
 
     /**
@@ -73,7 +73,7 @@ public class Renaissance_Constantin extends Card {
      */
     @Override
     public int getCost() {
-        return 5;
+        return 6;
     }
 
     /**

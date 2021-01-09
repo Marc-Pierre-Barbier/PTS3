@@ -33,7 +33,7 @@ public class Moyen_Age_Etienne extends Card {
      */
     @Override
     public String getDescription() {
-        return "initiative";
+        return "vigilance";
     }
 
     /**
@@ -63,7 +63,7 @@ public class Moyen_Age_Etienne extends Card {
      */
     @Override
     public String getName() {
-        return "Etienne Chevalier, commis du Victorieux";
+        return "Etienne Chevalier";
     }
 
     /**

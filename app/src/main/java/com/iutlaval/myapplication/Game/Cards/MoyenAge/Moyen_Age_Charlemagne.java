@@ -63,7 +63,7 @@ public class Moyen_Age_Charlemagne extends Card {
      */
     @Override
     public String getName() {
-        return "Charlemagne, le Grand";
+        return "Charlemagne";
     }
 
     /**

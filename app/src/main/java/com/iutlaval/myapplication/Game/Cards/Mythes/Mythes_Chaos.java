@@ -33,7 +33,7 @@ public class Mythes_Chaos extends Card {
      */
     @Override
     public String getDescription() {
-        return null;
+        return "";
     }
 
     /**

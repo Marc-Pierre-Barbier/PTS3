@@ -33,7 +33,7 @@ public class Renaissance_Leonard extends Card {
      */
     @Override
     public String getDescription() {
-        return "ETB: Déclanche un rale d'agonie aléatoire";
+        return "";
     }
 
     /**

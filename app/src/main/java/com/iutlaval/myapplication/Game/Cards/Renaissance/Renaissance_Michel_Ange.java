@@ -33,7 +33,7 @@ public class Renaissance_Michel_Ange extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: Vous pouvez jouer une créature de votre main avec un coût de mana de 3 ou moins";
+        return "";
     }
 
     /**
@@ -53,7 +53,7 @@ public class Renaissance_Michel_Ange extends Card {
      */
     @Override
     public int getDefaultHealth() {
-        return 1;
+        return 3;
     }
 
     /**

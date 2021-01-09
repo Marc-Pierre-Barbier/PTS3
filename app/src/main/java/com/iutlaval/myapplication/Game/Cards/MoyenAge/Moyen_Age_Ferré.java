@@ -63,7 +63,7 @@ public class Moyen_Age_Ferré extends Card {
      */
     @Override
     public String getName() {
-        return "Le Grand Ferré, paysan au bras puissant";
+        return "Le Grand Ferré";
     }
 
     /**

@@ -63,7 +63,7 @@ public class Moyen_Age_Sire_Jean extends Card {
      */
     @Override
     public String getName() {
-        return "Sire Jean de Joinville, biographe de Saint Louis";
+        return "Sire Jean de Joinville";
     }
 
     /**
