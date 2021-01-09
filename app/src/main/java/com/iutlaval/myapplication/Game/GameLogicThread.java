@@ -131,6 +131,11 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
             soundPool = builder.build();
         }
         soundPool.setOnLoadCompleteListener(this);
+        soundMap=new HashMap<>();
+        soundMap.put("fight",soundPool.load(cont,R.raw.combat_sfx,1));
+        soundMap.put("card",soundPool.load(cont,R.raw.carte_jouer_sfx,1));
+
+
 
 
         int startSound;
@@ -152,6 +157,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                 break;
         }
         backgroundMusicPlayer = MediaPlayer.create(cont,startSound);
+        backgroundMusicPlayer.setVolume(0.5F,0.5F);
         backgroundMusicPlayer.setOnCompletionListener(this);
         backgroundMusicPlayer.setScreenOnWhilePlaying(true);
         backgroundMusicPlayer.start();
@@ -331,6 +337,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                         //ajout la card au terain
                         cardPlayed.getDrawableCard().setDraggable(false);
                         board.setEnemyCard(zone,cardPlayed);
+                        playSound("card");
                         break;
 
                     case Command.MEULE:
@@ -527,6 +534,10 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                 e.printStackTrace();
             }
         }
+        if(requestPlaceCardResult)
+        {
+            playSound("card");
+        }
         return requestPlaceCardResult;
     }
 
@@ -558,6 +569,8 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                 e.printStackTrace();
             }
         }
+
+        playSound("fight");
 
         return true;
     }
@@ -623,13 +636,32 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
 
     @Override
     public void onLoadComplete(final SoundPool soundPool, int sampleId, int status) {
+        soundPoolLoaded=true;
+        Log.e("sound","ready");
+    }
 
+    public void playSound(String sound)
+    {
+        if(soundPoolLoaded){
+            if(soundMap.get(sound) != null)
+            {
+                soundPool.play(soundMap.get(sound),1.0f,1.0f,1,0,1f);
+                Log.i("sound","playing " + sound);
+
+            }else{
+                Log.i("sound","not found " + sound);
+
+            }
+        }
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
         mp.reset();
         backgroundMusicPlayer = MediaPlayer.create(cont, loopMusic);
+        backgroundMusicPlayer.setVolume(0.5F,0.5F);
+        backgroundMusicPlayer.setOnCompletionListener(this);
+        backgroundMusicPlayer.setScreenOnWhilePlaying(true);
         backgroundMusicPlayer.start();
         backgroundMusicPlayer.setLooping(true);
     }
