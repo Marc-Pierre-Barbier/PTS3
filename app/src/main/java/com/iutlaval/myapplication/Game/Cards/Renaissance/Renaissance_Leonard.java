@@ -63,7 +63,7 @@ public class Renaissance_Leonard extends Card {
      */
     @Override
     public String getName() {
-        return "Léonard de Vinci, Visionnaire sans limites";
+        return "Léonard de Vinci";
     }
 
     /**

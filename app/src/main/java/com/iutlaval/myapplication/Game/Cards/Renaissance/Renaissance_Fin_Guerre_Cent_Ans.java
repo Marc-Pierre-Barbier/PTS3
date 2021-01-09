@@ -63,7 +63,7 @@ public class Renaissance_Fin_Guerre_Cent_Ans extends Card {
      */
     @Override
     public String getName() {
-        return "Fin de la Guerre de Cent Ans";
+        return "la Guerre de 100 Ans";
     }
 
     /**

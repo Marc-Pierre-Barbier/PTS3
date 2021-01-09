@@ -63,7 +63,7 @@ public class Mythes_Thanatos extends Card {
      */
     @Override
     public String getName() {
-        return "Thanatos, personnification de la mort";
+        return "Thanatos";
     }
 
     /**

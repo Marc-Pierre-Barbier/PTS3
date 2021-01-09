@@ -63,7 +63,7 @@ public class Renaissance_Elisabeth extends Card {
      */
     @Override
     public String getName() {
-        return "Elisabeth I, la Reine Vierge";
+        return "Elisabeth I";
     }
 
     /**

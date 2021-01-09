@@ -64,7 +64,7 @@ public class Renaissance_Rabelais extends Card {
      */
     @Override
     public String getName() {
-        return "Rabelais, Fer de lance de l'Humanisme";
+        return "Rabelais";
     }
 
     /**

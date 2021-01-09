@@ -63,7 +63,7 @@ public class Mythes_Achille extends Card {
      */
     @Override
     public String getName() {
-        return "Achille, Roi des Myrmidons";
+        return "Achille";
     }
 
     /**
