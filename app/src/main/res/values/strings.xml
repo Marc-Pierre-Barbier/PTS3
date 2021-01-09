@@ -4,4 +4,6 @@
     <string name="title_item_detail">Item Detail</string>
     <string name="pickdeck">Choisissez votre deck</string>
     <string name="handicape">false</string>
+    <string name="credit">Qui sommes nous</string>
+    <string name="creditText">"Nous sommes un groupe quatre étudiants du département informatique de l\'IUT de Laval nommés  Marc BARBIER,  Antoine GALBRUN,  Clément CHERBONNIER et  Adrien LIGOT. Cette application a été créée dans le cadre de notre projet tuteuré du semestre 3 en s'inspirant des jeux Hearthstone et Magic The Gathering mais sur un thème historique."</string>
 </resources>

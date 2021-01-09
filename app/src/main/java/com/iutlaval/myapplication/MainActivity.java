@@ -1,6 +1,7 @@
 package com.iutlaval.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -42,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
                 handicapeButtonHandle(handicapeButton);
             }
         });
+
+        final Button creditbutton = (Button) findViewById(R.id.credit);
+        creditbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent creditIntent = new Intent(context,Credit.class);
+                context.startActivity(creditIntent);
+            }
+        });
+
 
         disabledMode=true;
         handicapeButtonHandle(handicapeButton);
