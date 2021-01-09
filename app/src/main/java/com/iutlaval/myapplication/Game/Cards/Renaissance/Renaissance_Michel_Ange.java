@@ -63,7 +63,7 @@ public class Renaissance_Michel_Ange extends Card {
      */
     @Override
     public String getName() {
-        return "Michel-Ange, Maître Sculpteur";
+        return "Michel-Ange";
     }
 
     /**

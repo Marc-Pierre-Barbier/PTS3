@@ -63,7 +63,7 @@ public class Mythes_Titanomachie extends Card {
      */
     @Override
     public String getName() {
-        return "Titanomachie, La Chute des Titans";
+        return "Titanomachie";
     }
 
     /**

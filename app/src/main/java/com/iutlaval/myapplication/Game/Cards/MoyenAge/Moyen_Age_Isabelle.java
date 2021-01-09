@@ -63,7 +63,7 @@ public class Moyen_Age_Isabelle extends Card {
      */
     @Override
     public String getName() {
-        return "Isabelle, la louve de france";
+        return "Isabelle";
     }
 
     /**

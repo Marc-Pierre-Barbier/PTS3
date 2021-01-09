@@ -63,7 +63,7 @@ public class Mythes_Poseidon extends Card {
      */
     @Override
     public String getName() {
-        return "Poséidon, l'ébranleur du sol ";
+        return "Poséidon";
     }
 
     /**

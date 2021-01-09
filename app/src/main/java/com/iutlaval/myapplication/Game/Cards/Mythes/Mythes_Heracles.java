@@ -63,7 +63,7 @@ public class Mythes_Heracles extends Card {
      */
     @Override
     public String getName() {
-        return "Héraclès, Dieu des éphébes";
+        return "Héraclès";
     }
 
     /**

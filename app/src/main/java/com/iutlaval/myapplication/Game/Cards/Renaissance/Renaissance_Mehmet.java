@@ -63,7 +63,7 @@ public class Renaissance_Mehmet extends Card {
      */
     @Override
     public String getName() {
-        return "Mehmet II, Conquérant de Constantinople";
+        return "Mehmet II";
     }
 
     /**

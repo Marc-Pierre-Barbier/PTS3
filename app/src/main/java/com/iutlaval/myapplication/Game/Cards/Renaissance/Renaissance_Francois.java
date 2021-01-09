@@ -63,7 +63,7 @@ public class Renaissance_Francois extends Card {
      */
     @Override
     public String getName() {
-        return "François I, Vainqueur de Marignan";
+        return "François I";
     }
 
     /**

@@ -39,7 +39,7 @@ public class Renaissance_Soliman extends Card {
 
     @Override
     public String getName() {
-        return "Soliman I, Le Magnifique ";
+        return "Soliman I";
     }
 
     @Override

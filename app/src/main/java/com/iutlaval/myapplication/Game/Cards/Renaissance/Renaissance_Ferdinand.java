@@ -33,7 +33,7 @@ public class Renaissance_Ferdinand extends Card {
      */
     @Override
     public String getDescription() {
-        return "RA: vous gagnez 2 PV";
+        return "";
     }
 
     /**
@@ -63,7 +63,7 @@ public class Renaissance_Ferdinand extends Card {
      */
     @Override
     public String getName() {
-        return "Ferdinand II, le Catholique";
+        return "Ferdinand II";
     }
 
     /**

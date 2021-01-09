@@ -63,7 +63,7 @@ public class Renaissance_Charles extends Card {
      */
     @Override
     public String getName() {
-        return "Charles Quint, Apogée des Habsbourg ";
+        return "Charles Quint ";
     }
 
     /**

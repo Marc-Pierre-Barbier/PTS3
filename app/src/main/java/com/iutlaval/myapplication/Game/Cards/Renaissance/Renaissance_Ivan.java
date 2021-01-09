@@ -63,7 +63,7 @@ public class Renaissance_Ivan extends Card {
      */
     @Override
     public String getName() {
-        return "Ivan IV, le Terrible";
+        return "Ivan IV";
     }
 
     /**

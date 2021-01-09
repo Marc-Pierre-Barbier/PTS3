@@ -63,7 +63,7 @@ public class Renaissance_Nobunaga extends Card {
      */
     @Override
     public String getName() {
-        return "Oda Nobunaga, Premier Unificateur";
+        return "Oda Nobunaga";
     }
 
     /**

@@ -63,7 +63,7 @@ public class Renaissance_Constantin extends Card {
      */
     @Override
     public String getName() {
-        return "Constantin XI, Dernier Empereur Romain";
+        return "Constantin XI";
     }
 
     /**

@@ -63,7 +63,7 @@ public class Moyen_Age_Pierre extends Card {
      */
     @Override
     public String getName() {
-        return "Pierre Flote, légiste et chancelier du Roi de fer";
+        return "Pierre Flote";
     }
 
     /**

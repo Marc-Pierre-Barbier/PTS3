@@ -63,7 +63,7 @@ public class Moyen_Age_Hugue extends Card {
      */
     @Override
     public String getName() {
-        return "Hugue capet, fondateur de la dynastie capétienne";
+        return "Hugue capet";
     }
 
     /**

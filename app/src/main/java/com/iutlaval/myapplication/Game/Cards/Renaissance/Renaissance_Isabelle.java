@@ -63,7 +63,7 @@ public class Renaissance_Isabelle extends Card {
      */
     @Override
     public String getName() {
-        return "Isabelle I, la Catholique";
+        return "Isabelle I";
     }
 
     /**

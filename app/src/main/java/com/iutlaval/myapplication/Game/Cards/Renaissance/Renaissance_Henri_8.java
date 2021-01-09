@@ -63,7 +63,7 @@ public class Renaissance_Henri_8 extends Card {
      */
     @Override
     public String getName() {
-        return "Henri VIII, Premier Anglican";
+        return "Henri VIII";
     }
 
     /**

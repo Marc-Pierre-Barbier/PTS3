@@ -63,7 +63,7 @@ public class Renaissance_Casimir extends Card {
      */
     @Override
     public String getName() {
-        return "Casimir IV, Soutien à la Ligue de Prusse";
+        return "Casimir IV";
     }
 
     /**

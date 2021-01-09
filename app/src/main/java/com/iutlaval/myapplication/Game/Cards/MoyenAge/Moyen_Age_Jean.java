@@ -63,7 +63,7 @@ public class Moyen_Age_Jean extends Card {
      */
     @Override
     public String getName() {
-        return "L'enlumineur Jean Pucelle";
+        return "Jean Pucelle";
     }
 
     /**

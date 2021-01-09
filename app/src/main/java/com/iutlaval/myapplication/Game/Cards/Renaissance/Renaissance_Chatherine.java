@@ -63,7 +63,7 @@ public class Renaissance_Chatherine extends Card {
      */
     @Override
     public String getName() {
-        return "Catherine de Medicis, Reine-Mère de France";
+        return "Catherine de Medicis";
     }
 
     /**

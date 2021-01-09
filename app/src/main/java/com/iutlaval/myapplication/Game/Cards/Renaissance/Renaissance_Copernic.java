@@ -63,7 +63,7 @@ public class Renaissance_Copernic extends Card {
      */
     @Override
     public String getName() {
-        return "Copernic, Défenseur de L'Héliocentrisme";
+        return "Copernic";
     }
 
     /**

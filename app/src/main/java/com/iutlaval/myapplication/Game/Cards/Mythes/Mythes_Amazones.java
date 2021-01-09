@@ -63,7 +63,7 @@ public class Mythes_Amazones extends Card {
      */
     @Override
     public String getName() {
-        return "les Amazones, Femmes guerrières";
+        return "les Amazones";
     }
 
     /**

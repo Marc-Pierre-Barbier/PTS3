@@ -63,7 +63,7 @@ public class Mythes_Erinyes extends Card {
      */
     @Override
     public String getName() {
-        return "Érinyes, pérsecutrices des Enfers";
+        return "Érinyes";
     }
 
     /**

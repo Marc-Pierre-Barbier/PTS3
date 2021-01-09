@@ -63,7 +63,7 @@ public class Mythes_Psyché extends Card {
      */
     @Override
     public String getName() {
-        return "Psyché, Beauté sans maris";
+        return "Psyché";
     }
 
     /**
