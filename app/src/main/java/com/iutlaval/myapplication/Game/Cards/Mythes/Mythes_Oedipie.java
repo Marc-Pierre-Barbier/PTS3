@@ -63,7 +63,7 @@ public class Mythes_Oedipie extends Card {
      */
     @Override
     public String getName() {
-        return "Oedipe, Maudit malgrés lui";
+        return "Oedipe";
     }
 
     /**

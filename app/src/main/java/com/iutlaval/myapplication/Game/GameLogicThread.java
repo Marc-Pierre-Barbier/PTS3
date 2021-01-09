@@ -469,7 +469,6 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
             renderer.moveToDraw(i* DrawableCard.getCardWith(),90F,c.getDrawableCard().getName());
             i++;
         }
-
     }
 
     /**
@@ -547,7 +546,6 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
         {
             return false;
         }
-
 
         //on ne peut pas avoir 2 requette simultané
         while(!requestAttackDone) {
@@ -632,7 +630,6 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
     public boolean isYourBattlePhase() {
         return isYourBattlePhase;
     }
-
 
     @Override
     public void onLoadComplete(final SoundPool soundPool, int sampleId, int status) {
