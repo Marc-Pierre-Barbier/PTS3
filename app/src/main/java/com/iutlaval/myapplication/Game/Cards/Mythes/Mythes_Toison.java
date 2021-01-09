@@ -33,7 +33,7 @@ public class Mythes_Toison extends Card {
      */
     @Override
     public String getDescription() {
-        return "donne +5pv à une creatures";
+        return "";
     }
 
     /**

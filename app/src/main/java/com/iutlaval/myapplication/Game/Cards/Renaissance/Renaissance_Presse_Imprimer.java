@@ -34,7 +34,7 @@ public class Renaissance_Presse_Imprimer extends Card {
      */
     @Override
     public String getDescription() {
-        return "vigilance";
+        return "solitude";
     }
 
     /**
