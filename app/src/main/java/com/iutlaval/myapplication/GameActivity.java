@@ -2,7 +2,6 @@ package com.iutlaval.myapplication;
 
 //N'oubliez pas de déclarer le bon package dans lequel se trouve le fichier !
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.iutlaval.myapplication.Game.GameLogicThread;
-import com.iutlaval.myapplication.Video.FpsTime;
 import com.iutlaval.myapplication.Video.Renderer;
 
 public class GameActivity extends Activity {
@@ -42,8 +40,6 @@ public class GameActivity extends Activity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         Display display = getWindowManager().getDefaultDisplay();
-        //permet d'attendre la duré de une image affiché a l'écran
-        FpsTime.init(display);
 
         String deck = getIntent().getStringExtra("DECK");
 

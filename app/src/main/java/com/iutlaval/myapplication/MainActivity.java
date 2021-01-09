@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         d.show(getSupportFragmentManager(),"s");
     }
 
+    //permet d'utiliser le bouton handicape et de changer son aparence
     private void handicapeButtonHandle(ImageButton handicapeButton)
     {
         if(!disabledMode)

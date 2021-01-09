@@ -13,6 +13,11 @@ public class DrawableSelfRemoving extends Drawable{
     private Drawable drawable;
     private long lifespan;
 
+    /**
+     *
+     * @param drawable drawable a afficher
+     * @param lifespan durée en seconde que le drawable va survivre
+     */
     public DrawableSelfRemoving(Drawable drawable,int lifespan) {
         super(drawable.getX(), drawable.getY(), drawable.getName());
         this.drawable = drawable;
@@ -21,7 +26,7 @@ public class DrawableSelfRemoving extends Drawable{
 
     @Override
     public void drawOn(@NonNull Canvas c, @NonNull Paint p) {
-        if(lifespan > System.currentTimeMillis())
+        if(!isDone())
         {
             drawable.drawOn(c,p);
         }

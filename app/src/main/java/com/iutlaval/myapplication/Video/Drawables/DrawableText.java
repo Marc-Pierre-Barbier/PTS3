@@ -18,13 +18,14 @@ import java.util.List;
 public class DrawableText extends Drawable{
 
     /**
-     * ce constructeur permet de rendre du texte
+     * ce constructeur permet de rendre du texte plus simplement mais il peut causes des bugs a cause de ses aproximaiton
      * @param text le texte a rendre
      * @param x_pos position en x du texte
      * @param y_pos position en y du texte
      * @param name nom du Drawable
      * @param x_size taille du drawable entre 0 et 100
      * @param y_size taille du drawable entre 0 et 100
+     * @param textSize taille de la police
      * @param y_canvasRatio taille du canevas en pixel sur le quel le texte va être dessiné /!\ doit être proportionnel a la police
      * @param x_canvasRatio voire y_canvasRatio
      */
@@ -41,6 +42,7 @@ public class DrawableText extends Drawable{
      * @param name nom du Drawable
      * @param x_size taille du drawable entre 0 et 100
      * @param y_size taille du drawable entre 0 et 100
+     * @param textSize taille de la police
      * @param y_canvasRatio taille du canevas en pixel sur le quel le texte va être dessiné /!\ doit être proportionnel a la police
      * @param x_canvasRatio voire y_canvasRatio
      */
