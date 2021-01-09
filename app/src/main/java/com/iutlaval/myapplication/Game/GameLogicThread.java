@@ -6,6 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -30,8 +34,9 @@ import java.lang.reflect.Constructor;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.HashMap;
 
-public class GameLogicThread extends Thread{
+public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteListener,MediaPlayer.OnCompletionListener {
 
     public static final float BUTTON_Y_POS = 45F;
     public static final int BUTTON_X_POS = 0;
@@ -64,6 +69,12 @@ public class GameLogicThread extends Thread{
     private DrawableCard requestDrawableCard =null;
     private int requestCardZone =-1;
     private boolean requestPlaceCardResult;
+
+    private boolean soundPoolLoaded = false;
+    private HashMap<String, Integer> soundMap;
+    private int loopMusic;
+    private SoundPool soundPool;
+    private MediaPlayer backgroundMusicPlayer;
 
     //si mise a true alors le thread va envoyer un message au serveur lui disant de passer a la phase suivante
     private boolean requestEnd = false;
@@ -108,8 +119,44 @@ public class GameLogicThread extends Thread{
             bitmapBackground = BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
         }else{
             bitmapBackground = BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background_handicapted);
-
         }
+
+        final int maxAudioStream = 2;
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            //déprecier aprés android lolipop
+            soundPool = new SoundPool(maxAudioStream, AudioManager.STREAM_MUSIC,100);
+        }else{
+            SoundPool.Builder builder = new SoundPool.Builder();
+            builder.setMaxStreams(maxAudioStream);
+            soundPool = builder.build();
+        }
+        soundPool.setOnLoadCompleteListener(this);
+
+
+        int startSound;
+        switch (deckName.trim())
+        {
+            default:
+                Log.e("Music","unrecognized deck loading default");
+            case "mythes et legendes grecs":
+                startSound=R.raw.mytes_start;
+                loopMusic =R.raw.mytes_loop;
+                break;
+            case "moyen-age francais":
+                startSound=R.raw.moyenage_start;
+                loopMusic =R.raw.moyenage_loop;
+                break;
+            case  "renaissance":
+                startSound=R.raw.renaissence_start;
+                loopMusic =R.raw.renaissence_loop;
+                break;
+        }
+        backgroundMusicPlayer = MediaPlayer.create(cont,startSound);
+        backgroundMusicPlayer.setOnCompletionListener(this);
+        backgroundMusicPlayer.setScreenOnWhilePlaying(true);
+        backgroundMusicPlayer.start();
+
+
 
         Log.i("ressources","base ressources loaded");
 
@@ -574,4 +621,16 @@ public class GameLogicThread extends Thread{
     }
 
 
+    @Override
+    public void onLoadComplete(final SoundPool soundPool, int sampleId, int status) {
+
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        mp.reset();
+        backgroundMusicPlayer = MediaPlayer.create(cont, loopMusic);
+        backgroundMusicPlayer.start();
+        backgroundMusicPlayer.setLooping(true);
+    }
 }
