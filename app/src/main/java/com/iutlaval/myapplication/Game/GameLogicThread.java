@@ -554,6 +554,9 @@ public class GameLogicThread extends Thread{
         interrupt();
     }
 
+    /**
+     * déclanche une demande de debut de tours
+     */
     public void requestEndTurn() {
         if(isYourMainPhase || isYourBattlePhase)
         {

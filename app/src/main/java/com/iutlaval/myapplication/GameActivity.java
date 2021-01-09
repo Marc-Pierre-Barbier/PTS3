@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,9 +36,11 @@ public class GameActivity extends Activity {
                 decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         }
 
+        //changement d'orientation sur des telephones moderne
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        Display display = getWindowManager().getDefaultDisplay();
 
         String deck = getIntent().getStringExtra("DECK");
 
