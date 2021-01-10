@@ -41,12 +41,11 @@ public class GameActivity extends Activity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         String deck = getIntent().getStringExtra("DECK");
 
         renderer = new Renderer(getBaseContext(),deck,this);
-
-
 
         setContentView(renderer);
     }

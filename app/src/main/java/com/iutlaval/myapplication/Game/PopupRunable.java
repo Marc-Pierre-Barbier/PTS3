@@ -33,7 +33,7 @@ public class PopupRunable implements Runnable{
     public static void makePopup(Activity activity,int stringId)
     {
         String recivedMessage = activity.getResources().getString(stringId);
-        new PopupRunable(activity,recivedMessage).run();
+        activity.runOnUiThread(new PopupRunable(activity,recivedMessage));
     }
 
     /**
@@ -43,6 +43,6 @@ public class PopupRunable implements Runnable{
      */
     public static void makePopup(Activity activity,String message)
     {
-        new PopupRunable(activity,message).run();
+        activity.runOnUiThread(new PopupRunable(activity,message));
     }
 }
