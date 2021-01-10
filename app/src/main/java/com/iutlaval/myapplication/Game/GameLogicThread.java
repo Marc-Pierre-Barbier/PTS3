@@ -12,13 +12,11 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import com.iutlaval.myapplication.Game.Cards.Card;
 import com.iutlaval.myapplication.Game.Cards.CardRegistery;
 import com.iutlaval.myapplication.GameActivity;
 import com.iutlaval.myapplication.MainActivity;
-import com.iutlaval.myapplication.PopupRunable;
 import com.iutlaval.myapplication.R;
 import com.iutlaval.myapplication.Video.Drawables.DrawableBitmap;
 import com.iutlaval.myapplication.Video.Drawables.DrawableCard;
@@ -42,8 +40,15 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
     public static final int BUTTON_X_POS = 0;
     public static final float BUTTON_X_SIZE = 20F;
     public static final float BUTTON_Y_SIZE = 10F;
-    public static final String BUTTONTURN_DRAWABLE_NAME = "buttonturn";
-    private Context cont;
+    public static final String BUTTON_TURN_DRAWABLE_NAME = "buttonturn";
+
+    //les constantes des id des sons
+    public static final String CARD_SOUND = "card";
+    public static final String FIGHT_SOUND = "fight";
+    public static final String WIN_SOUND = "win";
+    public static final String LOSE_SOUND = "lose";
+
+
     private Renderer renderer;
     private boolean ready;
     private TouchHandler touch;
@@ -81,15 +86,15 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
 
     public GameLogicThread(GameActivity gameActivity, String deckName, Renderer renderer)
     {
+        this.gameActivity = gameActivity;
         this.deckName=deckName;
+        this.renderer = renderer;
+
         Log.e("RESOLUTION:",""+GameActivity.screenWidth+"x"+GameActivity.screenHeight);
         ready=false;
-        this.cont = gameActivity;
-        this.renderer = renderer;
         board=new Board();
         touch = new TouchHandler(renderer,this,gameActivity);
         hand = new Hand();
-        this.gameActivity=gameActivity;
         GameActivity.setGameEngine(this);
         isYourMainPhase =false;
         cancelled=false;
@@ -106,8 +111,8 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
         Bitmap bitmapEnemyTurn = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_enemy_turn);
         Bitmap bitmapBattlePhase = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_pb_battlephase);
         Bitmap bitmapButtonEnd = BitmapFactory.decodeResource(renderer.getResources(),R.drawable.t_btn_boutonfintour);
-        Bitmap bitmapVictory =  BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_pb_victory);
-        Bitmap bitmapDefeat =  BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_pb_defeat);
+        Bitmap bitmapVictory =  BitmapFactory.decodeResource(gameActivity.getResources(), R.drawable.t_pb_victory);
+        Bitmap bitmapDefeat =  BitmapFactory.decodeResource(gameActivity.getResources(), R.drawable.t_pb_defeat);
 
         Log.i("loading","prefs");
         SharedPreferences sharedPref = gameActivity.getSharedPreferences("handicape",Context.MODE_PRIVATE);
@@ -116,9 +121,9 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
         Bitmap bitmapBackground;
         if(!modeHandicape)
         {
-            bitmapBackground = BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background);
+            bitmapBackground = BitmapFactory.decodeResource(gameActivity.getResources(), R.drawable.t_b_board_background);
         }else{
-            bitmapBackground = BitmapFactory.decodeResource(cont.getResources(), R.drawable.t_b_board_background_handicapted);
+            bitmapBackground = BitmapFactory.decodeResource(gameActivity.getResources(), R.drawable.t_b_board_background_handicapted);
         }
 
         final int maxAudioStream = 2;
@@ -132,10 +137,10 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
         }
         soundPool.setOnLoadCompleteListener(this);
         soundMap=new HashMap<>();
-        soundMap.put("fight",soundPool.load(cont,R.raw.combat_sfx,1));
-        soundMap.put("card",soundPool.load(cont,R.raw.carte_jouer_sfx,1));
-        soundMap.put("win",soundPool.load(cont,R.raw.victoire,1));
-        soundMap.put("lose",soundPool.load(cont,R.raw.defaite,1));
+        soundMap.put(FIGHT_SOUND,soundPool.load(gameActivity,R.raw.combat_sfx,1));
+        soundMap.put(CARD_SOUND,soundPool.load(gameActivity,R.raw.carte_jouer_sfx,1));
+        soundMap.put(WIN_SOUND,soundPool.load(gameActivity,R.raw.victoire,1));
+        soundMap.put(LOSE_SOUND,soundPool.load(gameActivity,R.raw.defaite,1));
 
 
 
@@ -158,7 +163,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                 loopMusic =R.raw.renaissence_loop;
                 break;
         }
-        backgroundMusicPlayer = MediaPlayer.create(cont,startSound);
+        backgroundMusicPlayer = MediaPlayer.create(gameActivity,startSound);
         backgroundMusicPlayer.setVolume(0.5F,0.5F);
         backgroundMusicPlayer.setOnCompletionListener(this);
         backgroundMusicPlayer.setScreenOnWhilePlaying(true);
@@ -173,8 +178,8 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
 
         ready=true;
 
-        final String host = "2.tcp.ngrok.io";//192.168.43.251tcp://2.tcp.ngrok.io:
-        final int port = 17057;
+        final String host = "2.tcp.ngrok.io"; // adresse du serveur
+        final int port = 17057; // port du serveur
 
 
         //on fait trois essay de connection
@@ -191,7 +196,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
         if(coms == null)
         {
             Log.e("ERROR SERVER DEAD","srv");
-            gameActivity.runOnUiThread(new PopupRunable("erreur de comunication avec le serveur",gameActivity));
+            PopupRunable.makePopup(gameActivity,R.string.comserr);
             //on arette le moteur de rendu
             renderer.terminate();
             //et on retourne la 'activité precedente
@@ -259,7 +264,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                     case Command.GET_DECK:
                         coms.send(deckName);
                         String deckstr = coms.recieve();
-                        deck = new NetworkDeck(deckstr,gameActivity.getBaseContext());
+                        deck = new NetworkDeck(deckstr, gameActivity.getBaseContext());
                         Log.e("got deck",deckstr);
                         break;
                     case Command.DRAW:
@@ -273,34 +278,34 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                         isYourMainPhase =true;
                         isYourBattlePhase=false;
                         renderer.addToDrawWithoutUpdate(new DrawableSelfRemoving(new DrawableBitmap(bitmapYourTurn,0,0,"yourTurn",100F,50F),1));
-                        renderer.addToDraw(new DrawableBitmap(bitmapButtonEnd, BUTTON_X_POS, BUTTON_Y_POS, BUTTONTURN_DRAWABLE_NAME, BUTTON_X_SIZE, BUTTON_Y_SIZE));
+                        renderer.addToDraw(new DrawableBitmap(bitmapButtonEnd, BUTTON_X_POS, BUTTON_Y_POS, BUTTON_TURN_DRAWABLE_NAME, BUTTON_X_SIZE, BUTTON_Y_SIZE));
                         break;
 
                     case Command.SETMANA:
                         renderer.removeToDrawWithoutUpdate("mana");
                         mana = coms.recieveInt();
-                        renderer.addToDraw(new DrawableText("Mana : "+mana,85F,60F,"mana",13.3F,6.65F,20, 100,30,Color.WHITE));
+                        renderer.addToDraw(new DrawableText( gameActivity.getResources().getString(R.string.mana)+" : "+mana,85F,60F,"mana",13.3F,6.65F,20, 100,30,Color.WHITE));
                         break;
 
                     case Command.ENEMYTURN:
                         isYourMainPhase =false;
 
-                        renderer.removeToDraw(BUTTONTURN_DRAWABLE_NAME);
+                        renderer.removeToDraw(BUTTON_TURN_DRAWABLE_NAME);
                         renderer.removeToDraw("battlePhase");
                         renderer.addToDraw(new DrawableSelfRemoving(new DrawableBitmap(bitmapEnemyTurn,0,0,"enemyTurn",100F,50F),1));
                         break;
 
                     case Command.POPUP:
                         String recivedMessage = coms.recieve();
-                        gameActivity.runOnUiThread(new PopupRunable(recivedMessage,gameActivity));
+                        PopupRunable.makePopup(gameActivity,recivedMessage);
                         Log.e("popup",recivedMessage);
                         break;
 
                     case Command.WIN:
                         //on termine la parite
                         backgroundMusicPlayer.stop();
-                        playSound("win");
-                        gameActivity.runOnUiThread(new PopupRunable("bravo ! vous avez gagné",gameActivity));
+                        playSound(WIN_SOUND);
+                        PopupRunable.makePopup(gameActivity,R.string.victoire);
                         renderer.addToDraw(new DrawableBitmap(bitmapVictory,0,0,"victory",100F,50F));
                         renderer.updateFrame();
                         cancelled = true;
@@ -311,8 +316,8 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                     case Command.LOSE:
                         //on termine la partie
                         backgroundMusicPlayer.stop();
-                        playSound("lose");
-                        gameActivity.runOnUiThread(new PopupRunable("vous avez perdu!",gameActivity));
+                        playSound(LOSE_SOUND);
+                        PopupRunable.makePopup(gameActivity,R.string.lose);
                         renderer.addToDraw(new DrawableBitmap(bitmapDefeat,0,0,"defeat",100F,50F));
                         renderer.updateFrame();
                         cancelled=true;
@@ -335,7 +340,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                         //on instancie la carte recu
                         Class<? extends Card> c = CardRegistery.get(cardId);
                         Constructor con = c.getConstructor(String.class, Context.class);
-                        Card cardPlayed = (Card) con.newInstance("enemy"+zone,gameActivity);
+                        Card cardPlayed = (Card) con.newInstance("enemy"+zone, gameActivity);
                         cardPlayed.getDrawableCard().setOnBoard(true);
 
                         //ajout de la carte au rendu
@@ -345,7 +350,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
                         //ajout la card au terain
                         cardPlayed.getDrawableCard().setDraggable(false);
                         board.setEnemyCard(zone,cardPlayed);
-                        playSound("card");
+                        playSound(CARD_SOUND);
                         break;
 
                     case Command.MEULE:
@@ -377,13 +382,13 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
 
                     case Command.SET_ENEMY_HP:
                         renderer.removeToDrawWithoutUpdate("advHp");
-                        renderer.addToDraw(new DrawableText(" Hp  : " + coms.recieve(),1F,10F,"advHp",13.3F,6.65F,20, 100,30,Color.WHITE));
+                        renderer.addToDraw(new DrawableText(gameActivity.getResources().getString(R.string.hp)+" : " + coms.recieve(),1F,10F,"advHp",13.3F,6.65F,20, 100,30,Color.WHITE));
 
                         break;
 
                     case Command.SET_HP:
                         renderer.removeToDrawWithoutUpdate("playerHp");
-                        renderer.addToDraw(new DrawableText(" Hp  : " + coms.recieve(),85F,80F,"playerHp",13.3F,6.65F,20, 100,30,Color.WHITE));
+                        renderer.addToDraw(new DrawableText(gameActivity.getResources().getString(R.string.hp)+ " : " + coms.recieve(),85F,80F,"playerHp",13.3F,6.65F,20, 100,30,Color.WHITE));
                         break;
 
                     case Command.SET_CARD_HP :
@@ -519,8 +524,6 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
 
     protected synchronized boolean setOnCardPlayedRequest(DrawableCard card,int zone)
     {
-        Log.e("request","recived");
-
         //on ne peut pas avoir 2 requette simultané
         while(!requestPlaceCardDone)
         {
@@ -543,7 +546,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
         }
         if(requestPlaceCardResult)
         {
-            playSound("card");
+            playSound(CARD_SOUND);
         }
         return requestPlaceCardResult;
     }
@@ -576,7 +579,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
             }
         }
 
-        playSound("fight");
+        playSound(FIGHT_SOUND);
 
         return true;
     }
@@ -628,10 +631,7 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
         {
             requestEnd=true;
         }else{
-            Toast t = new Toast(gameActivity);
-            t.setText("IT'S NOT YOUR TURN BE PATIENT");
-            t.setDuration(Toast.LENGTH_SHORT);
-            t.show();
+            PopupRunable.makePopup(gameActivity,R.string.notYourTurn);
         }
     }
 
@@ -660,10 +660,14 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
         }
     }
 
+    /**
+     * lance la boucle de la musique a la fin de l'introduction de la mussique
+     * @param mp
+     */
     @Override
     public void onCompletion(MediaPlayer mp) {
         mp.reset();
-        backgroundMusicPlayer = MediaPlayer.create(cont, loopMusic);
+        backgroundMusicPlayer = MediaPlayer.create(gameActivity, loopMusic);
         backgroundMusicPlayer.setVolume(0.5F,0.5F);
         backgroundMusicPlayer.setOnCompletionListener(this);
         backgroundMusicPlayer.setScreenOnWhilePlaying(true);

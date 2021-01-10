@@ -73,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
         if(!disabledMode)
         {
             handicapeButton.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.t_h_handicape));
+            handicapeButton.setContentDescription(getResources().getString(R.string.handicapeButtonon));
         }else{
             handicapeButton.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.t_h_handicape_greyed));
+            handicapeButton.setContentDescription(getResources().getString(R.string.handicapeButtonoff));
         }
         disabledMode = ! disabledMode;
 

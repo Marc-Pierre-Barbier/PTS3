@@ -7,4 +7,15 @@
     <string name="credit">Qui sommes nous</string>
     <string name="creditText">"Nous sommes un groupe quatre étudiants du département informatique de l\'IUT de Laval nommés  Marc BARBIER,  Antoine GALBRUN,  Clément CHERBONNIER et  Adrien LIGOT. Cette application a été créée dans le cadre de notre projet tuteuré du semestre 3 en s'inspirant des jeux Hearthstone et Magic The Gathering mais sur un thème historique."</string>
     <string name="copyright">les effet sonores de victoires et de defaite vienne de mixkit.co</string>
+    <string name="play">Jouer</string>
+    <string name="card">Carte</string>
+    <string name="handicapeButtonoff">bouton handicape off</string>
+    <string name="handicapeButtonon">bouton handicape on</string>
+    <string name="acceuilphoto">Le choc des Histoires </string>
+    <string name="mana">mana</string>
+    <string name="victoire">bravo vous avez gagné</string>
+    <string name="hp">PV</string>
+    <string name="lose">vous avez perdu</string>
+    <string name="notYourTurn">"ce n\'est pas votre tours soyez patient"</string>
+    <string name="comserr">"erreur de comunication avec le serveur"</string>
 </resources>
