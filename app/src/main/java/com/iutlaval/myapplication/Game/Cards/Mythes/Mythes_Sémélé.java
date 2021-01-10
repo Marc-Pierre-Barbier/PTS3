@@ -63,7 +63,7 @@ public class Mythes_Sémélé extends Card {
      */
     @Override
     public String getName() {
-        return "Sémélé, Mére de Dionysos";
+        return "Sémélé";
     }
 
     /**

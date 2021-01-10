@@ -134,6 +134,8 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
         soundMap=new HashMap<>();
         soundMap.put("fight",soundPool.load(cont,R.raw.combat_sfx,1));
         soundMap.put("card",soundPool.load(cont,R.raw.carte_jouer_sfx,1));
+        soundMap.put("win",soundPool.load(cont,R.raw.victoire,1));
+        soundMap.put("lose",soundPool.load(cont,R.raw.defaite,1));
 
 
 
@@ -296,21 +298,27 @@ public class GameLogicThread extends Thread implements SoundPool.OnLoadCompleteL
 
                     case Command.WIN:
                         //on termine la parite
+                        backgroundMusicPlayer.stop();
+                        playSound("win");
                         gameActivity.runOnUiThread(new PopupRunable("bravo ! vous avez gagné",gameActivity));
                         renderer.addToDraw(new DrawableBitmap(bitmapVictory,0,0,"victory",100F,50F));
                         renderer.updateFrame();
                         cancelled = true;
                         currentThread().sleep(2000);
+
                         returnToTheMainActivity();
                         break;
                     case Command.LOSE:
                         //on termine la partie
+                        backgroundMusicPlayer.stop();
+                        playSound("lose");
                         gameActivity.runOnUiThread(new PopupRunable("vous avez perdu!",gameActivity));
                         renderer.addToDraw(new DrawableBitmap(bitmapDefeat,0,0,"defeat",100F,50F));
                         renderer.updateFrame();
                         cancelled=true;
                         currentThread().sleep(2000);
                         //gameativity.finish() n'etait pas utilisable il fermais l'application
+
                         returnToTheMainActivity();
                         break;
                     case Command.PING:

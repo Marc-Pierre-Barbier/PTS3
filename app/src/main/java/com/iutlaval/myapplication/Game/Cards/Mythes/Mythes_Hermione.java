@@ -63,7 +63,7 @@ public class Mythes_Hermione extends Card {
      */
     @Override
     public String getName() {
-        return "Hermione, fille de Ménélas";
+        return "Hermione";
     }
 
     /**

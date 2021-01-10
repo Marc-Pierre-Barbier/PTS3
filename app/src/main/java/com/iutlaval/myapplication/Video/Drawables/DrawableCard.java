@@ -159,7 +159,7 @@ public class DrawableCard extends Drawable{
         if(c.getDescription() != null)
             cardDescription = new DrawableText(c.getDescription(),0,0,toString()+"description",DESCRIPTION_WIDTH*ratio,DESCRIPTION_HEIGHT*ratio,DESCRIPTION_FONT_SIZE,DESCRIPTION_TEXT_X_RES,DESCRIPTION_TEXT_Y_RES,Color.BLACK);
 
-        cardTitle = new DrawableText(c.getName(),0,0,toString()+"name",TITLE_WIDTH*ratio,TITLE_HEIGHT*ratio,TITLE_FONT_SIZE*0.75F,TEXT_TITLE_X_RES,TEXT_TITLE_Y_RES,Color.BLACK,30);
+        cardTitle = new DrawableText(c.getName(),0,0,toString()+"name",TITLE_WIDTH*ratio,TITLE_HEIGHT*ratio,TITLE_FONT_SIZE*0.75F,TEXT_TITLE_X_RES,TEXT_TITLE_Y_RES,Color.BLACK,26);
 
 
         cardCostDrawable = new DrawableText(c.getCost()  + "", 0, 0, toString() + "cost", OFFBOARD_ATK_HP_WIDTH*ratio, OFFBOARD_ATK_HP_HEIGHT*ratio, HP_ATK_FONT_SIZE, TEXT_ATK_HP_X_RES, TEXT_ATK_HP_Y_RES,Color.BLACK);

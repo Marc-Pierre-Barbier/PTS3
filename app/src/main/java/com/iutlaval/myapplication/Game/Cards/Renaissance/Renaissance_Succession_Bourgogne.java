@@ -63,7 +63,7 @@ public class Renaissance_Succession_Bourgogne extends Card {
      */
     @Override
     public String getName() {
-        return "Guerre de succession de Bourgogne";
+        return "Succession de Bourgogne";
     }
 
     /**
