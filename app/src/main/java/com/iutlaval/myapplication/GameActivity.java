@@ -74,5 +74,10 @@ public class GameActivity extends Activity {
         if(gameEngine != null)gameEngine.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
+
+    @Override
+    public void onBackPressed() {
+        //on override et on n'appelle pas la super classe pour retirer l'effet du bouton
+    }
 }
 
